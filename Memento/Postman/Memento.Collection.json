@@ -1,0 +1,945 @@
+{
+	"info": {
+		"_postman_id": "671047e1-6f37-464d-9ef9-0528d78c4c11",
+		"name": "Memento",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41357113"
+	},
+	"item": [
+		{
+			"name": "Authors",
+			"item": [
+				{
+					"name": "Single",
+					"item": [
+						{
+							"name": "Create",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (pm.response.code === 201) {",
+											"    var result = JSON.parse(pm.response.text());",
+											"    pm.collectionVariables.set(\"author-id\",result.data.id)",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"name\",\n    \"birthDate\": \"2025-01-01\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/{{variant}}/authors",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"{{variant}}",
+										"authors"
+									]
+								},
+								"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+							},
+							"response": []
+						},
+						{
+							"name": "Get",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/{{variant}}/authors/{{author-id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"{{variant}}",
+										"authors",
+										"{{author-id}}"
+									]
+								},
+								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"anotherName\",\n    \"birthDate\": \"2025-12-31\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/{{variant}}/authors/{{author-id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"{{variant}}",
+										"authors",
+										"{{author-id}}"
+									]
+								},
+								"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (pm.response.code === 201) {",
+											"    pm.collectionVariables.set(\"genre-id\",null)",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/{{variant}}/authors/{{author-id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"{{variant}}",
+										"authors",
+										"{{author-id}}"
+									]
+								},
+								"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Multiple",
+					"item": [
+						{
+							"name": "GetAll",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/{{variant}}/authors?pageNumber=0&pageSize=50&orderBy=Name&orderDirection=Ascending",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"{{variant}}",
+										"authors"
+									],
+									"query": [
+										{
+											"key": "pageNumber",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "50"
+										},
+										{
+											"key": "orderBy",
+											"value": "Name",
+											"description": "Id,Name,BirthDate"
+										},
+										{
+											"key": "orderDirection",
+											"value": "Ascending",
+											"description": "Ascending,Descending"
+										},
+										{
+											"key": "name",
+											"value": "Frank",
+											"disabled": true
+										},
+										{
+											"key": "bornAfter",
+											"value": "1950-01-01",
+											"disabled": true
+										},
+										{
+											"key": "bornBefore",
+											"value": "1975-01-01",
+											"disabled": true
+										}
+									]
+								},
+								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Books",
+			"item": [
+				{
+					"name": "Single",
+					"item": [
+						{
+							"name": "Create",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (pm.response.code === 201) {",
+											"    var result = JSON.parse(pm.response.text());",
+											"    pm.collectionVariables.set(\"book-id\",result.data.id)",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"name\",\n    \"releaseDate\": \"2025-01-01\",\n    \"authorId\": \"{{author-id}}\",\n    \"genreId\": \"{{genre-id}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/{{variant}}/books",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"{{variant}}",
+										"books"
+									]
+								},
+								"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+							},
+							"response": []
+						},
+						{
+							"name": "Get",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/{{variant}}/books/{{book-id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"{{variant}}",
+										"books",
+										"{{book-id}}"
+									]
+								},
+								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"anotherName\",\n    \"releaseDate\": \"2025-12-31\",\n    \"authorId\": \"{{author-id}}\",\n    \"genreId\": \"{{genre-id}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/{{variant}}/books/{{book-id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"{{variant}}",
+										"books",
+										"{{book-id}}"
+									]
+								},
+								"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (pm.response.code === 201) {",
+											"    pm.collectionVariables.set(\"genre-id\",null)",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/{{variant}}/books/{{book-id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"{{variant}}",
+										"books",
+										"{{book-id}}"
+									]
+								},
+								"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Multiple",
+					"item": [
+						{
+							"name": "GetAll",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/{{variant}}/books?pageNumber=0&pageSize=50&orderBy=Name&orderDirection=Ascending",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"{{variant}}",
+										"books"
+									],
+									"query": [
+										{
+											"key": "pageNumber",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "50"
+										},
+										{
+											"key": "orderBy",
+											"value": "Name",
+											"description": "Id,Name,ReleaseDate"
+										},
+										{
+											"key": "orderDirection",
+											"value": "Ascending",
+											"description": "Ascending,Descending"
+										},
+										{
+											"key": "name",
+											"value": "Dune",
+											"disabled": true
+										},
+										{
+											"key": "releasedAfter",
+											"value": "1950-01-01",
+											"disabled": true
+										},
+										{
+											"key": "releasedBefore",
+											"value": "1975-01-01",
+											"disabled": true
+										}
+									]
+								},
+								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Genres",
+			"item": [
+				{
+					"name": "Single",
+					"item": [
+						{
+							"name": "Create",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (pm.response.code === 201) {",
+											"    var result = JSON.parse(pm.response.text());",
+											"    pm.collectionVariables.set(\"genre-id\",result.data.id)",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"name\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/{{variant}}/genres",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"{{variant}}",
+										"genres"
+									]
+								},
+								"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+							},
+							"response": []
+						},
+						{
+							"name": "Get",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/{{variant}}/genres/{{genre-id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"{{variant}}",
+										"genres",
+										"{{genre-id}}"
+									]
+								},
+								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"anotherName\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/{{variant}}/genres/{{genre-id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"{{variant}}",
+										"genres",
+										"{{genre-id}}"
+									]
+								},
+								"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (pm.response.code === 201) {",
+											"    pm.collectionVariables.set(\"genre-id\",null)",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/{{variant}}/genres/{{genre-id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"{{variant}}",
+										"genres",
+										"{{genre-id}}"
+									]
+								},
+								"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Multiple",
+					"item": [
+						{
+							"name": "GetAll",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/{{variant}}/genres?pageNumber=0&pageSize=50&orderBy=Name&orderDirection=Ascending",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"{{variant}}",
+										"genres"
+									],
+									"query": [
+										{
+											"key": "pageNumber",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "50"
+										},
+										{
+											"key": "orderBy",
+											"value": "Name",
+											"description": "Id,Name"
+										},
+										{
+											"key": "orderDirection",
+											"value": "Ascending",
+											"description": "Ascending,Descending"
+										},
+										{
+											"key": "name",
+											"value": "Action",
+											"disabled": true
+										}
+									]
+								},
+								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "tokenRequestParams",
+				"value": [
+					{
+						"key": "audience",
+						"value": "{{audience}}",
+						"enabled": true,
+						"send_as": "request_body"
+					}
+				],
+				"type": "any"
+			},
+			{
+				"key": "authRequestParams",
+				"value": [
+					{
+						"key": "audience",
+						"value": "{{audience}}",
+						"enabled": true,
+						"send_as": "request_url"
+					}
+				],
+				"type": "any"
+			},
+			{
+				"key": "scope",
+				"value": "{{scopes}}",
+				"type": "string"
+			},
+			{
+				"key": "redirect_uri",
+				"value": "{{callback-url}}",
+				"type": "string"
+			},
+			{
+				"key": "authUrl",
+				"value": "{{authorize-url}}",
+				"type": "string"
+			},
+			{
+				"key": "accessTokenUrl",
+				"value": "{{token-url}}",
+				"type": "string"
+			},
+			{
+				"key": "clientId",
+				"value": "{{client-id}}",
+				"type": "string"
+			},
+			{
+				"key": "clientSecret",
+				"value": "{{client-secret}}",
+				"type": "string"
+			},
+			{
+				"key": "client_authentication",
+				"value": "body",
+				"type": "string"
+			},
+			{
+				"key": "grant_type",
+				"value": "authorization_code",
+				"type": "string"
+			},
+			{
+				"key": "tokenName",
+				"value": "Bearer",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "https://localhost:10001/api"
+		},
+		{
+			"key": "variant",
+			"value": "controllers",
+			"type": "string"
+		},
+		{
+			"key": "callback-url",
+			"value": "https://localhost:10001/swagger/oauth2-redirect.html",
+			"type": "string"
+		},
+		{
+			"key": "token-url",
+			"value": "https://dev-memento.eu.auth0.com/oauth/token",
+			"type": "string"
+		},
+		{
+			"key": "authorize-url",
+			"value": "https://dev-memento.eu.auth0.com/authorize",
+			"type": "string"
+		},
+		{
+			"key": "audience",
+			"value": "https://api.memento.com",
+			"type": "string"
+		},
+		{
+			"key": "client-id",
+			"value": "nxSOWm9XmzjBoj8bbHdRWBCxrmDC3HLn",
+			"type": "string"
+		},
+		{
+			"key": "client-secret",
+			"value": "uKxJtD9-xoSKGsLcA6XR0sUvAUwxiNc565wIHdnK-VIRsxdSb9v0FG2iRK_gmXbY",
+			"type": "string"
+		},
+		{
+			"key": "scopes",
+			"value": "profile",
+			"type": "string"
+		},
+		{
+			"key": "author-id",
+			"value": "d5a9a396-9a0e-4c5c-bd5b-40df8d214238",
+			"type": "string"
+		},
+		{
+			"key": "book-id",
+			"value": "74f915b5-6218-4a98-924c-8e5f8a6b17a4",
+			"type": "string"
+		},
+		{
+			"key": "genre-id",
+			"value": "caf5cad1-c04d-4a54-9f1b-00114f863efb"
+		}
+	]
+}

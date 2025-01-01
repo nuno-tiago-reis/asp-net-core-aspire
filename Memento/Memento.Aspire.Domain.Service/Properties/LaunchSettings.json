@@ -1,0 +1,18 @@
+﻿{
+	"$schema": "https://json.schemastore.org/launchsettings.json",
+	"profiles":
+	{
+		"Default":
+		{
+			"commandName": "Project",
+			"dotnetRunMessages": true,
+			"applicationUrl": "https://localhost:10002",
+			"launchUrl": "health/masstransit",
+			"launchBrowser": true,
+			"environmentVariables":
+			{
+				"ASPNETCORE_ENVIRONMENT": "Development"
+			}
+		}
+	}
+}

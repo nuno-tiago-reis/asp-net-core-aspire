@@ -1,0 +1,82 @@
+[
+	{
+		"Id": "841f2c0a-fd23-4583-be86-81d0cedcf9cd",
+		"Name": "Suzanne Collins",
+		"BirthDate": "1962-08-11",
+		"Books": [],
+		"CreatedBy": "e1b0feb2-a5d0-6b3a-8cfa-863a57b3999f",
+		"CreatedAt": "2025-01-01T00:00:00.000Z"
+	},
+	{
+		"Id": "87ad9471-2b17-4d2e-ae2c-654c76e04046",
+		"Name": "George Raymond Richard Martin",
+		"BirthDate": "1948-09-20",
+		"Books": [],
+		"CreatedBy": "e1b0feb2-a5d0-6b3a-8cfa-863a57b3999f",
+		"CreatedAt": "2025-01-01T00:00:00.000Z"
+	},
+	{
+		"Id": "d5a9a396-9a0e-4c5c-bd5b-40df8d214238",
+		"Name": "Agatha Christie",
+		"BirthDate": "1890-09-15",
+		"Books": [],
+		"CreatedBy": "e1b0feb2-a5d0-6b3a-8cfa-863a57b3999f",
+		"CreatedAt": "2025-01-01T00:00:00.000Z"
+	},
+	{
+		"Id": "5e3b2af8-7579-4840-a6f5-c3dbfeb76b47",
+		"Name": "John Ronald Reuel Tolkien",
+		"BirthDate": "1892-01-03",
+		"Books": [],
+		"CreatedBy": "e1b0feb2-a5d0-6b3a-8cfa-863a57b3999f",
+		"CreatedAt": "2025-01-01T00:00:00.000Z"
+	},
+	{
+		"Id": "84e1ca8b-86b0-4fc5-90b8-fbddee5bebe6",
+		"Name": "William Lawrence Shirer",
+		"BirthDate": "1904-02-23",
+		"Books": [],
+		"CreatedBy": "e1b0feb2-a5d0-6b3a-8cfa-863a57b3999f",
+		"CreatedAt": "2025-01-01T00:00:00.000Z"
+	},
+	{
+		"Id": "db471eea-5103-481d-bc14-41e913176b8e",
+		"Name": "Stephen King",
+		"BirthDate": "1947-09-21",
+		"Books": [],
+		"CreatedBy": "e1b0feb2-a5d0-6b3a-8cfa-863a57b3999f",
+		"CreatedAt": "2025-01-01T00:00:00.000Z"
+	},
+	{
+		"Id": "e686e55f-a736-4d06-bce4-ee1fe783e326",
+		"Name": "Dan Brown",
+		"BirthDate": "1964-06-22",
+		"Books": [],
+		"CreatedBy": "e1b0feb2-a5d0-6b3a-8cfa-863a57b3999f",
+		"CreatedAt": "2025-01-01T00:00:00.000Z"
+	},
+	{
+		"Id": "468f3dd6-654f-441c-ae45-13daf0f3d168",
+		"Name": "Stephenie Meyer",
+		"BirthDate": "1973-12-24",
+		"Books": [],
+		"CreatedBy": "e1b0feb2-a5d0-6b3a-8cfa-863a57b3999f",
+		"CreatedAt": "2025-01-01T00:00:00.000Z"
+	},
+	{
+		"Id": "4c7bc656-848c-4950-bc55-38084f914ae6",
+		"Name": "Frank Herbert",
+		"BirthDate": "1920-10-08",
+		"Books": [],
+		"CreatedBy": "e1b0feb2-a5d0-6b3a-8cfa-863a57b3999f",
+		"CreatedAt": "2025-01-01T00:00:00.000Z"
+	},
+	{
+		"Id": "2fc051d0-cd01-4127-aa5b-a97a425dd928",
+		"Name": "Stan Lee",
+		"BirthDate": "1922-12-28",
+		"Books": [],
+		"CreatedBy": "e1b0feb2-a5d0-6b3a-8cfa-863a57b3999f",
+		"CreatedAt": "2025-01-01T00:00:00.000Z"
+	}
+]

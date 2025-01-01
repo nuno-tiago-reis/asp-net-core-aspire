@@ -1,0 +1,72 @@
+[
+	{
+		"Id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+		"Name": "Action",
+		"Books": [],
+		"CreatedBy": "e1b0feb2-a5d0-6b3a-8cfa-863a57b3999f",
+		"CreatedAt": "2025-01-01T00:00:00.000Z"
+	},
+	{
+		"Id": "7834a52f-c06d-4f3b-b70a-99c2117a8de4",
+		"Name": "Adventure",
+		"Books": [],
+		"CreatedBy": "e1b0feb2-a5d0-6b3a-8cfa-863a57b3999f",
+		"CreatedAt": "2025-01-01T00:00:00.000Z"
+	},
+	{
+		"Id": "caf5cad1-c04d-4a54-9f1b-00114f863efb",
+		"Name": "Crime",
+		"Books": [],
+		"CreatedBy": "e1b0feb2-a5d0-6b3a-8cfa-863a57b3999f",
+		"CreatedAt": "2025-01-01T00:00:00.000Z"
+	},
+	{
+		"Id": "192824ac-16d0-4361-be29-de288ba46a0e",
+		"Name": "Fantasy",
+		"Books": [],
+		"CreatedBy": "e1b0feb2-a5d0-6b3a-8cfa-863a57b3999f",
+		"CreatedAt": "2025-01-01T00:00:00.000Z"
+	},
+	{
+		"Id": "b1f13f3c-0b9f-47b4-8c21-c475513e91be",
+		"Name": "History",
+		"Books": [],
+		"CreatedBy": "e1b0feb2-a5d0-6b3a-8cfa-863a57b3999f",
+		"CreatedAt": "2025-01-01T00:00:00.000Z"
+	},
+	{
+		"Id": "f01f3bad-c80a-49dc-8086-9f171fc51367",
+		"Name": "Horror",
+		"Books": [],
+		"CreatedBy": "e1b0feb2-a5d0-6b3a-8cfa-863a57b3999f",
+		"CreatedAt": "2025-01-01T00:00:00.000Z"
+	},
+	{
+		"Id": "687c1183-ed9e-4400-87c9-d6a661a947df",
+		"Name": "Mystery",
+		"Books": [],
+		"CreatedBy": "e1b0feb2-a5d0-6b3a-8cfa-863a57b3999f",
+		"CreatedAt": "2025-01-01T00:00:00.000Z"
+	},
+	{
+		"Id": "a50609f0-8329-4399-b388-267c30ceedaa",
+		"Name": "Romance",
+		"Books": [],
+		"CreatedBy": "e1b0feb2-a5d0-6b3a-8cfa-863a57b3999f",
+		"CreatedAt": "2025-01-01T00:00:00.000Z"
+	},
+	{
+		"Id": "a878f34e-2dbc-43aa-ab80-c1a373f79776",
+		"Name": "Science Fiction",
+		"Books": [],
+		"CreatedBy": "e1b0feb2-a5d0-6b3a-8cfa-863a57b3999f",
+		"CreatedAt": "2025-01-01T00:00:00.000Z"
+	},
+	{
+		"Id": "c21819bc-720b-4fe8-a812-72ad403b8a93",
+		"Name": "Superhero",
+		"Books": [],
+		"CreatedBy": "e1b0feb2-a5d0-6b3a-8cfa-863a57b3999f",
+		"CreatedAt": "2025-01-01T00:00:00.000Z"
+	}
+]

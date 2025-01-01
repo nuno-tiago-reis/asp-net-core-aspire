@@ -1,0 +1,22 @@
+{
+	"$schema": "https://json.schemastore.org/launchsettings.json",
+	"profiles":
+	{
+		"Default":
+		{
+			"commandName": "Project",
+			"dotnetRunMessages": true,
+			"applicationUrl": "https://localhost:10000",
+			"launchUrl": "/",
+			"launchBrowser": true,
+			"environmentVariables":
+			{
+				"ASPNETCORE_ENVIRONMENT": "Development",
+				"DOTNET_ASPIRE_CONTAINER_RUNTIME": "Podman",
+				"DOTNET_ENVIRONMENT": "Development",
+				"DOTNET_DASHBOARD_OTLP_ENDPOINT_URL": "https://localhost:20001",
+				"DOTNET_RESOURCE_SERVICE_ENDPOINT_URL": "https://localhost:20002"
+			}
+		}
+	}
+}
