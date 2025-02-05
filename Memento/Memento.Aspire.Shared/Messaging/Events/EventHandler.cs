@@ -38,6 +38,9 @@ public abstract class EventHandler<TEvent> : IConsumer<TEvent>
 	/// <param name="context">The context.</param>
 	public async Task Consume(ConsumeContext<TEvent> context)
 	{
+		// Create a logging scope
+		using var _ = this.Logger.BeginScope("{CorrelationId}", context.Message.CorrelationId);
+
 		// Log the event
 		this.Logger.LogInformation("Processing {Message}", context.Message);
 

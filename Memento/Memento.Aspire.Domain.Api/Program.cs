@@ -107,14 +107,6 @@ internal sealed class Program
 				// don't append a trailing slash
 				options.AppendTrailingSlash = false;
 			});
-		builder.Services
-			.Configure<RouteOptions>((options) =>
-			{
-				// transform the routing tokens by converting them to lower case
-				options.LowercaseUrls = true;
-				// don't append a trailing slash
-				options.AppendTrailingSlash = false;
-			});
 
 		// Builder (Controllers)
 		builder.Services
@@ -162,6 +154,10 @@ internal sealed class Program
 		#region [Application]
 		// Application
 		var application = builder.Build();
+
+		// Application (Logging)
+		application
+			.UseLogging(applicationSettings.Logging);
 
 		// Application (ASP.NET)
 		application

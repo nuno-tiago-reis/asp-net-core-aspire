@@ -26,9 +26,17 @@ internal sealed class Program
 			.WithLifetime(ContainerLifetime.Persistent)
 			.AddDatabase("Database");
 
-			//.WithBindMount("VolumeMount.SqlServer", "/var/opt/mssql")
-			//.WithDataBindMount(@"C:\Aspire\SqlServer")
-			//.WithDataBindMount(@"C:\Users\Tiago Reis\Documents\Aspire\SqlServer")
+			//.WithBindMount("VolumeMount.SqlServer", "/var/opt/mssql");
+			//.WithDataBindMount(@"C:\Aspire\SqlServer");
+			//.WithDataBindMount(@"C:\Users\Tiago Reis\Documents\Aspire\SqlServer");
+
+		// Builder (Logger)
+		var logger = builder.AddSeq("Logger")
+			.WithLifetime(ContainerLifetime.Persistent);
+
+			//.WithBindMount("VolumeMount.Seq", "/var/opt/seq");
+			//.WithDataBindMount(@"C:\Aspire\Seq");
+			//.WithDataBindMount(@"C:\Users\Tiago Reis\Documents\Aspire\Seq");
 
 		// Builder (MessageBus)
 		var messageBus = builder.AddRabbitMQ("MessageBus")
@@ -49,6 +57,9 @@ internal sealed class Program
 			.WithReference(database)
 			.WaitFor(database)
 			.WithEnvironment("Database:ConnectionString", database)
+			.WithReference(logger)
+			.WaitFor(logger)
+			.WithEnvironment("Serilog:WriteTo__0__Args:configure__1__Args:serverUrl", logger)
 			.WithReference(messageBus)
 			.WaitFor(messageBus)
 			.WithEnvironment("MessageBus:ConnectionString", messageBus);
@@ -62,6 +73,9 @@ internal sealed class Program
 			.WithReference(database)
 			.WaitFor(database)
 			.WithEnvironment("Database:ConnectionString", database)
+			.WithReference(logger)
+			.WaitFor(logger)
+			.WithEnvironment("Serilog:WriteTo__0__Args:configure__1__Args:serverUrl", logger)
 			.WithReference(messageBus)
 			.WaitFor(messageBus)
 			.WithEnvironment("MessageBus:ConnectionString", messageBus);

@@ -15,7 +15,7 @@ public static class CorrelationExtensions
 	/// <summary>
 	/// The header name.
 	/// </summary>
-	public const string HeaderName = "Correlation-Id";
+	public const string HeaderName = "X-Correlation-Id";
 	#endregion
 
 	#region [Extensions]

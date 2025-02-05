@@ -95,9 +95,8 @@ public static class MessageBusExtensions
 		ValidateOptions(options);
 
 		// Configure the healthcheck options
-		builder.MapHealthChecks("/health/masstransit", new HealthCheckOptions
+		builder.MapHealthChecks("/health", new HealthCheckOptions
 		{
-			Predicate = (check) => check.Tags.Contains("masstransit"),
 			ResponseWriter = WriteResponse
 		});
 

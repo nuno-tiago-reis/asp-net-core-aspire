@@ -40,6 +40,9 @@ public abstract class MessageHandler<TMessage, TMessageResult> : IConsumer<TMess
 	/// <param name="context">The context.</param>
 	public async Task Consume(ConsumeContext<TMessage> context)
 	{
+		// Create a logging scope
+		using var _ = this.Logger.BeginScope("{CorrelationId}", context.Message.CorrelationId);
+
 		// Log the message
 		this.Logger.LogInformation("Processing {Message}", context.Message);
 

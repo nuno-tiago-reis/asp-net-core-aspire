@@ -7,7 +7,7 @@
 			"commandName": "Project",
 			"dotnetRunMessages": true,
 			"applicationUrl": "https://localhost:10002",
-			"launchUrl": "health/masstransit",
+			"launchUrl": "health",
 			"launchBrowser": true,
 			"environmentVariables":
 			{

@@ -1,6 +1,5 @@
 ﻿namespace Memento.Aspire.Domain.Api.Configuration;
 
-using Memento.Aspire.Shared.ApplicationInsights;
 using Memento.Aspire.Shared.Cache;
 using Memento.Aspire.Shared.Localization;
 using Memento.Aspire.Shared.Logging;
@@ -13,11 +12,6 @@ using Memento.Aspire.Shared.Swagger;
 public sealed record ApplicationSettings
 {
 	#region [Properties]
-	/// <summary>
-	/// Gets or sets the application insights options.
-	/// </summary>
-	public required ApplicationInsightsOptions ApplicationInsights { get; set; }
-
 	/// <summary>
 	/// Gets or sets the cache options.
 	/// </summary>

@@ -14,7 +14,7 @@ public static class IdempotencyExtensions
 	/// <summary>
 	/// The header name.
 	/// </summary>
-	public const string HeaderName = "Idempotency-Id";
+	public const string HeaderName = "X-Idempotency-Id";
 	#endregion
 
 	#region [Extensions]

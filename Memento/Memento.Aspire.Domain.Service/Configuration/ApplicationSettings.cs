@@ -1,6 +1,5 @@
 ﻿namespace Memento.Aspire.Domain.Service.Configuration;
 
-using Memento.Aspire.Shared.ApplicationInsights;
 using Memento.Aspire.Shared.Localization;
 using Memento.Aspire.Shared.Logging;
 using Memento.Aspire.Shared.Messaging;
@@ -11,11 +10,6 @@ using Memento.Aspire.Shared.Messaging;
 public sealed record ApplicationSettings
 {
 	#region [Properties]
-	/// <summary>
-	/// Gets or sets the application insights options.
-	/// </summary>
-	public required ApplicationInsightsOptions ApplicationInsights { get; set; }
-
 	/// <summary>
 	/// Gets or sets the database options.
 	/// </summary>

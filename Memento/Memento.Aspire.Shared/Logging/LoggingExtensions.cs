@@ -1,4 +1,6 @@
 ﻿namespace Memento.Aspire.Shared.Logging;
+
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -80,6 +82,9 @@ public static class LoggingExtensions
 		// Register the options
 		services.AddSingleton(options);
 
+		// Register the http context accessor
+		services.AddHttpContextAccessor();
+
 		// Register the http logger
 		services.AddHttpLogging((logging) =>
 		{
@@ -87,8 +92,11 @@ public static class LoggingExtensions
 			logging.MediaTypeOptions.AddText(MediaTypeNames.Application.Json);
 			logging.RequestBodyLogLimit = int.MaxValue;
 			logging.ResponseBodyLogLimit = int.MaxValue;
-			logging.CombineLogs = true;
+			logging.CombineLogs = false;
 		});
+
+		// Register the http logger interceptor
+		services.AddHttpLoggingInterceptor<LoggingInterceptor>();
 
 		// Register the serilog logger
 		services.AddSerilog();
@@ -116,6 +124,48 @@ public static class LoggingExtensions
 
 		// Register the service
 		return services.AddLogging(options);
+	}
+
+	/// <summary>
+	/// Registers the <see cref="ILogging{T}"/> in the pipeline of the specified <seealso cref="IApplicationBuilder"/>.
+	/// Uses the specified <seealso cref="LoggingOptions"/>
+	/// </summary>
+	///
+	/// <param name="builder">The application builder.</param>
+	/// <param name="options">The options.</param>
+	public static IApplicationBuilder UseLogging(this IApplicationBuilder builder, LoggingOptions options)
+	{
+		// Validate the options
+		ValidateOptions(options);
+
+		// Configure the http logging
+		builder.UseHttpLogging();
+
+		return builder;
+	}
+
+	/// <summary>
+	/// Registers the <see cref="ILogging{T}"/> in the pipeline of the specified <seealso cref="IApplicationBuilder"/>.
+	/// Configures the options using specified <seealso cref="Action{LoggingOptions}"/>
+	/// </summary>
+	///
+	/// <param name="builder">The application builder.</param>
+	/// <param name="action">The action that configures the <seealso cref="LoggingOptions"/>.</param>
+	public static IApplicationBuilder UseLogging(this IApplicationBuilder builder, Action<LoggingOptions> action)
+	{
+		// Create the options
+		var options = new LoggingOptions
+		{
+			HttpLogging = null
+		};
+
+		// Configure the options
+		action?.Invoke(options);
+
+		// Register the service
+		builder.UseLogging(options);
+
+		return builder;
 	}
 	#endregion
 
