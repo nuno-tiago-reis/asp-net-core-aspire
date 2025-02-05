@@ -1,5 +1,4 @@
-﻿namespace Memento.Aspire.Shared.Binding;
-
+﻿namespace Memento.Aspire.Shared.Api;
 /// <summary>
 /// Implements a parameter binder designed to be a workaround a Minimal API limitation that prevents case insensitive parsing.
 /// </summary>

@@ -76,7 +76,6 @@ public sealed class CreateGenreCommandHandler : CommandHandler<CreateGenreComman
 		return new CreateGenreCommandResult
 		{
 			CorrelationId = command.CorrelationId,
-			IdempotencyId = command.IdempotencyId,
 			UserId = command.UserId,
 			Success = true,
 			Exception = null,
@@ -91,7 +90,6 @@ public sealed class CreateGenreCommandHandler : CommandHandler<CreateGenreComman
 		return Task.FromResult(new CreateGenreCommandResult
 		{
 			CorrelationId = command.CorrelationId,
-			IdempotencyId = command.IdempotencyId,
 			UserId = command.UserId,
 			Success = false,
 			Exception = exception,

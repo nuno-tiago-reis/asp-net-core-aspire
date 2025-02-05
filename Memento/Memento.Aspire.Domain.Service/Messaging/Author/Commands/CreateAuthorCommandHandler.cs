@@ -76,7 +76,6 @@ public sealed class CreateAuthorCommandHandler : CommandHandler<CreateAuthorComm
 		return new CreateAuthorCommandResult
 		{
 			CorrelationId = command.CorrelationId,
-			IdempotencyId = command.IdempotencyId,
 			UserId = command.UserId,
 			Success = true,
 			Exception = null,
@@ -91,7 +90,6 @@ public sealed class CreateAuthorCommandHandler : CommandHandler<CreateAuthorComm
 		return Task.FromResult(new CreateAuthorCommandResult
 		{
 			CorrelationId = command.CorrelationId,
-			IdempotencyId = command.IdempotencyId,
 			UserId = command.UserId,
 			Success = false,
 			Exception = exception,

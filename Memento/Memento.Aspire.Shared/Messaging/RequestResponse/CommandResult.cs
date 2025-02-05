@@ -6,10 +6,5 @@
 /// </summary>
 public abstract record CommandResult : MessageResult
 {
-	#region [Properties]
-	/// <summary>
-	/// Gets or sets the idempotency identifier.
-	/// </summary>
-	public required Guid IdempotencyId { get; set; }
-	#endregion
+	// Intentionally Empty.
 }

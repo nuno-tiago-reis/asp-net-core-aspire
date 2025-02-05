@@ -77,7 +77,6 @@ public sealed class UpdateBookCommandHandler : CommandHandler<UpdateBookCommand,
 		return new UpdateBookCommandResult
 		{
 			CorrelationId = command.CorrelationId,
-			IdempotencyId = command.IdempotencyId,
 			UserId = command.UserId,
 			Success = true,
 			Exception = null,
@@ -92,7 +91,6 @@ public sealed class UpdateBookCommandHandler : CommandHandler<UpdateBookCommand,
 		return Task.FromResult(new UpdateBookCommandResult
 		{
 			CorrelationId = command.CorrelationId,
-			IdempotencyId = command.IdempotencyId,
 			UserId = command.UserId,
 			Success = false,
 			Exception = exception,

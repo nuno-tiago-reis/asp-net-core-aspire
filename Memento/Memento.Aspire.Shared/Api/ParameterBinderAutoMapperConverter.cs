@@ -1,4 +1,4 @@
-﻿namespace Memento.Aspire.Shared.Binding;
+﻿namespace Memento.Aspire.Shared.Api;
 
 using AutoMapper;
 
@@ -21,7 +21,8 @@ public sealed class ParameterBinderAutoMapperConverter<TSource, TDestination> :
 	/// <inheritdoc />
 	public ParameterBinder<TDestination> Convert(TSource source, ParameterBinder<TDestination> destination, ResolutionContext context)
 	{
-		return new ParameterBinder<TDestination> {
+		return new ParameterBinder<TDestination>
+		{
 			Value = (TDestination)Enum.Parse(typeof(TDestination), source.ToString()!)
 		};
 	}

@@ -3,7 +3,7 @@
 using AutoMapper;
 using Memento.Aspire.Domain.Service.Contracts.Book;
 using Memento.Aspire.Domain.Service.Persistence.Entities.Book;
-using Memento.Aspire.Shared.Binding;
+using Memento.Aspire.Shared.Api;
 
 /// <summary>
 /// Implements the 'Book' profile.

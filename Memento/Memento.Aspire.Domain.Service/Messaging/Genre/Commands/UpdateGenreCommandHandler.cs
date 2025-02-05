@@ -77,7 +77,6 @@ public sealed class UpdateGenreCommandHandler : CommandHandler<UpdateGenreComman
 		return new UpdateGenreCommandResult
 		{
 			CorrelationId = command.CorrelationId,
-			IdempotencyId = command.IdempotencyId,
 			UserId = command.UserId,
 			Success = true,
 			Exception = null,
@@ -92,7 +91,6 @@ public sealed class UpdateGenreCommandHandler : CommandHandler<UpdateGenreComman
 		return Task.FromResult(new UpdateGenreCommandResult
 		{
 			CorrelationId = command.CorrelationId,
-			IdempotencyId = command.IdempotencyId,
 			UserId = command.UserId,
 			Success = false,
 			Exception = exception,

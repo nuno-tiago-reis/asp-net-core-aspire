@@ -7,7 +7,6 @@ using Memento.Aspire.Domain.Service.Messaging.Genre.Commands;
 using Memento.Aspire.Domain.Service.Messaging.Genre.Queries;
 using Memento.Aspire.Shared.Api;
 using Memento.Aspire.Shared.Cache;
-using Memento.Aspire.Shared.Contracts;
 using Memento.Aspire.Shared.Extensions;
 using Memento.Aspire.Shared.Messaging;
 using Memento.Aspire.Shared.Pagination;
@@ -48,8 +47,10 @@ public sealed class GenreModule : EntityModule
 			.Produces<StandardResult<GenreDetailContract>>(StatusCodes.Status201Created)
 			.Produces<StandardResult<GenreDetailContract>>(StatusCodes.Status400BadRequest)
 			.Produces<StandardResult<GenreDetailContract>>(StatusCodes.Status500InternalServerError)
-			.RequireCors()
 			.RequireAuthorization()
+			.RequireCorrelation()
+			.RequireCors()
+			.RequireIdempotency()
 			.WithOpenApi();
 
 		builder
@@ -57,8 +58,10 @@ public sealed class GenreModule : EntityModule
 			.Produces<StandardResult>(StatusCodes.Status200OK)
 			.Produces<StandardResult>(StatusCodes.Status400BadRequest)
 			.Produces<StandardResult>(StatusCodes.Status500InternalServerError)
-			.RequireCors()
 			.RequireAuthorization()
+			.RequireCorrelation()
+			.RequireCors()
+			.RequireIdempotency()
 			.WithOpenApi();
 
 		builder
@@ -66,8 +69,10 @@ public sealed class GenreModule : EntityModule
 			.Produces<StandardResult>(StatusCodes.Status200OK)
 			.Produces<StandardResult>(StatusCodes.Status400BadRequest)
 			.Produces<StandardResult>(StatusCodes.Status500InternalServerError)
-			.RequireCors()
 			.RequireAuthorization()
+			.RequireCorrelation()
+			.RequireCors()
+			.RequireIdempotency()
 			.WithOpenApi();
 
 		builder
@@ -75,8 +80,9 @@ public sealed class GenreModule : EntityModule
 			.Produces<StandardResult<GenreDetailContract>>(StatusCodes.Status200OK)
 			.Produces<StandardResult<GenreDetailContract>>(StatusCodes.Status400BadRequest)
 			.Produces<StandardResult<GenreDetailContract>>(StatusCodes.Status500InternalServerError)
-			.RequireCors()
 			.RequireAuthorization()
+			.RequireCorrelation()
+			.RequireCors()
 			.WithOpenApi();
 
 		builder
@@ -84,8 +90,9 @@ public sealed class GenreModule : EntityModule
 			.Produces<StandardResult<Page<GenreSummaryContract>>>(StatusCodes.Status200OK)
 			.Produces<StandardResult<Page<GenreSummaryContract>>>(StatusCodes.Status400BadRequest)
 			.Produces<StandardResult<Page<GenreSummaryContract>>>(StatusCodes.Status500InternalServerError)
-			.RequireCors()
 			.RequireAuthorization()
+			.RequireCorrelation()
+			.RequireCors()
 			.WithOpenApi();
 	}
 	#endregion
@@ -103,6 +110,9 @@ public sealed class GenreModule : EntityModule
 		var messageBus = httpContext.RequestServices.GetService<IMessageBus>()!;
 		var cancellationToken = httpContext.RequestAborted;
 
+		// Get the correlation identifier
+		var correlationId = httpContext.GetCorrelationId();
+
 		// Validate the parameters
 		var validator = httpContext.RequestServices.GetService<IValidator<GenreFormContract>>()!;
 		var validationResult = await validator.ValidateAsync(contract);
@@ -116,8 +126,7 @@ public sealed class GenreModule : EntityModule
 		var command = new CreateGenreCommand
 		{
 			GenreContract = contract,
-			CorrelationId = Guid.NewGuid(),
-			IdempotencyId = Guid.NewGuid(),
+			CorrelationId = correlationId,
 			UserId = httpContext.GetUserId()
 		};
 		var commandResult = await messageBus.RequestResponseViaBusAsync<CreateGenreCommand, CreateGenreCommandResult>(command, cancellationToken);
@@ -145,6 +154,9 @@ public sealed class GenreModule : EntityModule
 		var messageBus = httpContext.RequestServices.GetService<IMessageBus>()!;
 		var cancellationToken = httpContext.RequestAborted;
 
+		// Get the correlation identifier
+		var correlationId = httpContext.GetCorrelationId();
+
 		// Validate the parameters
 		var validator = httpContext.RequestServices.GetService<IValidator<GenreFormContract>>()!;
 		var validationResult = await validator.ValidateAsync(contract);
@@ -159,8 +171,7 @@ public sealed class GenreModule : EntityModule
 		{
 			GenreId = id,
 			GenreContract = contract,
-			CorrelationId = Guid.NewGuid(),
-			IdempotencyId = Guid.NewGuid(),
+			CorrelationId = correlationId,
 			UserId = httpContext.GetUserId()
 		};
 		var commandResult = await messageBus.RequestResponseViaBusAsync<UpdateGenreCommand, UpdateGenreCommandResult>(command, cancellationToken);
@@ -187,12 +198,14 @@ public sealed class GenreModule : EntityModule
 		var messageBus = httpContext.RequestServices.GetService<IMessageBus>()!;
 		var cancellationToken = httpContext.RequestAborted;
 
+		// Get the correlation identifier
+		var correlationId = httpContext.GetCorrelationId();
+
 		// Build and execute the command
 		var command = new DeleteGenreCommand
 		{
 			GenreId = id,
-			CorrelationId = Guid.NewGuid(),
-			IdempotencyId = Guid.NewGuid(),
+			CorrelationId = correlationId,
 			UserId = httpContext.GetUserId()
 		};
 		var commandResult = await messageBus.RequestResponseViaBusAsync<DeleteGenreCommand, DeleteGenreCommandResult>(command, cancellationToken);
@@ -220,6 +233,9 @@ public sealed class GenreModule : EntityModule
 		var messageBus = httpContext.RequestServices.GetService<IMessageBus>()!;
 		var cancellationToken = httpContext.RequestAborted;
 
+		// Get the correlation identifier
+		var correlationId = httpContext.GetCorrelationId();
+
 		// Try to get the genre from the cache
 		var cachedGenreContract = await cache.TryGetAsync<GenreDetailContract>(CacheEntries.GetGenreCacheKey(id));
 
@@ -233,7 +249,7 @@ public sealed class GenreModule : EntityModule
 		var query = new GetGenreQuery
 		{
 			GenreId = id,
-			CorrelationId = Guid.NewGuid(),
+			CorrelationId = correlationId,
 			UserId = httpContext.GetUserId()
 		};
 		var queryResult = await messageBus.RequestResponseViaBusAsync<GetGenreQuery, GetGenreQueryResult>(query, cancellationToken);
@@ -260,11 +276,14 @@ public sealed class GenreModule : EntityModule
 		var messageBus = httpContext.RequestServices.GetService<IMessageBus>()!;
 		var cancellationToken = httpContext.RequestAborted;
 
+		// Get the correlation identifier
+		var correlationId = httpContext.GetCorrelationId();
+
 		// Build and execute the query
 		var query = new GetGenresQuery
 		{
 			GenreFilterContract = filter,
-			CorrelationId = Guid.NewGuid(),
+			CorrelationId = correlationId,
 			UserId = httpContext.GetUserId()
 		};
 		var queryResult = await messageBus.RequestResponseViaBusAsync<GetGenresQuery, GetGenresQueryResult>(query, cancellationToken);

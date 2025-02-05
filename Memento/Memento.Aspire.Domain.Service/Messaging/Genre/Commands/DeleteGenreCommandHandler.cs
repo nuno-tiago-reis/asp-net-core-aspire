@@ -63,7 +63,6 @@ public sealed class DeleteGenreCommandHandler : CommandHandler<DeleteGenreComman
 		return new DeleteGenreCommandResult
 		{
 			CorrelationId = command.CorrelationId,
-			IdempotencyId = command.IdempotencyId,
 			UserId = command.UserId,
 			Success = true,
 			Exception = null
@@ -77,7 +76,6 @@ public sealed class DeleteGenreCommandHandler : CommandHandler<DeleteGenreComman
 		return Task.FromResult(new DeleteGenreCommandResult
 		{
 			CorrelationId = command.CorrelationId,
-			IdempotencyId = command.IdempotencyId,
 			UserId = command.UserId,
 			Success = false,
 			Exception = exception

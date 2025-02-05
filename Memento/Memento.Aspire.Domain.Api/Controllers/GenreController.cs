@@ -7,7 +7,6 @@ using Memento.Aspire.Domain.Service.Messaging.Genre.Commands;
 using Memento.Aspire.Domain.Service.Messaging.Genre.Queries;
 using Memento.Aspire.Shared.Api;
 using Memento.Aspire.Shared.Cache;
-using Memento.Aspire.Shared.Contracts;
 using Memento.Aspire.Shared.Extensions;
 using Memento.Aspire.Shared.Localization;
 using Memento.Aspire.Shared.Messaging;
@@ -22,6 +21,7 @@ using Microsoft.AspNetCore.Mvc;
 /// <seealso cref="EntityController" />
 [ApiController]
 [Authorize]
+[Correlate]
 [Route("/api/controllers/[controller]")]
 public sealed class GenreController : EntityController
 {
@@ -60,11 +60,15 @@ public sealed class GenreController : EntityController
 	///
 	/// <param name="contract">The contract.</param>
 	[HttpPost]
+	[Idempotent]
 	[ProducesResponseType<StandardResult<GenreDetailContract>>(StatusCodes.Status201Created)]
 	[ProducesResponseType<StandardResult<GenreDetailContract>>(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType<StandardResult<GenreDetailContract>>(StatusCodes.Status500InternalServerError)]
 	public async Task<ActionResult<StandardResult<GenreDetailContract>>> CreateAsync([FromBody] GenreFormContract contract)
 	{
+		// Get the correlation identifier
+		var correlationId = this.HttpContext.GetCorrelationId();
+
 		// Validate the parameters
 		var validator = this.HttpContext.RequestServices.GetService<IValidator<GenreFormContract>>()!;
 		var validationResult = await validator.ValidateAsync(contract);
@@ -78,8 +82,7 @@ public sealed class GenreController : EntityController
 		var command = new CreateGenreCommand
 		{
 			GenreContract = contract,
-			CorrelationId = Guid.NewGuid(),
-			IdempotencyId = Guid.NewGuid(),
+			CorrelationId = correlationId,
 			UserId = this.HttpContext.GetUserId()
 		};
 		var commandResult = await this.MessageBus.RequestResponseViaBusAsync<CreateGenreCommand, CreateGenreCommandResult>(command, this.HttpContext.RequestAborted);
@@ -101,12 +104,16 @@ public sealed class GenreController : EntityController
 	/// <param name="id">The identifier.</param>
 	/// <param name="contract">The contract.</param>
 	[HttpPut("{id:Guid}")]
+	[Idempotent]
 	[ProducesResponseType<StandardResult>(StatusCodes.Status200OK)]
 	[ProducesResponseType<StandardResult>(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType<StandardResult>(StatusCodes.Status404NotFound)]
 	[ProducesResponseType<StandardResult>(StatusCodes.Status500InternalServerError)]
 	public async Task<ActionResult<StandardResult>> UpdateAsync([FromRoute] Guid id, [FromBody] GenreFormContract contract)
 	{
+		// Get the correlation identifier
+		var correlationId = this.HttpContext.GetCorrelationId();
+
 		// Validate the parameters
 		var validator = this.HttpContext.RequestServices.GetService<IValidator<GenreFormContract>>()!;
 		var validationResult = await validator.ValidateAsync(contract);
@@ -121,8 +128,7 @@ public sealed class GenreController : EntityController
 		{
 			GenreId = id,
 			GenreContract = contract,
-			CorrelationId = Guid.NewGuid(),
-			IdempotencyId = Guid.NewGuid(),
+			CorrelationId = correlationId,
 			UserId = this.HttpContext.GetUserId()
 		};
 		var commandResult = await this.MessageBus.RequestResponseViaBusAsync<UpdateGenreCommand, UpdateGenreCommandResult>(command, this.HttpContext.RequestAborted);
@@ -143,18 +149,21 @@ public sealed class GenreController : EntityController
 	///
 	/// <param name="id">The identifier.</param>
 	[HttpDelete("{id:Guid}")]
+	[Idempotent]
 	[ProducesResponseType<StandardResult>(StatusCodes.Status200OK)]
 	[ProducesResponseType<StandardResult>(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType<StandardResult>(StatusCodes.Status404NotFound)]
 	[ProducesResponseType<StandardResult>(StatusCodes.Status500InternalServerError)]
 	public async Task<ActionResult<StandardResult>> DeleteAsync([FromRoute] Guid id)
 	{
+		// Get the correlation identifier
+		var correlationId = this.HttpContext.GetCorrelationId();
+
 		// Build and execute the command
 		var command = new DeleteGenreCommand
 		{
 			GenreId = id,
-			CorrelationId = Guid.NewGuid(),
-			IdempotencyId = Guid.NewGuid(),
+			CorrelationId = correlationId,
 			UserId = this.HttpContext.GetUserId()
 		};
 		var commandResult = await this.MessageBus.RequestResponseViaBusAsync<DeleteGenreCommand, DeleteGenreCommandResult>(command, this.HttpContext.RequestAborted);
@@ -181,6 +190,9 @@ public sealed class GenreController : EntityController
 	[ProducesResponseType<StandardResult<GenreDetailContract>>(StatusCodes.Status500InternalServerError)]
 	public async Task<ActionResult<StandardResult<GenreDetailContract>>> GetAsync([FromRoute] Guid id)
 	{
+		// Get the correlation identifier
+		var correlationId = this.HttpContext.GetCorrelationId();
+
 		// Try to get the genre from the cache
 		var cachedGenreContract = await this.Cache.TryGetAsync<GenreDetailContract>(CacheEntries.GetGenreCacheKey(id));
 
@@ -194,7 +206,7 @@ public sealed class GenreController : EntityController
 		var query = new GetGenreQuery
 		{
 			GenreId = id,
-			CorrelationId = Guid.NewGuid(),
+			CorrelationId = correlationId,
 			UserId = this.HttpContext.GetUserId()
 		};
 		var queryResult = await this.MessageBus.RequestResponseViaBusAsync<GetGenreQuery, GetGenreQueryResult>(query, this.HttpContext.RequestAborted);
@@ -220,11 +232,14 @@ public sealed class GenreController : EntityController
 	[ProducesResponseType<StandardResult<Page<GenreSummaryContract>>>(StatusCodes.Status500InternalServerError)]
 	public async Task<ActionResult<StandardResult<Page<GenreSummaryContract>>>> GetAsync([FromQuery] GenreFilterContract filter)
 	{
+		// Get the correlation identifier
+		var correlationId = this.HttpContext.GetCorrelationId();
+
 		// Build and execute the query
 		var query = new GetGenresQuery
 		{
 			GenreFilterContract = filter,
-			CorrelationId = Guid.NewGuid(),
+			CorrelationId = correlationId,
 			UserId = this.HttpContext.GetUserId()
 		};
 		var queryResult = await this.MessageBus.RequestResponseViaBusAsync<GetGenresQuery, GetGenresQueryResult>(query, this.HttpContext.RequestAborted);

@@ -59,6 +59,8 @@ public static class SwaggerExtensions
 			// Operation Filters
 			swashbuckleOptions.OperationFilter<AuthorizeOperationFilter>();
 			swashbuckleOptions.OperationFilter<ContentTypeOperationFilter>();
+			swashbuckleOptions.OperationFilter<CorrelateOperationFilter>();
+			swashbuckleOptions.OperationFilter<IdempotentOperationFilter>();
 
 			// Schema Filters
 			swashbuckleOptions.SchemaFilter<FluentValidationSchemaFilter>();

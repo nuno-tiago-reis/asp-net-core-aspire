@@ -1,4 +1,4 @@
-﻿namespace Memento.Aspire.Shared.Contracts;
+﻿namespace Memento.Aspire.Shared.Api;
 
 using System.Text.Json.Serialization;
 

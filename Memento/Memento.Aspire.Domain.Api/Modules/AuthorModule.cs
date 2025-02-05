@@ -7,7 +7,6 @@ using Memento.Aspire.Domain.Service.Messaging.Author.Commands;
 using Memento.Aspire.Domain.Service.Messaging.Author.Queries;
 using Memento.Aspire.Shared.Api;
 using Memento.Aspire.Shared.Cache;
-using Memento.Aspire.Shared.Contracts;
 using Memento.Aspire.Shared.Extensions;
 using Memento.Aspire.Shared.Messaging;
 using Memento.Aspire.Shared.Pagination;
@@ -48,8 +47,10 @@ public sealed class AuthorModule : EntityModule
 			.Produces<StandardResult<AuthorDetailContract>>(StatusCodes.Status201Created)
 			.Produces<StandardResult<AuthorDetailContract>>(StatusCodes.Status400BadRequest)
 			.Produces<StandardResult<AuthorDetailContract>>(StatusCodes.Status500InternalServerError)
-			.RequireCors()
 			.RequireAuthorization()
+			.RequireCorrelation()
+			.RequireCors()
+			.RequireIdempotency()
 			.WithOpenApi();
 
 		builder
@@ -57,8 +58,10 @@ public sealed class AuthorModule : EntityModule
 			.Produces<StandardResult>(StatusCodes.Status200OK)
 			.Produces<StandardResult>(StatusCodes.Status400BadRequest)
 			.Produces<StandardResult>(StatusCodes.Status500InternalServerError)
-			.RequireCors()
 			.RequireAuthorization()
+			.RequireCorrelation()
+			.RequireCors()
+			.RequireIdempotency()
 			.WithOpenApi();
 
 		builder
@@ -66,8 +69,10 @@ public sealed class AuthorModule : EntityModule
 			.Produces<StandardResult>(StatusCodes.Status200OK)
 			.Produces<StandardResult>(StatusCodes.Status400BadRequest)
 			.Produces<StandardResult>(StatusCodes.Status500InternalServerError)
-			.RequireCors()
 			.RequireAuthorization()
+			.RequireCorrelation()
+			.RequireCors()
+			.RequireIdempotency()
 			.WithOpenApi();
 
 		builder
@@ -75,8 +80,9 @@ public sealed class AuthorModule : EntityModule
 			.Produces<StandardResult<AuthorDetailContract>>(StatusCodes.Status200OK)
 			.Produces<StandardResult<AuthorDetailContract>>(StatusCodes.Status400BadRequest)
 			.Produces<StandardResult<AuthorDetailContract>>(StatusCodes.Status500InternalServerError)
-			.RequireCors()
 			.RequireAuthorization()
+			.RequireCorrelation()
+			.RequireCors()
 			.WithOpenApi();
 
 		builder
@@ -84,8 +90,9 @@ public sealed class AuthorModule : EntityModule
 			.Produces<StandardResult<Page<AuthorSummaryContract>>>(StatusCodes.Status200OK)
 			.Produces<StandardResult<Page<AuthorSummaryContract>>>(StatusCodes.Status400BadRequest)
 			.Produces<StandardResult<Page<AuthorSummaryContract>>>(StatusCodes.Status500InternalServerError)
-			.RequireCors()
 			.RequireAuthorization()
+			.RequireCorrelation()
+			.RequireCors()
 			.WithOpenApi();
 	}
 	#endregion
@@ -103,6 +110,9 @@ public sealed class AuthorModule : EntityModule
 		var messageBus = httpContext.RequestServices.GetService<IMessageBus>()!;
 		var cancellationToken = httpContext.RequestAborted;
 
+		// Get the correlation identifier
+		var correlationId = httpContext.GetCorrelationId();
+
 		// Validate the parameters
 		var validator = httpContext.RequestServices.GetService<IValidator<AuthorFormContract>>()!;
 		var validationResult = await validator.ValidateAsync(contract);
@@ -116,8 +126,7 @@ public sealed class AuthorModule : EntityModule
 		var command = new CreateAuthorCommand
 		{
 			AuthorContract = contract,
-			CorrelationId = Guid.NewGuid(),
-			IdempotencyId = Guid.NewGuid(),
+			CorrelationId = correlationId,
 			UserId = httpContext.GetUserId()
 		};
 		var commandResult = await messageBus.RequestResponseViaBusAsync<CreateAuthorCommand, CreateAuthorCommandResult>(command, cancellationToken);
@@ -145,6 +154,9 @@ public sealed class AuthorModule : EntityModule
 		var messageBus = httpContext.RequestServices.GetService<IMessageBus>()!;
 		var cancellationToken = httpContext.RequestAborted;
 
+		// Get the correlation identifier
+		var correlationId = httpContext.GetCorrelationId();
+
 		// Validate the parameters
 		var validator = httpContext.RequestServices.GetService<IValidator<AuthorFormContract>>()!;
 		var validationResult = await validator.ValidateAsync(contract);
@@ -159,8 +171,7 @@ public sealed class AuthorModule : EntityModule
 		{
 			AuthorId = id,
 			AuthorContract = contract,
-			CorrelationId = Guid.NewGuid(),
-			IdempotencyId = Guid.NewGuid(),
+			CorrelationId = correlationId,
 			UserId = httpContext.GetUserId()
 		};
 		var commandResult = await messageBus.RequestResponseViaBusAsync<UpdateAuthorCommand, UpdateAuthorCommandResult>(command, cancellationToken);
@@ -187,12 +198,14 @@ public sealed class AuthorModule : EntityModule
 		var messageBus = httpContext.RequestServices.GetService<IMessageBus>()!;
 		var cancellationToken = httpContext.RequestAborted;
 
+		// Get the correlation identifier
+		var correlationId = httpContext.GetCorrelationId();
+
 		// Build and execute the command
 		var command = new DeleteAuthorCommand
 		{
 			AuthorId = id,
-			CorrelationId = Guid.NewGuid(),
-			IdempotencyId = Guid.NewGuid(),
+			CorrelationId = correlationId,
 			UserId = httpContext.GetUserId()
 		};
 		var commandResult = await messageBus.RequestResponseViaBusAsync<DeleteAuthorCommand, DeleteAuthorCommandResult>(command, cancellationToken);
@@ -220,6 +233,9 @@ public sealed class AuthorModule : EntityModule
 		var messageBus = httpContext.RequestServices.GetService<IMessageBus>()!;
 		var cancellationToken = httpContext.RequestAborted;
 
+		// Get the correlation identifier
+		var correlationId = httpContext.GetCorrelationId();
+
 		// Try to get the author from the cache
 		var cachedAuthorContract = await cache.TryGetAsync<AuthorDetailContract>(CacheEntries.GetAuthorCacheKey(id));
 
@@ -233,7 +249,7 @@ public sealed class AuthorModule : EntityModule
 		var query = new GetAuthorQuery
 		{
 			AuthorId = id,
-			CorrelationId = Guid.NewGuid(),
+			CorrelationId = correlationId,
 			UserId = httpContext.GetUserId()
 		};
 		var queryResult = await messageBus.RequestResponseViaBusAsync<GetAuthorQuery, GetAuthorQueryResult>(query, cancellationToken);
@@ -260,11 +276,14 @@ public sealed class AuthorModule : EntityModule
 		var messageBus = httpContext.RequestServices.GetService<IMessageBus>()!;
 		var cancellationToken = httpContext.RequestAborted;
 
+		// Get the correlation identifier
+		var correlationId = httpContext.GetCorrelationId();
+
 		// Build and execute the query
 		var query = new GetAuthorsQuery
 		{
 			AuthorFilterContract = filter,
-			CorrelationId = Guid.NewGuid(),
+			CorrelationId = correlationId,
 			UserId = httpContext.GetUserId()
 		};
 		var queryResult = await messageBus.RequestResponseViaBusAsync<GetAuthorsQuery, GetAuthorsQueryResult>(query, cancellationToken);

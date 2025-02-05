@@ -7,7 +7,6 @@ using Memento.Aspire.Domain.Service.Messaging.Book.Commands;
 using Memento.Aspire.Domain.Service.Messaging.Book.Queries;
 using Memento.Aspire.Shared.Api;
 using Memento.Aspire.Shared.Cache;
-using Memento.Aspire.Shared.Contracts;
 using Memento.Aspire.Shared.Extensions;
 using Memento.Aspire.Shared.Localization;
 using Memento.Aspire.Shared.Messaging;
@@ -22,6 +21,7 @@ using Microsoft.AspNetCore.Mvc;
 /// <seealso cref="EntityController" />
 [ApiController]
 [Authorize]
+[Correlate]
 [Route("/api/controllers/[controller]")]
 public sealed class BookController : EntityController
 {
@@ -60,11 +60,15 @@ public sealed class BookController : EntityController
 	///
 	/// <param name="contract">The contract.</param>
 	[HttpPost]
+	[Idempotent]
 	[ProducesResponseType<StandardResult<BookDetailContract>>(StatusCodes.Status201Created)]
 	[ProducesResponseType<StandardResult<BookDetailContract>>(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType<StandardResult<BookDetailContract>>(StatusCodes.Status500InternalServerError)]
 	public async Task<ActionResult<StandardResult<BookDetailContract>>> CreateAsync([FromBody] BookFormContract contract)
 	{
+		// Get the correlation identifier
+		var correlationId = this.HttpContext.GetCorrelationId();
+
 		// Validate the parameters
 		var validator = this.HttpContext.RequestServices.GetService<IValidator<BookFormContract>>()!;
 		var validationResult = await validator.ValidateAsync(contract);
@@ -78,8 +82,7 @@ public sealed class BookController : EntityController
 		var command = new CreateBookCommand
 		{
 			BookContract = contract,
-			CorrelationId = Guid.NewGuid(),
-			IdempotencyId = Guid.NewGuid(),
+			CorrelationId = correlationId,
 			UserId = this.HttpContext.GetUserId()
 		};
 		var commandResult = await this.MessageBus.RequestResponseViaBusAsync<CreateBookCommand, CreateBookCommandResult>(command, this.HttpContext.RequestAborted);
@@ -101,12 +104,16 @@ public sealed class BookController : EntityController
 	/// <param name="id">The identifier.</param>
 	/// <param name="contract">The contract.</param>
 	[HttpPut("{id:Guid}")]
+	[Idempotent]
 	[ProducesResponseType<StandardResult>(StatusCodes.Status200OK)]
 	[ProducesResponseType<StandardResult>(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType<StandardResult>(StatusCodes.Status404NotFound)]
 	[ProducesResponseType<StandardResult>(StatusCodes.Status500InternalServerError)]
 	public async Task<ActionResult<StandardResult>> UpdateAsync([FromRoute] Guid id, [FromBody] BookFormContract contract)
 	{
+		// Get the correlation identifier
+		var correlationId = this.HttpContext.GetCorrelationId();
+
 		// Validate the parameters
 		var validator = this.HttpContext.RequestServices.GetService<IValidator<BookFormContract>>()!;
 		var validationResult = await validator.ValidateAsync(contract);
@@ -121,8 +128,7 @@ public sealed class BookController : EntityController
 		{
 			BookId = id,
 			BookContract = contract,
-			CorrelationId = Guid.NewGuid(),
-			IdempotencyId = Guid.NewGuid(),
+			CorrelationId = correlationId,
 			UserId = this.HttpContext.GetUserId()
 		};
 		var commandResult = await this.MessageBus.RequestResponseViaBusAsync<UpdateBookCommand, UpdateBookCommandResult>(command, this.HttpContext.RequestAborted);
@@ -143,18 +149,21 @@ public sealed class BookController : EntityController
 	///
 	/// <param name="id">The identifier.</param>
 	[HttpDelete("{id:Guid}")]
+	[Idempotent]
 	[ProducesResponseType<StandardResult>(StatusCodes.Status200OK)]
 	[ProducesResponseType<StandardResult>(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType<StandardResult>(StatusCodes.Status404NotFound)]
 	[ProducesResponseType<StandardResult>(StatusCodes.Status500InternalServerError)]
 	public async Task<ActionResult<StandardResult>> DeleteAsync([FromRoute] Guid id)
 	{
+		// Get the correlation identifier
+		var correlationId = this.HttpContext.GetCorrelationId();
+
 		// Build and execute the command
 		var command = new DeleteBookCommand
 		{
 			BookId = id,
-			CorrelationId = Guid.NewGuid(),
-			IdempotencyId = Guid.NewGuid(),
+			CorrelationId = correlationId,
 			UserId = this.HttpContext.GetUserId()
 		};
 		var commandResult = await this.MessageBus.RequestResponseViaBusAsync<DeleteBookCommand, DeleteBookCommandResult>(command, this.HttpContext.RequestAborted);
@@ -181,6 +190,9 @@ public sealed class BookController : EntityController
 	[ProducesResponseType<StandardResult<BookDetailContract>>(StatusCodes.Status500InternalServerError)]
 	public async Task<ActionResult<StandardResult<BookDetailContract>>> GetAsync([FromRoute] Guid id)
 	{
+		// Get the correlation identifier
+		var correlationId = this.HttpContext.GetCorrelationId();
+
 		// Try to get the book from the cache
 		var cachedBookContract = await this.Cache.TryGetAsync<BookDetailContract>(CacheEntries.GetBookCacheKey(id));
 
@@ -194,7 +206,7 @@ public sealed class BookController : EntityController
 		var query = new GetBookQuery
 		{
 			BookId = id,
-			CorrelationId = Guid.NewGuid(),
+			CorrelationId = correlationId,
 			UserId = this.HttpContext.GetUserId()
 		};
 		var queryResult = await this.MessageBus.RequestResponseViaBusAsync<GetBookQuery, GetBookQueryResult>(query, this.HttpContext.RequestAborted);
@@ -220,11 +232,14 @@ public sealed class BookController : EntityController
 	[ProducesResponseType<StandardResult<Page<BookSummaryContract>>>(StatusCodes.Status500InternalServerError)]
 	public async Task<ActionResult<StandardResult<Page<BookSummaryContract>>>> GetAsync([FromQuery] BookFilterContract filter)
 	{
+		// Get the correlation identifier
+		var correlationId = this.HttpContext.GetCorrelationId();
+
 		// Build and execute the query
 		var query = new GetBooksQuery
 		{
 			BookFilterContract = filter,
-			CorrelationId = Guid.NewGuid(),
+			CorrelationId = correlationId,
 			UserId = this.HttpContext.GetUserId()
 		};
 		var queryResult = await this.MessageBus.RequestResponseViaBusAsync<GetBooksQuery, GetBooksQueryResult>(query, this.HttpContext.RequestAborted);

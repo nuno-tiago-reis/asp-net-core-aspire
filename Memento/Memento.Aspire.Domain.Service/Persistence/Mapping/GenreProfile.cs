@@ -3,7 +3,7 @@
 using AutoMapper;
 using Memento.Aspire.Domain.Service.Contracts.Genre;
 using Memento.Aspire.Domain.Service.Persistence.Entities.Genre;
-using Memento.Aspire.Shared.Binding;
+using Memento.Aspire.Shared.Api;
 
 /// <summary>
 /// Implements the 'Genre' profile.

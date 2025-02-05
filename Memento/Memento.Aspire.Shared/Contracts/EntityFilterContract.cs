@@ -1,6 +1,6 @@
 ﻿namespace Memento.Aspire.Shared.Contracts;
 
-using Memento.Aspire.Shared.Binding;
+using Memento.Aspire.Shared.Api;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 

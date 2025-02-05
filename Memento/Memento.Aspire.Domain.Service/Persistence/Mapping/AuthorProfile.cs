@@ -3,7 +3,7 @@
 using AutoMapper;
 using Memento.Aspire.Domain.Service.Contracts.Author;
 using Memento.Aspire.Domain.Service.Persistence.Entities.Author;
-using Memento.Aspire.Shared.Binding;
+using Memento.Aspire.Shared.Api;
 
 /// <summary>
 /// Implements the 'Author' profile.

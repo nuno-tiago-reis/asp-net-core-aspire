@@ -57,13 +57,13 @@ public sealed class Cache : ICache
 
 	#region [Methods]
 	/// <summary>
-	/// Sets a Value with the given key.
+	/// Sets a value with the given key.
 	/// The key has an absolute duration after which it will be deleted from the cache.
-	/// If the Value isn't accessed for the sliding duration it will be deleted from the cache.
+	/// If the value isn't accessed for the sliding duration it will be deleted from the cache.
 	/// </summary>
 	///
 	/// <param name="key">The key.</param>
-	/// <param name="value">The Value.</param>
+	/// <param name="value">The value .</param>
 	/// <param name="absoluteDuration">The absolute duration.</param>
 	/// <param name="slidingDuration">The sliding duration.</param>
 	/// <param name="cancellationToken">The cancellation token.</param>
@@ -84,14 +84,14 @@ public sealed class Cache : ICache
 	}
 
 	/// <summary>
-	/// Sets a Value with the given key.
+	/// Sets a value with the given key.
 	/// The key has an absolute duration after which it will be deleted from the cache.
-	/// If the Value isn't accessed for the sliding duration it will be deleted from the cache.
+	/// If the value isn't accessed for the sliding duration it will be deleted from the cache.
 	/// Will not throw an exception if any error occurs.
 	/// </summary>
 	///
 	/// <param name="key">The key.</param>
-	/// <param name="value">The Value.</param>
+	/// <param name="value">The value.</param>
 	/// <param name="absoluteDuration">The absolute duration.</param>
 	/// <param name="slidingDuration">The sliding duration.</param>
 	/// <param name="cancellationToken">The cancellation token.</param>
@@ -108,7 +108,7 @@ public sealed class Cache : ICache
 	}
 
 	/// <summary>
-	/// Gets a Value with the given key.
+	/// Gets a value with the given key.
 	/// </summary>
 	///
 	/// <param name="key">The key.</param>
@@ -123,7 +123,7 @@ public sealed class Cache : ICache
 	}
 
 	/// <summary>
-	/// Gets a Value with the given key.
+	/// Gets a value with the given key.
 	/// Will not throw an exception if any error occurs.
 	/// </summary>
 	///
@@ -144,7 +144,7 @@ public sealed class Cache : ICache
 	}
 
 	/// <summary>
-	/// Removes a Value with the given key.
+	/// Removes a value with the given key.
 	/// </summary>
 	///
 	/// <param name="key">The key.</param>
@@ -155,7 +155,7 @@ public sealed class Cache : ICache
 	}
 
 	/// <summary>
-	/// Removes a Value with the given key.
+	/// Removes a value with the given key.
 	/// Will not throw an exception if any error occurs.
 	/// </summary>
 	///

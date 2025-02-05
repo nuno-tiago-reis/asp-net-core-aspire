@@ -76,7 +76,6 @@ public sealed class CreateBookCommandHandler : CommandHandler<CreateBookCommand,
 		return new CreateBookCommandResult
 		{
 			CorrelationId = command.CorrelationId,
-			IdempotencyId = command.IdempotencyId,
 			UserId = command.UserId,
 			Success = true,
 			Exception = null,
@@ -91,7 +90,6 @@ public sealed class CreateBookCommandHandler : CommandHandler<CreateBookCommand,
 		return Task.FromResult(new CreateBookCommandResult
 		{
 			CorrelationId = command.CorrelationId,
-			IdempotencyId = command.IdempotencyId,
 			UserId = command.UserId,
 			Success = false,
 			Exception = exception,

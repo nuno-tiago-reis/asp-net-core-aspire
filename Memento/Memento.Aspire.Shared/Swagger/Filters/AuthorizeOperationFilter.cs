@@ -31,14 +31,10 @@ public sealed class AuthorizeOperationFilter : IOperationFilter
 	#endregion
 
 	#region [Methods]
-	/// <summary>
-	/// Applies the this filter on swagger documentation generation.
-	/// </summary>
-	/// <param name="operation"></param>
-	/// <param name="context"></param>
+	/// <inheritdoc />
 	public void Apply(OpenApiOperation operation, OperationFilterContext context)
 	{
-		// Check if the controller/method/handler has the operation attribute
+		// Check if the controller/method/handler has the authorize attribute
 		var hasAuthorizeAttribute = context.ApiDescription.ActionDescriptor.EndpointMetadata.Any((metadata) => metadata is AuthorizeAttribute);
 		var hasAllowAnonymousAttribute = context.ApiDescription.ActionDescriptor.EndpointMetadata.Any((metadata) => metadata is AllowAnonymousAttribute);
 
@@ -57,7 +53,6 @@ public sealed class AuthorizeOperationFilter : IOperationFilter
 					Links = response.Links,
 					Reference = response.Reference,
 					UnresolvedReference = response.UnresolvedReference
-
 				};
 
 				operation.Responses.TryAdd("401", unauthorizedResponse);

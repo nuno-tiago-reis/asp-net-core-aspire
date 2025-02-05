@@ -1,6 +1,6 @@
 ﻿namespace Memento.Aspire.Shared.Swagger.Filters;
 
-using Memento.Aspire.Shared.Binding;
+using Memento.Aspire.Shared.Api;
 using Memento.Aspire.Shared.Extensions;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;

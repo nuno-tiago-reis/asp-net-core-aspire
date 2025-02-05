@@ -91,6 +91,9 @@ public abstract class EntityRepository<TEntity, TEntityFilter, TEntityOrderBy, T
 		// Detach the entity before returning it
 		this.Context.Entry(entity).State = EntityState.Detached;
 
+		// Ensure the navigation properties are included
+		entity = await this.GetAsync(entity.Id, cancellationToken);
+
 		return entity;
 	}
 
@@ -123,6 +126,9 @@ public abstract class EntityRepository<TEntity, TEntityFilter, TEntityOrderBy, T
 		// Detach the entity before returning it
 		this.Context.Entry(entity).State = EntityState.Detached;
 
+		// Ensure the navigation properties are included
+		entity = await this.GetAsync(entity.Id, cancellationToken);
+
 		return entity;
 	}
 
@@ -135,10 +141,10 @@ public abstract class EntityRepository<TEntity, TEntityFilter, TEntityOrderBy, T
 	public virtual async Task DeleteAsync(Guid entityId, CancellationToken cancellationToken = default)
 	{
 		// Check if the entity exists
-		var databaseEntity = await this.TryGetEntityAsync(entityId, cancellationToken);
+		var entity = await this.TryGetEntityAsync(entityId, cancellationToken);
 
 		// Delete the entity
-		this.Entities.Remove(databaseEntity);
+		this.Entities.Remove(entity);
 		// Save the changes
 		await this.Context.SaveChangesAsync(cancellationToken);
 	}
@@ -155,12 +161,12 @@ public abstract class EntityRepository<TEntity, TEntityFilter, TEntityOrderBy, T
 		var _ = await this.TryGetEntityAsync(entityId, cancellationToken);
 
 		// Get the entity
-		var databaseEntity = await this.GetEntityDetailQueryable().FirstAsync((entity) => entity.Id == entityId, cancellationToken);
+		var entity = await this.GetEntityDetailQueryable().FirstAsync((entity) => entity.Id == entityId, cancellationToken);
 
 		// Detach the entity before returning it
-		this.Context.Entry(databaseEntity).State = EntityState.Detached;
+		this.Context.Entry(entity).State = EntityState.Detached;
 
-		return databaseEntity;
+		return entity;
 	}
 
 	/// <summary>

@@ -7,7 +7,6 @@ using Memento.Aspire.Domain.Service.Messaging.Author.Commands;
 using Memento.Aspire.Domain.Service.Messaging.Author.Queries;
 using Memento.Aspire.Shared.Api;
 using Memento.Aspire.Shared.Cache;
-using Memento.Aspire.Shared.Contracts;
 using Memento.Aspire.Shared.Extensions;
 using Memento.Aspire.Shared.Localization;
 using Memento.Aspire.Shared.Messaging;
@@ -22,6 +21,7 @@ using Microsoft.AspNetCore.Mvc;
 /// <seealso cref="EntityController" />
 [ApiController]
 [Authorize]
+[Correlate]
 [Route("/api/controllers/[controller]")]
 public sealed class AuthorController : EntityController
 {
@@ -60,11 +60,15 @@ public sealed class AuthorController : EntityController
 	///
 	/// <param name="contract">The contract.</param>
 	[HttpPost]
+	[Idempotent]
 	[ProducesResponseType<StandardResult<AuthorDetailContract>>(StatusCodes.Status201Created)]
 	[ProducesResponseType<StandardResult<AuthorDetailContract>>(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType<StandardResult<AuthorDetailContract>>(StatusCodes.Status500InternalServerError)]
 	public async Task<ActionResult<StandardResult<AuthorDetailContract>>> CreateAsync([FromBody] AuthorFormContract contract)
 	{
+		// Get the correlation identifier
+		var correlationId = this.HttpContext.GetCorrelationId();
+
 		// Validate the parameters
 		var validator = this.HttpContext.RequestServices.GetService<IValidator<AuthorFormContract>>()!;
 		var validationResult = await validator.ValidateAsync(contract);
@@ -78,8 +82,7 @@ public sealed class AuthorController : EntityController
 		var command = new CreateAuthorCommand
 		{
 			AuthorContract = contract,
-			CorrelationId = Guid.NewGuid(),
-			IdempotencyId = Guid.NewGuid(),
+			CorrelationId = correlationId,
 			UserId = this.HttpContext.GetUserId()
 		};
 		var commandResult = await this.MessageBus.RequestResponseViaBusAsync<CreateAuthorCommand, CreateAuthorCommandResult>(command, this.HttpContext.RequestAborted);
@@ -101,12 +104,16 @@ public sealed class AuthorController : EntityController
 	/// <param name="id">The identifier.</param>
 	/// <param name="contract">The contract.</param>
 	[HttpPut("{id:Guid}")]
+	[Idempotent]
 	[ProducesResponseType<StandardResult>(StatusCodes.Status200OK)]
 	[ProducesResponseType<StandardResult>(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType<StandardResult>(StatusCodes.Status404NotFound)]
 	[ProducesResponseType<StandardResult>(StatusCodes.Status500InternalServerError)]
 	public async Task<ActionResult<StandardResult>> UpdateAsync([FromRoute] Guid id, [FromBody] AuthorFormContract contract)
 	{
+		// Get the correlation identifier
+		var correlationId = this.HttpContext.GetCorrelationId();
+
 		// Validate the parameters
 		var validator = this.HttpContext.RequestServices.GetService<IValidator<AuthorFormContract>>()!;
 		var validationResult = await validator.ValidateAsync(contract);
@@ -121,8 +128,7 @@ public sealed class AuthorController : EntityController
 		{
 			AuthorId = id,
 			AuthorContract = contract,
-			CorrelationId = Guid.NewGuid(),
-			IdempotencyId = Guid.NewGuid(),
+			CorrelationId = correlationId,
 			UserId = this.HttpContext.GetUserId()
 		};
 		var commandResult = await this.MessageBus.RequestResponseViaBusAsync<UpdateAuthorCommand, UpdateAuthorCommandResult>(command, this.HttpContext.RequestAborted);
@@ -143,18 +149,21 @@ public sealed class AuthorController : EntityController
 	///
 	/// <param name="id">The identifier.</param>
 	[HttpDelete("{id:Guid}")]
+	[Idempotent]
 	[ProducesResponseType<StandardResult>(StatusCodes.Status200OK)]
 	[ProducesResponseType<StandardResult>(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType<StandardResult>(StatusCodes.Status404NotFound)]
 	[ProducesResponseType<StandardResult>(StatusCodes.Status500InternalServerError)]
 	public async Task<ActionResult<StandardResult>> DeleteAsync([FromRoute] Guid id)
 	{
+		// Get the correlation identifier
+		var correlationId = this.HttpContext.GetCorrelationId();
+
 		// Build and execute the command
 		var command = new DeleteAuthorCommand
 		{
 			AuthorId = id,
-			CorrelationId = Guid.NewGuid(),
-			IdempotencyId = Guid.NewGuid(),
+			CorrelationId = correlationId,
 			UserId = this.HttpContext.GetUserId()
 		};
 		var commandResult = await this.MessageBus.RequestResponseViaBusAsync<DeleteAuthorCommand, DeleteAuthorCommandResult>(command, this.HttpContext.RequestAborted);
@@ -181,6 +190,9 @@ public sealed class AuthorController : EntityController
 	[ProducesResponseType<StandardResult<AuthorDetailContract>>(StatusCodes.Status500InternalServerError)]
 	public async Task<ActionResult<StandardResult<AuthorDetailContract>>> GetAsync([FromRoute] Guid id)
 	{
+		// Get the correlation identifier
+		var correlationId = this.HttpContext.GetCorrelationId();
+
 		// Try to get the author from the cache
 		var cachedAuthorContract = await this.Cache.TryGetAsync<AuthorDetailContract>(CacheEntries.GetAuthorCacheKey(id));
 
@@ -194,7 +206,7 @@ public sealed class AuthorController : EntityController
 		var query = new GetAuthorQuery
 		{
 			AuthorId = id,
-			CorrelationId = Guid.NewGuid(),
+			CorrelationId = correlationId,
 			UserId = this.HttpContext.GetUserId()
 		};
 		var queryResult = await this.MessageBus.RequestResponseViaBusAsync<GetAuthorQuery, GetAuthorQueryResult>(query, this.HttpContext.RequestAborted);
@@ -220,11 +232,14 @@ public sealed class AuthorController : EntityController
 	[ProducesResponseType<StandardResult<Page<AuthorSummaryContract>>>(StatusCodes.Status500InternalServerError)]
 	public async Task<ActionResult<StandardResult<Page<AuthorSummaryContract>>>> GetAsync([FromQuery] AuthorFilterContract filter)
 	{
+		// Get the correlation identifier
+		var correlationId = this.HttpContext.GetCorrelationId();
+
 		// Build and execute the query
 		var query = new GetAuthorsQuery
 		{
 			AuthorFilterContract = filter,
-			CorrelationId = Guid.NewGuid(),
+			CorrelationId = correlationId,
 			UserId = this.HttpContext.GetUserId()
 		};
 		var queryResult = await this.MessageBus.RequestResponseViaBusAsync<GetAuthorsQuery, GetAuthorsQueryResult>(query, this.HttpContext.RequestAborted);

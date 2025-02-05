@@ -63,7 +63,6 @@ public sealed class DeleteAuthorCommandHandler : CommandHandler<DeleteAuthorComm
 		return new DeleteAuthorCommandResult
 		{
 			CorrelationId = command.CorrelationId,
-			IdempotencyId = command.IdempotencyId,
 			UserId = command.UserId,
 			Success = true,
 			Exception = null
@@ -77,7 +76,6 @@ public sealed class DeleteAuthorCommandHandler : CommandHandler<DeleteAuthorComm
 		return Task.FromResult(new DeleteAuthorCommandResult
 		{
 			CorrelationId = command.CorrelationId,
-			IdempotencyId = command.IdempotencyId,
 			UserId = command.UserId,
 			Success = false,
 			Exception = exception

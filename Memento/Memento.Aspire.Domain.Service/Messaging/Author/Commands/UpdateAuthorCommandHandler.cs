@@ -77,7 +77,6 @@ public sealed class UpdateAuthorCommandHandler : CommandHandler<UpdateAuthorComm
 		return new UpdateAuthorCommandResult
 		{
 			CorrelationId = command.CorrelationId,
-			IdempotencyId = command.IdempotencyId,
 			UserId = command.UserId,
 			Success = true,
 			Exception = null,
@@ -92,7 +91,6 @@ public sealed class UpdateAuthorCommandHandler : CommandHandler<UpdateAuthorComm
 		return Task.FromResult(new UpdateAuthorCommandResult
 		{
 			CorrelationId = command.CorrelationId,
-			IdempotencyId = command.IdempotencyId,
 			UserId = command.UserId,
 			Success = false,
 			Exception = exception,

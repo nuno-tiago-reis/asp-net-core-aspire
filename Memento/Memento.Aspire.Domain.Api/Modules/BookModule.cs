@@ -7,7 +7,6 @@ using Memento.Aspire.Domain.Service.Messaging.Book.Commands;
 using Memento.Aspire.Domain.Service.Messaging.Book.Queries;
 using Memento.Aspire.Shared.Api;
 using Memento.Aspire.Shared.Cache;
-using Memento.Aspire.Shared.Contracts;
 using Memento.Aspire.Shared.Extensions;
 using Memento.Aspire.Shared.Messaging;
 using Memento.Aspire.Shared.Pagination;
@@ -48,8 +47,10 @@ public sealed class BookModule : EntityModule
 			.Produces<StandardResult<BookDetailContract>>(StatusCodes.Status201Created)
 			.Produces<StandardResult<BookDetailContract>>(StatusCodes.Status400BadRequest)
 			.Produces<StandardResult<BookDetailContract>>(StatusCodes.Status500InternalServerError)
-			.RequireCors()
 			.RequireAuthorization()
+			.RequireCorrelation()
+			.RequireCors()
+			.RequireIdempotency()
 			.WithOpenApi();
 
 		builder
@@ -57,8 +58,10 @@ public sealed class BookModule : EntityModule
 			.Produces<StandardResult>(StatusCodes.Status200OK)
 			.Produces<StandardResult>(StatusCodes.Status400BadRequest)
 			.Produces<StandardResult>(StatusCodes.Status500InternalServerError)
-			.RequireCors()
 			.RequireAuthorization()
+			.RequireCorrelation()
+			.RequireCors()
+			.RequireIdempotency()
 			.WithOpenApi();
 
 		builder
@@ -66,8 +69,10 @@ public sealed class BookModule : EntityModule
 			.Produces<StandardResult>(StatusCodes.Status200OK)
 			.Produces<StandardResult>(StatusCodes.Status400BadRequest)
 			.Produces<StandardResult>(StatusCodes.Status500InternalServerError)
-			.RequireCors()
 			.RequireAuthorization()
+			.RequireCorrelation()
+			.RequireCors()
+			.RequireIdempotency()
 			.WithOpenApi();
 
 		builder
@@ -75,8 +80,9 @@ public sealed class BookModule : EntityModule
 			.Produces<StandardResult<BookDetailContract>>(StatusCodes.Status200OK)
 			.Produces<StandardResult<BookDetailContract>>(StatusCodes.Status400BadRequest)
 			.Produces<StandardResult<BookDetailContract>>(StatusCodes.Status500InternalServerError)
-			.RequireCors()
 			.RequireAuthorization()
+			.RequireCorrelation()
+			.RequireCors()
 			.WithOpenApi();
 
 		builder
@@ -84,8 +90,9 @@ public sealed class BookModule : EntityModule
 			.Produces<StandardResult<Page<BookSummaryContract>>>(StatusCodes.Status200OK)
 			.Produces<StandardResult<Page<BookSummaryContract>>>(StatusCodes.Status400BadRequest)
 			.Produces<StandardResult<Page<BookSummaryContract>>>(StatusCodes.Status500InternalServerError)
-			.RequireCors()
 			.RequireAuthorization()
+			.RequireCorrelation()
+			.RequireCors()
 			.WithOpenApi();
 	}
 	#endregion
@@ -103,6 +110,9 @@ public sealed class BookModule : EntityModule
 		var messageBus = httpContext.RequestServices.GetService<IMessageBus>()!;
 		var cancellationToken = httpContext.RequestAborted;
 
+		// Get the correlation identifier
+		var correlationId = httpContext.GetCorrelationId();
+
 		// Validate the parameters
 		var validator = httpContext.RequestServices.GetService<IValidator<BookFormContract>>()!;
 		var validationResult = await validator.ValidateAsync(contract);
@@ -116,8 +126,7 @@ public sealed class BookModule : EntityModule
 		var command = new CreateBookCommand
 		{
 			BookContract = contract,
-			CorrelationId = Guid.NewGuid(),
-			IdempotencyId = Guid.NewGuid(),
+			CorrelationId = correlationId,
 			UserId = httpContext.GetUserId()
 		};
 		var commandResult = await messageBus.RequestResponseViaBusAsync<CreateBookCommand, CreateBookCommandResult>(command, cancellationToken);
@@ -145,6 +154,9 @@ public sealed class BookModule : EntityModule
 		var messageBus = httpContext.RequestServices.GetService<IMessageBus>()!;
 		var cancellationToken = httpContext.RequestAborted;
 
+		// Get the correlation identifier
+		var correlationId = httpContext.GetCorrelationId();
+
 		// Validate the parameters
 		var validator = httpContext.RequestServices.GetService<IValidator<BookFormContract>>()!;
 		var validationResult = await validator.ValidateAsync(contract);
@@ -159,8 +171,7 @@ public sealed class BookModule : EntityModule
 		{
 			BookId = id,
 			BookContract = contract,
-			CorrelationId = Guid.NewGuid(),
-			IdempotencyId = Guid.NewGuid(),
+			CorrelationId = correlationId,
 			UserId = httpContext.GetUserId()
 		};
 		var commandResult = await messageBus.RequestResponseViaBusAsync<UpdateBookCommand, UpdateBookCommandResult>(command, cancellationToken);
@@ -187,12 +198,14 @@ public sealed class BookModule : EntityModule
 		var messageBus = httpContext.RequestServices.GetService<IMessageBus>()!;
 		var cancellationToken = httpContext.RequestAborted;
 
+		// Get the correlation identifier
+		var correlationId = httpContext.GetCorrelationId();
+
 		// Build and execute the command
 		var command = new DeleteBookCommand
 		{
 			BookId = id,
-			CorrelationId = Guid.NewGuid(),
-			IdempotencyId = Guid.NewGuid(),
+			CorrelationId = correlationId,
 			UserId = httpContext.GetUserId()
 		};
 		var commandResult = await messageBus.RequestResponseViaBusAsync<DeleteBookCommand, DeleteBookCommandResult>(command, cancellationToken);
@@ -220,6 +233,9 @@ public sealed class BookModule : EntityModule
 		var messageBus = httpContext.RequestServices.GetService<IMessageBus>()!;
 		var cancellationToken = httpContext.RequestAborted;
 
+		// Get the correlation identifier
+		var correlationId = httpContext.GetCorrelationId();
+
 		// Try to get the book from the cache
 		var cachedBookContract = await cache.TryGetAsync<BookDetailContract>(CacheEntries.GetBookCacheKey(id));
 
@@ -233,7 +249,7 @@ public sealed class BookModule : EntityModule
 		var query = new GetBookQuery
 		{
 			BookId = id,
-			CorrelationId = Guid.NewGuid(),
+			CorrelationId = correlationId,
 			UserId = httpContext.GetUserId()
 		};
 		var queryResult = await messageBus.RequestResponseViaBusAsync<GetBookQuery, GetBookQueryResult>(query, cancellationToken);
@@ -260,11 +276,14 @@ public sealed class BookModule : EntityModule
 		var messageBus = httpContext.RequestServices.GetService<IMessageBus>()!;
 		var cancellationToken = httpContext.RequestAborted;
 
+		// Get the correlation identifier
+		var correlationId = httpContext.GetCorrelationId();
+
 		// Build and execute the query
 		var query = new GetBooksQuery
 		{
 			BookFilterContract = filter,
-			CorrelationId = Guid.NewGuid(),
+			CorrelationId = correlationId,
 			UserId = httpContext.GetUserId()
 		};
 		var queryResult = await messageBus.RequestResponseViaBusAsync<GetBooksQuery, GetBooksQueryResult>(query, cancellationToken);
