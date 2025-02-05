@@ -56,7 +56,7 @@ public sealed class UnhandledExceptionHandler : IExceptionHandler
 		// Log the original error
 		this.Logger.LogError("Unhandled Exception: {Message} {Exception}", exception.Message, exception);
 
-		// Create a standardised error
+		// Create the standardised error
 		var result = new StandardResult
 		{
 			Success = false,

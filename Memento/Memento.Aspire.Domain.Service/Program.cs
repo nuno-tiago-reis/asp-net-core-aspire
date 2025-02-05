@@ -43,22 +43,18 @@ internal sealed class Program
 		builder.Services
 			.Configure<HttpJsonOptions>((options) =>
 			{
-				// configure the default options
 				options.SerializerOptions.ConfigureDefaultOptions();
 			});
 		builder.Services
 			.Configure<MvcJsonOptions>((options) =>
 			{
-				// configure the default options
 				options.JsonSerializerOptions.ConfigureDefaultOptions();
 			});
 		builder.Services
 			.Configure<RouteOptions>((options) =>
 			{
-				// transform the routing tokens by converting them to lower case
-				options.LowercaseUrls = true;
-				// don't append a trailing slash
 				options.AppendTrailingSlash = false;
+				options.LowercaseUrls = true;
 			});
 
 		// Builder (EntityFramework)
