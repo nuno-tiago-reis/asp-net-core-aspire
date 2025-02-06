@@ -8,40 +8,44 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="AutoMapper" Version="13.0.1" />
-		<PackageReference Include="Carter" Version="9.0.0" />
-		<PackageReference Include="FluentValidation" Version="11.11.0" />
-		<PackageReference Include="MassTransit" Version="8.3.4" />
-		<PackageReference Include="MassTransit.RabbitMQ" Version="8.3.4" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.1" />
-		<PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.3.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.3.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Localization" Version="2.3.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.Localization" Version="2.3.0" />
-		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.1" />
-		<PackageReference Include="Microsoft.CodeAnalysis.Features" Version="4.11.0" />
-		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Features" Version="4.11.0" />
-		<PackageReference Include="Microsoft.CodeAnalysis.Scripting.Common" Version="4.11.0" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.1" />
-		<PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="9.0.1" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.1" />
-		<PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="9.0.1" />
-		<PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.1" />
-		<PackageReference Include="Microsoft.Extensions.Primitives" Version="9.0.1" />
-		<PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="8.3.1" />
-		<PackageReference Include="Serilog" Version="4.2.0" />
-		<PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
-		<PackageReference Include="Serilog.Enrichers.ClientInfo" Version="2.1.2" />
-		<PackageReference Include="Serilog.Extensions.Hosting" Version="9.0.0" />
-		<PackageReference Include="Serilog.Extensions.Logging" Version="9.0.0" />
-		<PackageReference Include="Serilog.Settings.Configuration" Version="9.0.0" />
-		<PackageReference Include="Serilog.Sinks.Async" Version="2.1.0" />
-		<PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
-		<PackageReference Include="Serilog.Sinks.Seq" Version="9.0.0" />
-		<PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
+		<PackageReference Include="AutoMapper" />
+		<PackageReference Include="Carter" />
+		<PackageReference Include="FluentValidation" />
+		<PackageReference Include="MassTransit" />
+		<PackageReference Include="MassTransit.RabbitMQ" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+		<PackageReference Include="Microsoft.AspNetCore.Hosting" />
+		<PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" />
+		<PackageReference Include="Microsoft.AspNetCore.Localization" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Core" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Localization" />
+		<PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
+		<PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+		<PackageReference Include="Microsoft.Extensions.Localization.Abstractions" />
+		<PackageReference Include="Microsoft.Extensions.Logging" />
+		<PackageReference Include="Microsoft.Extensions.Primitives" />
+		<PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" />
+		<PackageReference Include="Serilog" />
+		<PackageReference Include="Serilog.AspNetCore" />
+		<PackageReference Include="Serilog.Enrichers.ClientInfo" />
+		<PackageReference Include="Serilog.Extensions.Hosting" />
+		<PackageReference Include="Serilog.Extensions.Logging" />
+		<PackageReference Include="Serilog.Settings.Configuration" />
+		<PackageReference Include="Serilog.Sinks.Async" />
+		<PackageReference Include="Serilog.Sinks.Console" />
+		<PackageReference Include="Serilog.Sinks.Seq" />
+		<PackageReference Include="Swashbuckle.AspNetCore" />
+
+		<!-- Temporary to get around https://github.com/dotnet/efcore/issues/35143 -->
+		<PackageReference Include="Microsoft.CodeAnalysis.Common" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" />
+		<PackageReference Include="Microsoft.CodeAnalysis.Workspaces.Common" />
+		<PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" />
 	</ItemGroup>
 
 	<ItemGroup>

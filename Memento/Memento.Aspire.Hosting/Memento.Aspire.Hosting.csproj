@@ -9,6 +9,7 @@
 		<OutputType>Exe</OutputType>
 		<IsAspireHost>true</IsAspireHost>
 		<UserSecretsId>735d065b-938b-4d7c-a974-dc3405717ee6</UserSecretsId>
+		<ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
 	</PropertyGroup>
 
 	<ItemGroup>
