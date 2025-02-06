@@ -65,7 +65,6 @@ public static class SwaggerExtensions
 			// Schema Filters
 			swashbuckleOptions.SchemaFilter<FluentValidationSchemaFilter>();
 			swashbuckleOptions.SchemaFilter<NotNullableWhenRequiredSchemaFilter>();
-			swashbuckleOptions.SchemaFilter<ParameterBinderSchemaFilter>();
 		});
 
 		return services;
@@ -297,7 +296,7 @@ public static class SwaggerExtensions
 	{
 		var assemblies = AppDomain.CurrentDomain
 			.GetAssemblies()
-			.Where(assembly => assembly.GetTypes().Any(type => type.FullName?.StartsWith(nameof(Memento)) == true))
+			.Where(assembly => assembly.GetTypes().Any(type => type.FullName?.StartsWith(nameof(Memento), StringComparison.OrdinalIgnoreCase) == true))
 			.ToArray();
 
 		return assemblies;
@@ -310,7 +309,7 @@ public static class SwaggerExtensions
 	{
 		var assemblyDocumentationFiles = AppDomain.CurrentDomain
 			.GetAssemblies()
-			.Where(assembly => assembly.GetTypes().Any(type => type.FullName?.StartsWith(nameof(Memento)) == true))
+			.Where(assembly => assembly.GetTypes().Any(type => type.FullName?.StartsWith(nameof(Memento), StringComparison.OrdinalIgnoreCase) == true))
 			.Where(assembly => File.Exists(assembly.Location.Replace("dll", "xml")))
 			.Select(assembly => assembly.Location.Replace("dll", "xml"))
 			.ToArray();

@@ -17,7 +17,7 @@ public abstract class MessageHandler<TMessage, TMessageResult> : IConsumer<TMess
 	/// <summary>
 	/// The logger.
 	/// </summary>
-	protected readonly ILogger Logger;
+	protected ILogger Logger { get; init; }
 	#endregion
 
 	#region [Constructors]

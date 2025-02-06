@@ -22,12 +22,12 @@ public abstract class EntityController : ControllerBase
 	/// <summary>
 	/// The localizer.
 	/// </summary>
-	protected readonly ILocalizer Localizer;
+	protected ILocalizer Localizer { get; init; }
 
 	/// <summary>
 	/// The logger.
 	/// </summary>
-	protected readonly ILogger Logger;
+	protected ILogger Logger { get; init; }
 	#endregion
 
 	#region [Constructors]

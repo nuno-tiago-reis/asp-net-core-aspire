@@ -27,11 +27,11 @@ public sealed class PageJsonConverterFactory : JsonConverterFactory
 	}
 
 	/// <inheritdoc />
-	public override JsonConverter CreateConverter(Type type, JsonSerializerOptions options)
+	public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
 	{
 		const BindingFlags converterFlags = BindingFlags.Instance | BindingFlags.Public;
 
-		var genericType = typeof(PageJsonConverter<>).MakeGenericType(type.GetGenericArguments()[0]);
+		var genericType = typeof(PageJsonConverter<>).MakeGenericType(typeToConvert.GetGenericArguments()[0]);
 
 		var converter = (JsonConverter)Activator.CreateInstance(genericType, converterFlags, null, [options], null)!;
 
@@ -43,17 +43,17 @@ public sealed class PageJsonConverterFactory : JsonConverterFactory
 	/// Implements the <see cref="Page{T}"/> json converter.
 	/// </summary>
 	///
-	/// <typeparam name="T">The type.</typeparam>
+	/// <typeparam name="T">The typeToConvert.</typeparam>
 	private sealed class PageJsonConverter<T> : JsonConverter<Page<T>>
 	{
 		#region [Properties]
 		/// <summary>
-		/// The type.
+		/// The typeToConvert.
 		/// </summary>
 		private readonly Type ConverterType;
 
 		/// <summary>
-		/// The type converter.
+		/// The typeToConvert converter.
 		/// </summary>
 		private readonly JsonConverter<IList<T>> Converter;
 		#endregion
@@ -70,7 +70,7 @@ public sealed class PageJsonConverterFactory : JsonConverterFactory
 			this.ConverterType = typeof(IList<T>);
 
 			// For performance, use the existing converter if available
-			this.Converter = (JsonConverter<IList<T>>)options.GetConverter(ConverterType);
+			this.Converter = (JsonConverter<IList<T>>)options.GetConverter(this.ConverterType);
 		}
 		#endregion
 
@@ -147,7 +147,7 @@ public sealed class PageJsonConverterFactory : JsonConverterFactory
 					if (this.Converter is not null)
 					{
 						reader.Read();
-						items.AddRange(this.Converter.Read(ref reader, ConverterType, options)!);
+						items.AddRange(this.Converter.Read(ref reader, this.ConverterType, options)!);
 					}
 					else
 					{
@@ -190,9 +190,10 @@ public sealed class PageJsonConverterFactory : JsonConverterFactory
 
 			// Items
 			writer.WritePropertyName(ConvertPropertyName(nameof(page.Items), options));
-			if (Converter is not null)
+
+			if (this.Converter is not null)
 			{
-				Converter.Write(writer, page.Items, options);
+				this.Converter.Write(writer, page.Items, options);
 			}
 			else
 			{

@@ -17,7 +17,10 @@ public sealed class StandardException : Exception
 	/// </summary>
 	public override string Message
 	{
-		get { return this.Messages.Aggregate((i, j) => i + Environment.NewLine + j); }
+		get
+		{
+			return this.Messages.Aggregate((i, j) => i + Environment.NewLine + j);
+		}
 	}
 
 	/// <Value>

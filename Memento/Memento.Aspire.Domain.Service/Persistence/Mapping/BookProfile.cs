@@ -3,7 +3,6 @@
 using AutoMapper;
 using Memento.Aspire.Domain.Service.Contracts.Book;
 using Memento.Aspire.Domain.Service.Persistence.Entities.Book;
-using Memento.Aspire.Shared.Api;
 
 /// <summary>
 /// Implements the 'Book' profile.
@@ -32,24 +31,6 @@ public sealed class BookProfile : Profile
 		this.CreateMap<BookFilterContract, BookFilter>();
 		// Filter => FilterContract
 		this.CreateMap<BookFilter, BookFilterContract>();
-
-		// EnumContract => Enum
-		this.CreateMap<Contracts.Book.BookOrderBy, Entities.Book.BookOrderBy>();
-		this.CreateMap<Contracts.Book.BookOrderDirection, Entities.Book.BookOrderDirection>();
-		// Enum => EnumContract
-		this.CreateMap<Entities.Book.BookOrderBy, Contracts.Book.BookOrderBy>();
-		this.CreateMap<Entities.Book.BookOrderDirection, Contracts.Book.BookOrderDirection>();
-
-		// EnumContract => Enum
-		this.CreateMap<ParameterBinder<Contracts.Book.BookOrderBy>, Entities.Book.BookOrderBy>()
-			.ConvertUsing<ParameterBinderAutoMapperConverter<Contracts.Book.BookOrderBy, Entities.Book.BookOrderBy>>();
-		this.CreateMap<ParameterBinder<Contracts.Book.BookOrderDirection>, Entities.Book.BookOrderDirection>()
-			.ConvertUsing<ParameterBinderAutoMapperConverter<Contracts.Book.BookOrderDirection, Entities.Book.BookOrderDirection>>();
-		// Enum => EnumContract
-		this.CreateMap<Entities.Book.BookOrderBy, ParameterBinder<Contracts.Book.BookOrderBy>>()
-			.ConvertUsing<ParameterBinderAutoMapperConverter<Entities.Book.BookOrderBy, Contracts.Book.BookOrderBy>>();
-		this.CreateMap<Entities.Book.BookOrderDirection, ParameterBinder<Contracts.Book.BookOrderDirection>>()
-			.ConvertUsing<ParameterBinderAutoMapperConverter<Entities.Book.BookOrderDirection, Contracts.Book.BookOrderDirection>>();
 	}
 	#endregion
 }

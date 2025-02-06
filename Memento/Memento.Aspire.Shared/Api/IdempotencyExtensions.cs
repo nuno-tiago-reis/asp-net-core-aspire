@@ -26,13 +26,13 @@ public static class IdempotencyExtensions
 	public static Guid GetIdempotencyId(this HttpContext httpContext)
 	{
 		// Check if the header name is valid
-		if (!httpContext.Request.Headers.TryGetValue(HeaderName, out StringValues headerValue))
+		if (!httpContext.Request.Headers.TryGetValue(HeaderName, out var headerValue))
 		{
 			throw new ArgumentException($"The {HeaderName} header is invalid.");
 		}
 
 		// Check if the header value is valid
-		if (!Guid.TryParse(headerValue, out Guid idempotencyId))
+		if (!Guid.TryParse(headerValue, out var idempotencyId))
 		{
 			throw new ArgumentException($"The {HeaderName} header is invalid.");
 		}
@@ -65,13 +65,13 @@ public static class IdempotencyExtensions
 		idempotencyId = null;
 
 		// Check if the header name is valid
-		if (!httpContext.Request.Headers.TryGetValue(HeaderName, out StringValues headerValue))
+		if (!httpContext.Request.Headers.TryGetValue(HeaderName, out var headerValue))
 		{
 			return false;
 		}
 
 		// Check if the header value is valid
-		if (!Guid.TryParse(headerValue, out Guid innerIdempotencyId))
+		if (!Guid.TryParse(headerValue, out var innerIdempotencyId))
 		{
 			return false;
 		}

@@ -22,7 +22,7 @@ public sealed class StandardExceptionJsonConverterFactory : JsonConverterFactory
 	}
 
 	/// <inheritdoc />
-	public override JsonConverter CreateConverter(Type type, JsonSerializerOptions options)
+	public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
 	{
 		var converter = new StandardExceptionJsonConverter();
 
@@ -34,7 +34,7 @@ public sealed class StandardExceptionJsonConverterFactory : JsonConverterFactory
 	/// Implements the <see cref="StandardException{T}"/> json converter.
 	/// </summary>
 	///
-	/// <typeparam name="T">The type.</typeparam>
+	/// <typeparam name="T">The typeToConvert.</typeparam>
 	private sealed class StandardExceptionJsonConverter : JsonConverter<StandardException>
 	{
 		#region [Methods] JsonConverter

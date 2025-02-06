@@ -1,5 +1,7 @@
 ﻿namespace Memento.Aspire.Domain.Api.Constants;
 
+using System.Text;
+
 /// <summary>
 /// Implements several utility methods for dealing with cache entries.
 /// </summary>
@@ -9,17 +11,17 @@ internal static class CacheEntries
 	/// <summary>
 	/// The template for the cache key for Author cache entries.
 	/// </summary>
-	private static readonly string Author = "Author:{0}";
+	private static readonly CompositeFormat Author = CompositeFormat.Parse("Author:{0}");
 
 	/// <summary>
 	/// The template for the cache key for Book cache entries.
 	/// </summary>
-	private static readonly string Book = "Book:{0}";
+	private static readonly CompositeFormat Book = CompositeFormat.Parse("Book:{0}");
 
 	/// <summary>
 	/// The template for the cache key for Genre cache entries.
 	/// </summary>
-	private static readonly string Genre = "Genre:{0}";
+	private static readonly CompositeFormat Genre = CompositeFormat.Parse("Genre:{0}");
 	#endregion
 
 	#region [Methods]
@@ -30,7 +32,7 @@ internal static class CacheEntries
 	/// <param name="authorId"></param>
 	public static string GetAuthorCacheKey(Guid authorId)
 	{
-		return string.Format(Author, authorId);
+		return string.Format(null, Author, authorId);
 	}
 
 	/// <summary>
@@ -40,7 +42,7 @@ internal static class CacheEntries
 	/// <param name="bookId"></param>
 	public static string GetBookCacheKey(Guid bookId)
 	{
-		return string.Format(Book, bookId);
+		return string.Format(null, Book, bookId);
 	}
 
 	/// <summary>
@@ -50,7 +52,7 @@ internal static class CacheEntries
 	/// <param name="genreId"></param>
 	public static string GetGenreCacheKey(Guid genreId)
 	{
-		return string.Format(Genre, genreId);
+		return string.Format(null, Genre, genreId);
 	}
 	#endregion
 }

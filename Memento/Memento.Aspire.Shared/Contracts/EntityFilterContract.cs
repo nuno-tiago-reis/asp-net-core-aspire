@@ -3,6 +3,7 @@
 using Memento.Aspire.Shared.Api;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
+using System.Globalization;
 
 /// <summary>
 /// Implements a generic entity filter contract.
@@ -12,24 +13,24 @@ using Microsoft.Extensions.Primitives;
 /// <typeparam name="TOrderBy">The entity filter order by type.</typeparam>
 /// <typeparam name="TOrderDirection">The entity filter order direction type.</typeparam>
 public abstract record EntityFilterContract<TOrderBy, TOrderDirection>
-	where TOrderBy : Enum
-	where TOrderDirection : Enum
+	where TOrderBy : struct, Enum
+	where TOrderDirection : struct, Enum
 {
 	#region [Constants]
 	/// <summary>
 	/// The maximum page size.
 	/// </summary>
-	public const int MAXIMUM_PAGE_SIZE = 50;
+	public const int MaximumPageSize = 50;
 
 	/// <summary>
 	/// The default page size.
 	/// </summary>
-	public const int DEFAULT_PAGE_SIZE = 10;
+	public const int DefaultPageSize = 10;
 
 	/// <summary>
 	/// The minimum page size.
 	/// </summary>
-	public const int MINIMUM_PAGE_SIZE = 1;
+	public const int MinimumPageSize = 1;
 	#endregion
 
 	#region [Attributes]
@@ -48,34 +49,42 @@ public abstract record EntityFilterContract<TOrderBy, TOrderDirection>
 	/// <summary>
 	/// Gets or sets the page number.
 	/// </summary>
-	[FromQuery]
 	public required int PageNumber
 	{
-		get { return this.InnerPageNumber; }
-		set { this.InnerPageNumber = Math.Max(value, 1); }
+		get
+		{
+			return this.InnerPageNumber;
+		}
+		set
+		{
+			this.InnerPageNumber = Math.Max(value, 1);
+		}
 	}
 
 	/// <summary>
 	/// Gets or sets the page size.
 	/// </summary>
-	[FromQuery]
 	public required int PageSize
 	{
-		get { return this.InnerPageSize; }
-		set { this.InnerPageSize = Math.Min(Math.Max(value, MINIMUM_PAGE_SIZE), MAXIMUM_PAGE_SIZE); }
+		get
+		{
+			return this.InnerPageSize;
+		}
+		set
+		{
+			this.InnerPageSize = Math.Min(Math.Max(value, MinimumPageSize), MaximumPageSize);
+		}
 	}
 
 	/// <summary>
 	/// Gets or sets the order by Value.
 	/// </summary>
-	[FromQuery]
-	public required ParameterBinder<TOrderBy> OrderBy { get; set; }
+	public required TOrderBy OrderBy { get; set; }
 
 	/// <summary>
 	/// Gets or sets the order direction Value.
 	/// </summary>
-	[FromQuery]
-	public required ParameterBinder<TOrderDirection> OrderDirection { get; set; }
+	public required TOrderDirection OrderDirection { get; set; }
 	#endregion
 
 	#region [Constructors]
@@ -85,7 +94,7 @@ public abstract record EntityFilterContract<TOrderBy, TOrderDirection>
 	protected EntityFilterContract()
 	{
 		this.PageNumber = 1;
-		this.PageSize = DEFAULT_PAGE_SIZE;
+		this.PageSize = DefaultPageSize;
 		this.OrderBy = default!;
 		this.OrderDirection = default!;
 	}
@@ -128,7 +137,6 @@ public abstract record EntityFilterContract<TOrderBy, TOrderDirection>
 	/// <param name="query">The query.</param>
 	protected abstract void ReadFilterFromQuery(Dictionary<string, StringValues> query);
 
-
 	/// <summary>
 	/// Reads the filters paging properties from a query string.
 	/// </summary>
@@ -165,18 +173,18 @@ public abstract record EntityFilterContract<TOrderBy, TOrderDirection>
 		// OrderBy
 		if (query.TryGetValue(nameof(this.OrderBy), out var orderByQuery))
 		{
-			if (ParameterBinder<TOrderBy>.TryParse(orderByQuery, out var orderBy))
+			if (Enum.TryParse<TOrderBy>(orderByQuery, out var orderBy))
 			{
-				this.OrderBy = orderBy;
+				this.OrderBy = orderBy!;
 			}
 		}
 
 		// OrderDirection
 		if (query.TryGetValue(nameof(this.OrderDirection), out var orderDirectionQuery))
 		{
-			if (ParameterBinder<TOrderDirection>.TryParse(orderDirectionQuery, out var orderDirection))
+			if (Enum.TryParse<TOrderDirection>(orderDirectionQuery, out var orderDirection))
 			{
-				this.OrderDirection = orderDirection;
+				this.OrderDirection = orderDirection!;
 			}
 		}
 	}
@@ -196,10 +204,10 @@ public abstract record EntityFilterContract<TOrderBy, TOrderDirection>
 	protected virtual void WritePagingToQuery(Dictionary<string, string> query)
 	{
 		// PageNumber
-		query.Add(nameof(this.PageNumber), this.PageNumber.ToString());
+		query.Add(nameof(this.PageNumber), this.PageNumber.ToString(CultureInfo.InvariantCulture));
 
 		// PageSize
-		query.Add(nameof(this.PageSize), this.PageSize.ToString());
+		query.Add(nameof(this.PageSize), this.PageSize.ToString(CultureInfo.InvariantCulture));
 	}
 
 	/// <summary>

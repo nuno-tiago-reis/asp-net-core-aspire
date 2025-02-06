@@ -15,38 +15,33 @@ public sealed record BookFilterContract : EntityFilterContract<BookOrderBy, Book
 {
 	#region [Properties]
 	/// <summary>
-	///  The name filter.
-	///  Only returns books matching this value.
+	/// The name filter.
+	/// Only returns books matching this value.
 	/// </summary>
-	[FromQuery]
 	public string? Name { get; set; }
 
 	/// <summary>
-	///  The released before filter.
-	///  Only returns authors with a birth date that is lesser or equal to this value.
+	/// The released before filter.
+	/// Only returns authors with a birth date that is lesser or equal to this value.
 	/// </summary>
-	[FromQuery]
 	public DateOnly? ReleasedBefore { get; set; }
 
 	/// <summary>
-	///  The released after filter.
-	///  Only returns authors with a birth date that is greater or equal to this value.
+	/// The released after filter.
+	/// Only returns authors with a birth date that is greater or equal to this value.
 	/// </summary>
-	[FromQuery]
 	public DateOnly? ReleasedAfter { get; set; }
 
 	/// <summary>
-	///  The author filter.
-	///  Only returns books matching this value (either by id or by name).
+	/// The author filter.
+	/// Only returns books matching this value (either by id or by name).
 	/// </summary>
-	[FromQuery]
 	public string? Author { get; set; }
 
 	/// <summary>
-	///  The genre filter.
-	///  Only returns books matching this value (either by id or by name).
+	/// The genre filter.
+	/// Only returns books matching this value (either by id or by name).
 	/// </summary>
-	[FromQuery]
 	public string? Genre { get; set; }
 	#endregion
 

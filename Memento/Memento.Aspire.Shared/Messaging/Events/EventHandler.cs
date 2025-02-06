@@ -15,7 +15,7 @@ public abstract class EventHandler<TEvent> : IConsumer<TEvent>
 	/// <summary>
 	/// The logger.
 	/// </summary>
-	protected readonly ILogger Logger;
+	protected ILogger Logger { get; init; }
 	#endregion
 
 	#region [Constructors]

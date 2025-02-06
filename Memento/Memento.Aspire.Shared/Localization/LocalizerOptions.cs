@@ -9,12 +9,12 @@ public sealed record LocalizerOptions
 	/// <summary>
 	/// The default culture (English).
 	/// </summary>
-	public static readonly string DEFAULT_CULTURE = "EN";
+	public static readonly string DefaultDefaulCulture = "EN";
 
 	/// <summary>
 	/// The default culture (English, Portuguese).
 	/// </summary>
-	public static readonly string[] SUPPORTED_CULTURES = [ "EN", "PT" ];
+	public static readonly string[] DefaultSupportedCultures = [ "EN", "PT" ];
 	#endregion
 
 	#region [Properties]

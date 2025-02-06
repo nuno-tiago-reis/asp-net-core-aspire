@@ -1,6 +1,7 @@
 ﻿namespace Memento.Aspire.Shared.Api;
 
 using Microsoft.AspNetCore.Routing;
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 /// <summary>
@@ -30,7 +31,7 @@ public sealed class SlashParameterTransformer : IOutboundParameterTransformer
 		{
 			if (regexToken.EndsWith('y') || regexToken.EndsWith('Y'))
 			{
-				parameter += $"{regexToken.Substring(0, regexToken.Length - 1)}ies/";
+				parameter += $"{regexToken[ ..^1 ]}ies/";
 			}
 			else
 			{
@@ -38,7 +39,7 @@ public sealed class SlashParameterTransformer : IOutboundParameterTransformer
 			}
 		}
 
-		return parameter.ToLower().TrimEnd('/');
+		return parameter.ToLower(CultureInfo.InvariantCulture).TrimEnd('/');
 	}
 	#endregion
 }

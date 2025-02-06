@@ -3,7 +3,7 @@
 using AutoMapper;
 
 /// <summary>
-/// Implements the <see cref="Page{T}"/> automapper converter.
+/// Implements the <see cref="Page{}"/> automapper converter.
 /// </summary>
 public sealed class PageAutoMapperConverter<TSource, TDestination> :
 	ITypeConverter<IPage<TSource>, IPage<TDestination>>,

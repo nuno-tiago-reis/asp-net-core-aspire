@@ -17,17 +17,17 @@ public sealed class CorrelateAttribute : Attribute, IAsyncActionFilter
 	/// Checks if a header is present with a valid CorrelationKey and sets a default value when it is not present.
 	/// </summary>
 	///
-	/// <param name="executingContext">The executing context.</param>
-	/// <param name="next">The next delegate.</param>
-	public async Task OnActionExecutionAsync(ActionExecutingContext executingContext, ActionExecutionDelegate next)
+	/// <param name="context">The context.</param>
+	/// <param name="next">The delegate.</param>
+	public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
 	{
 		// Get the dependencies
-		var logger = executingContext.HttpContext.RequestServices.GetService<ILogger<CorrelateAttribute>>()!;
+		var logger = context.HttpContext.RequestServices.GetService<ILogger<CorrelateAttribute>>()!;
 
 		// Check if the correlation id is valid
-		if (!executingContext.HttpContext.TryGetCorrelationId(out var _))
+		if (!context.HttpContext.TryGetCorrelationId(out var _))
 		{
-			HandleMissingHeader(executingContext, logger);
+			HandleMissingHeader(context, logger);
 		}
 
 		// Execute the request
@@ -38,15 +38,15 @@ public sealed class CorrelateAttribute : Attribute, IAsyncActionFilter
 	/// Generates a default correlation identifier header due to the header being missing.
 	/// </summary>
 	///
-	/// <param name="executingContext">The executing context.</param>
+	/// <param name="context">The context.</param>
 	/// <param name="logger">The logger.</param>
-	private static void HandleMissingHeader(ActionExecutingContext executingContext, ILogger logger)
+	private static void HandleMissingHeader(ActionExecutingContext context, ILogger logger)
 	{
 		// Log the outcome
 		logger.LogWarning("Request does not have a valid CorrelationId.");
 
 		// Generate a default value
-		executingContext.HttpContext.SetDefaultCorrelationId();
+		context.HttpContext.SetDefaultCorrelationId();
 	}
 	#endregion
 }

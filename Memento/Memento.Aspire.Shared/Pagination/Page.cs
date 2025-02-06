@@ -49,7 +49,7 @@ public sealed class Page<T> : List<T>, IPage<T>
 	{
 		get
 		{
-			return this.ToArray();
+			return [ .. this ];
 		}
 	}
 	#endregion
@@ -95,7 +95,7 @@ public sealed class Page<T> : List<T>, IPage<T>
 		this.PageNumber = pageNumber;
 		this.PageSize = pageSize;
 
-		this.TotalPages = Math.Max(totalItems / pageSize + (totalItems % pageSize == 0 ? 0 : 1), 1);
+		this.TotalPages = Math.Max((totalItems / pageSize) + (totalItems % pageSize == 0 ? 0 : 1), 1);
 		this.TotalItems = totalItems;
 
 		this.OrderBy = orderBy;
@@ -126,7 +126,12 @@ public sealed class Page<T> : List<T>, IPage<T>
 	/// <param name="orderDirection">The direction on which the results were ordered.</param>
 	public static Page<T> Create
 	(
-		IList<T> enumerable, IList<T> enumerableCount, int pageNumber, int pageSize, string orderBy, string orderDirection
+		IList<T> enumerable,
+		IList<T> enumerableCount,
+		int pageNumber,
+		int pageSize,
+		string orderBy,
+		string orderDirection
 	)
 	{
 		var items = enumerable.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
@@ -146,7 +151,12 @@ public sealed class Page<T> : List<T>, IPage<T>
 	/// <param name="orderDirection">The direction on which the results were ordered.</param>
 	public static async Task<Page<T>> CreateAsync
 	(
-		IQueryable<T> queryable, IQueryable<T> queryableCount, int pageNumber, int pageSize, string orderBy, string orderDirection
+		IQueryable<T> queryable,
+		IQueryable<T> queryableCount,
+		int pageNumber,
+		int pageSize,
+		string orderBy,
+		string orderDirection
 	)
 	{
 		var items = await queryable.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
@@ -166,7 +176,12 @@ public sealed class Page<T> : List<T>, IPage<T>
 	/// <param name="orderDirection">The direction on which the results were ordered.</param>
 	public static Page<T> CreateUnmodified
 	(
-		IList<T> enumerable, int enumerableCount, int pageNumber, int pageSize, string orderBy, string orderDirection
+		IList<T> enumerable,
+		int enumerableCount,
+		int pageNumber,
+		int pageSize,
+		string orderBy,
+		string orderDirection
 	)
 	{
 		var items = enumerable.ToList();
@@ -186,7 +201,12 @@ public sealed class Page<T> : List<T>, IPage<T>
 	/// <param name="orderDirection">The direction on which the results were ordered.</param>
 	public static async Task<Page<T>> CreateUnmodifiedAsync
 	(
-		IQueryable<T> queryable, int queryableCount, int pageNumber, int pageSize, string orderBy, string orderDirection
+		IQueryable<T> queryable,
+		int queryableCount,
+		int pageNumber,
+		int pageSize,
+		string orderBy,
+		string orderDirection
 	)
 	{
 		var items = await queryable.ToListAsync();

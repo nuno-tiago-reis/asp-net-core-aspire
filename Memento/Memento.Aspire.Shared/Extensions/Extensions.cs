@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -27,7 +28,7 @@ public static class Extensions
 	{
 		var assemblies = appDomain
 			.GetAssemblies()
-			.Where(assembly => assembly.GetTypes().Any(type => type.FullName?.StartsWith(nameof(Memento)) == true))
+			.Where((assembly) => assembly.GetTypes().Any((type) => type.FullName?.StartsWith(nameof(Memento), StringComparison.OrdinalIgnoreCase) == true))
 			.ToArray();
 
 		return assemblies;
@@ -103,7 +104,7 @@ public static class Extensions
 	public static Guid GetUserId(this HttpContext httpContext)
 	{
 		var userId = httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)!;
-		byte[] hashedUserId = MD5.HashData(Encoding.UTF8.GetBytes(userId));
+		var hashedUserId = SHA512.HashData(Encoding.UTF8.GetBytes(userId)).Take(16).ToArray();
 
 		return new Guid(hashedUserId);
 	}
@@ -283,7 +284,9 @@ public static class Extensions
 	public static string SpacesFromCamel(this string @string)
 	{
 		if (@string.Length <= 0)
+		{
 			return @string;
+		}
 
 		var result = new List<char>();
 		var array = @string.ToCharArray();
@@ -294,10 +297,11 @@ public static class Extensions
 			{
 				result.Add(' ');
 			}
+
 			result.Add(item);
 		}
 
-		return new string(result.ToArray()).Trim();
+		return new string([ .. result ]).Trim();
 	}
 
 	/// <summary>
@@ -309,14 +313,14 @@ public static class Extensions
 	{
 		if (@string.Length < 2)
 		{
-			return @string.ToLower();
+			return @string.ToLower(CultureInfo.InvariantCulture);
 		}
 
 		// Start with the first character
-		var result = @string.Substring(0, 1).ToLower();
+		var result = @string[ ..1 ].ToLower(CultureInfo.InvariantCulture);
 
 		// Remove extra whitespaces
-		result += Regex.Replace(@string.Substring(1), " +([a-zA-Z])", "$1".ToUpper());
+		result += Regex.Replace(@string[ 1.. ], " +([a-zA-Z])", "$1".ToUpper(CultureInfo.InvariantCulture));
 
 		return result;
 	}
@@ -330,14 +334,14 @@ public static class Extensions
 	{
 		if (@string.Length < 2)
 		{
-			return @string.ToUpper();
+			return @string.ToUpper(CultureInfo.InvariantCulture);
 		}
 
 		// Start with the first character
-		var result = @string.Substring(0, 1).ToUpper();
+		var result = @string[ ..1 ].ToUpper(CultureInfo.InvariantCulture);
 
 		// Remove extra whitespaces
-		result += Regex.Replace(@string.Substring(1), " +([a-zA-Z])", "$1".ToUpper());
+		result += Regex.Replace(@string[ 1.. ], " +([a-zA-Z])", "$1".ToUpper(CultureInfo.InvariantCulture));
 
 		return result;
 	}
@@ -351,14 +355,14 @@ public static class Extensions
 	{
 		if (@string.Length < 2)
 		{
-			return @string.ToUpper();
+			return @string.ToUpper(CultureInfo.InvariantCulture);
 		}
 
 		// Start with the first character
-		var result = @string.Substring(0, 1).ToUpper();
+		var result = @string[ ..1 ].ToUpper(CultureInfo.InvariantCulture);
 
 		// Remove extra whitespaces
-		result += Regex.Replace(@string.Substring(1), " +([a-zA-Z])", " $1".ToUpper());
+		result += Regex.Replace(@string[ 1.. ], " +([a-zA-Z])", " $1".ToUpper(CultureInfo.InvariantCulture));
 
 		// Insert missing whitespaces
 		result = Regex.Replace(result, "([a-z])([A-Z])", "$1 $2");
@@ -374,7 +378,7 @@ public static class Extensions
 	/// <param name="value">The string to compare to.</param>
 	public static bool EqualsNormalized(this string @string, string value)
 	{
-		return @string.Equals(value, StringComparison.InvariantCultureIgnoreCase);
+		return @string.Equals(value, StringComparison.OrdinalIgnoreCase);
 	}
 
 	/// <summary>

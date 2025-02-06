@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Text;
 using System.Threading.Tasks;
 
 /// <summary>
@@ -18,7 +19,7 @@ public sealed class IdempotentAttribute : Attribute, IAsyncActionFilter
 	/// <summary>
 	/// The cache key.
 	/// </summary>
-	private const string CacheKey = "Idempotency:{0}";
+	private static readonly CompositeFormat CacheKey = CompositeFormat.Parse("Idempotency:{0}");
 	#endregion
 
 	#region [Methods]
@@ -28,24 +29,24 @@ public sealed class IdempotentAttribute : Attribute, IAsyncActionFilter
 	/// Otherwise it executes the request as normal.
 	/// </summary>
 	///
-	/// <param name="executingContext">The execution context.</param>
-	/// <param name="next">The next delegate.</param>
-	public async Task OnActionExecutionAsync(ActionExecutingContext executingContext, ActionExecutionDelegate next)
+	/// <param name="context">The context.</param>
+	/// <param name="next">The delegate.</param>
+	public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
 	{
 		// Get the dependencies
-		var cache = executingContext.HttpContext.RequestServices.GetService<ICache>()!;
-		var logger = executingContext.HttpContext.RequestServices.GetService<ILogger<IdempotentAttribute>>()!;
-		var cancellationToken = executingContext.HttpContext.RequestAborted;
+		var cache = context.HttpContext.RequestServices.GetService<ICache>()!;
+		var logger = context.HttpContext.RequestServices.GetService<ILogger<IdempotentAttribute>>()!;
+		var cancellationToken = context.HttpContext.RequestAborted;
 
 		// Check if the idempotency id is valid
-		if (!executingContext.HttpContext.TryGetIdempotencyId(out var idempotencyId))
+		if (!context.HttpContext.TryGetIdempotencyId(out var idempotencyId))
 		{
 			await HandleMissingHeaderAsync(next, logger);
 			return;
 		}
 
 		// Check if the result is cached
-		var cacheKey = string.Format(CacheKey, idempotencyId);
+		var cacheKey = string.Format(null,CacheKey, idempotencyId);
 		var cacheValue = await cache.TryGetAsync<IdempotencyResult>(cacheKey, cancellationToken);
 
 		if (cacheValue is not null)
@@ -56,14 +57,14 @@ public sealed class IdempotentAttribute : Attribute, IAsyncActionFilter
 			// Return the cached result
 			if (cacheValue.Location is not null)
 			{
-				executingContext.Result = new CreatedResult(cacheValue.Location, cacheValue.Value)
+				context.Result = new CreatedResult(cacheValue.Location, cacheValue.Value)
 				{
 					StatusCode = cacheValue.StatusCode
 				};
 			}
 			else
 			{
-				executingContext.Result = new ObjectResult(cacheValue.Value)
+				context.Result = new ObjectResult(cacheValue.Value)
 				{
 					StatusCode = cacheValue.StatusCode
 				};
@@ -107,8 +108,7 @@ public sealed class IdempotentAttribute : Attribute, IAsyncActionFilter
 	/// Bypasses the cache header due to the header being missing.
 	/// </summary>
 	///
-	/// <param name="invocationContext">The invocation context.</param>
-	/// <param name="next">The next delegate.</param>
+	/// <param name="next">The delegate.</param>
 	/// <param name="logger">The logger.</param>
 	private static async Task HandleMissingHeaderAsync(ActionExecutionDelegate next, ILogger logger)
 	{

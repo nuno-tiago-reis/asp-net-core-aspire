@@ -95,7 +95,7 @@ internal sealed class DomainSeeder
 		try
 		{
 			// Read the authors from the global file
-			string globalFile = $"{AUTHORS_FILE_NAME}.json";
+			var globalFile = $"{AUTHORS_FILE_NAME}.json";
 			authors.AddRange(JsonSerializer.Deserialize<List<Author>>(File.ReadAllText(globalFile))!);
 		}
 		catch (DirectoryNotFoundException)
@@ -110,7 +110,7 @@ internal sealed class DomainSeeder
 		try
 		{
 			// Read the authors from the environment specific file
-			string environmentFile = $"{AUTHORS_FILE_NAME}.{this.Environment.EnvironmentName}.json";
+			var environmentFile = $"{AUTHORS_FILE_NAME}.{this.Environment.EnvironmentName}.json";
 			authors.AddRange(JsonSerializer.Deserialize<List<Author>>(File.ReadAllText(environmentFile))!);
 		}
 		catch (DirectoryNotFoundException)
@@ -153,7 +153,7 @@ internal sealed class DomainSeeder
 		try
 		{
 			// Read the books from the global file
-			string globalFile = $"{BOOKS_FILE_NAME}.json";
+			var globalFile = $"{BOOKS_FILE_NAME}.json";
 			books.AddRange(JsonSerializer.Deserialize<List<Book>>(File.ReadAllText(globalFile))!);
 		}
 		catch (DirectoryNotFoundException)
@@ -168,7 +168,7 @@ internal sealed class DomainSeeder
 		try
 		{
 			// Read the books from the environment specific file
-			string environmentFile = $"{BOOKS_FILE_NAME}.{this.Environment.EnvironmentName}.json";
+			var environmentFile = $"{BOOKS_FILE_NAME}.{this.Environment.EnvironmentName}.json";
 			books.AddRange(JsonSerializer.Deserialize<List<Book>>(File.ReadAllText(environmentFile))!);
 		}
 		catch (DirectoryNotFoundException)
@@ -211,7 +211,7 @@ internal sealed class DomainSeeder
 		try
 		{
 			// Read the genres from the global file
-			string globalFile = $"{GENRES_FILE_NAME}.json";
+			var globalFile = $"{GENRES_FILE_NAME}.json";
 			genres.AddRange(JsonSerializer.Deserialize<List<Genre>>(File.ReadAllText(globalFile))!);
 		}
 		catch (DirectoryNotFoundException)
@@ -226,7 +226,7 @@ internal sealed class DomainSeeder
 		try
 		{
 			// Read the genres from the environment specific file
-			string environmentFile = $"{GENRES_FILE_NAME}.{this.Environment.EnvironmentName}.json";
+			var environmentFile = $"{GENRES_FILE_NAME}.{this.Environment.EnvironmentName}.json";
 			genres.AddRange(JsonSerializer.Deserialize<List<Genre>>(File.ReadAllText(environmentFile))!);
 		}
 		catch (DirectoryNotFoundException)

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 /// </summary>
 ///
 /// <seealso cref="EntityContext"/>
-internal sealed class DomainContext : EntityContext
+public sealed class DomainContext : EntityContext
 {
 	#region [Properties]
 		/// <summary>
@@ -44,14 +44,14 @@ internal sealed class DomainContext : EntityContext
 
 	#region [Methods]
 	/// <inheritdoc />
-	protected override void OnModelCreating(ModelBuilder builder)
+	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
-		base.OnModelCreating(builder);
+		base.OnModelCreating(modelBuilder);
 
 		// Configurations (Models)
-		builder.ApplyConfiguration(new AuthorConfiguration());
-		builder.ApplyConfiguration(new BookConfiguration());
-		builder.ApplyConfiguration(new GenreConfiguration());
+		modelBuilder.ApplyConfiguration(new AuthorConfiguration());
+		modelBuilder.ApplyConfiguration(new BookConfiguration());
+		modelBuilder.ApplyConfiguration(new GenreConfiguration());
 	}
 	#endregion
 }

@@ -22,7 +22,7 @@ using System.Linq.Expressions;
 /// <seealso cref="BookFilter" />
 /// <seealso cref="BookOrderBy" />
 /// <seealso cref="BookOrderDirection" />
-internal sealed class BookRepository : EntityRepository<Book, BookFilter, BookOrderBy, BookOrderDirection>, IBookRepository
+public sealed class BookRepository : EntityRepository<Book, BookFilter, BookOrderBy, BookOrderDirection>, IBookRepository
 {
 	#region [Constructors]
 	/// <summary>
@@ -32,7 +32,7 @@ internal sealed class BookRepository : EntityRepository<Book, BookFilter, BookOr
 	/// <param name="context">The context.</param>
 	/// <param name="localizer">The localizer.</param>
 	/// <param name="logger">The logger.</param>
-	internal BookRepository
+	public BookRepository
 	(
 		DomainContext context,
 		ILocalizer localizer,
@@ -46,36 +46,39 @@ internal sealed class BookRepository : EntityRepository<Book, BookFilter, BookOr
 
 	#region [Methods] Entity
 	/// <inheritdoc />
-	protected override void NormalizeEntity(Book sourceBook)
+	protected override void NormalizeEntity(Book book)
 	{
 		// Intentionally Empty.
 	}
 
 	/// <inheritdoc />
-	protected override void ValidateEntity(Book sourceBook)
+	protected override void ValidateEntity(Book book)
 	{
 		var errorMessages = new List<string>();
 
 		// Required fields
-		if (string.IsNullOrWhiteSpace(sourceBook.Name))
+		if (string.IsNullOrWhiteSpace(book.Name))
 		{
 			errorMessages.Add(this.GetEntityHasInvalidFieldMessage((book) => book.Name));
 		}
-		if (sourceBook.ReleaseDate == default)
+
+		if (book.ReleaseDate == default)
 		{
 			errorMessages.Add(this.GetEntityHasInvalidFieldMessage((book) => book.ReleaseDate));
 		}
-		if (sourceBook.AuthorId == default)
+
+		if (book.AuthorId == default)
 		{
 			errorMessages.Add(this.GetEntityHasInvalidFieldMessage((book) => book.AuthorId));
 		}
-		if (sourceBook.GenreId == default)
+
+		if (book.GenreId == default)
 		{
 			errorMessages.Add(this.GetEntityHasInvalidFieldMessage((book) => book.GenreId));
 		}
 
 		// Duplicate fields
-		if (this.Entities.Any((book) => book.Id != sourceBook.Id && book.Name.Equals(sourceBook.Name)))
+		if (this.Entities.Any((book) => book.Id != book.Id && book.Name.Equals(book.Name, StringComparison.OrdinalIgnoreCase)))
 		{
 			errorMessages.Add(this.GetEntityHasDuplicateFieldCombinationMessage((book) => book.Name, (book) => book.ReleaseDate));
 		}
@@ -96,12 +99,6 @@ internal sealed class BookRepository : EntityRepository<Book, BookFilter, BookOr
 
 		// Entity
 		targetBook.UpdatedBy = sourceBook.UpdatedBy;
-	}
-
-	/// <inheritdoc />
-	protected override void UpdateEntityRelations(Book sourceBook, Book targetBook)
-	{
-		// Nothing to do here.
 	}
 	#endregion
 

@@ -12,8 +12,8 @@ public sealed record GenreFilter : EntityFilter<GenreOrderBy, GenreOrderDirectio
 {
 	#region [Properties]
 	/// <summary>
-	///  The name filter.
-	///  Only returns genres matching this value.
+	/// The name filter.
+	/// Only returns genres matching this value.
 	/// </summary>
 	public string? Name { get; set; }
 	#endregion

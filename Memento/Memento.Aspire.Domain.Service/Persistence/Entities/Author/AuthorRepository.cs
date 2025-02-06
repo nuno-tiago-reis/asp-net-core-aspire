@@ -22,7 +22,7 @@ using System.Linq.Expressions;
 /// <seealso cref="AuthorFilter" />
 /// <seealso cref="AuthorOrderBy" />
 /// <seealso cref="AuthorOrderDirection" />
-internal sealed class AuthorRepository : EntityRepository<Author, AuthorFilter, AuthorOrderBy, AuthorOrderDirection>, IAuthorRepository
+public sealed class AuthorRepository : EntityRepository<Author, AuthorFilter, AuthorOrderBy, AuthorOrderDirection>, IAuthorRepository
 {
 	#region [Constructors]
 	/// <summary>
@@ -32,7 +32,7 @@ internal sealed class AuthorRepository : EntityRepository<Author, AuthorFilter, 
 	/// <param name="context">The context.</param>
 	/// <param name="localizer">The localizer.</param>
 	/// <param name="logger">The logger.</param>
-	internal AuthorRepository
+	public AuthorRepository
 	(
 		DomainContext context,
 		ILocalizer localizer,
@@ -46,28 +46,29 @@ internal sealed class AuthorRepository : EntityRepository<Author, AuthorFilter, 
 
 	#region [Methods] Entity
 	/// <inheritdoc />
-	protected override void NormalizeEntity(Author sourceAuthor)
+	protected override void NormalizeEntity(Author author)
 	{
 		// Intentionally Empty.
 	}
 
 	/// <inheritdoc />
-	protected override void ValidateEntity(Author sourceAuthor)
+	protected override void ValidateEntity(Author author)
 	{
 		var errorMessages = new List<string>();
 
 		// Required fields
-		if (string.IsNullOrWhiteSpace(sourceAuthor.Name))
+		if (string.IsNullOrWhiteSpace(author.Name))
 		{
 			errorMessages.Add(this.GetEntityHasInvalidFieldMessage((author) => author.Name));
 		}
-		if (sourceAuthor.BirthDate == default)
+
+		if (author.BirthDate == default)
 		{
 			errorMessages.Add(this.GetEntityHasInvalidFieldMessage((author) => author.BirthDate));
 		}
 
 		// Duplicate fields
-		if (this.Entities.Any((author) => author.Id != sourceAuthor.Id && author.Name.Equals(sourceAuthor.Name) && author.BirthDate == sourceAuthor.BirthDate))
+		if (this.Entities.Any((author) => author.Id != author.Id && author.Name.Equals(author.Name, StringComparison.OrdinalIgnoreCase) && author.BirthDate == author.BirthDate))
 		{
 			errorMessages.Add(this.GetEntityHasDuplicateFieldCombinationMessage((author) => author.Name, (author) => author.BirthDate));
 		}
@@ -87,12 +88,6 @@ internal sealed class AuthorRepository : EntityRepository<Author, AuthorFilter, 
 
 		// Entity
 		targetAuthor.UpdatedBy = sourceAuthor.UpdatedBy;
-	}
-
-	/// <inheritdoc />
-	protected override void UpdateEntityRelations(Author sourceAuthor, Author targetAuthor)
-	{
-		// Nothing to do here.
 	}
 	#endregion
 

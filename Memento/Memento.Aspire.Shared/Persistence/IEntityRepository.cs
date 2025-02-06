@@ -14,8 +14,8 @@ using Memento.Aspire.Shared.Pagination;
 public interface IEntityRepository<TEntity, TEntityFilter, TEntityOrderBy, TEntityOrderDirection>
 	where TEntity : class, IEntity
 	where TEntityFilter : class, IEntityFilter<TEntityOrderBy, TEntityOrderDirection>
-	where TEntityOrderBy : Enum
-	where TEntityOrderDirection : Enum
+	where TEntityOrderBy : struct, Enum
+	where TEntityOrderDirection : struct, Enum
 {
 	#region [Methods]
 	/// <summary>

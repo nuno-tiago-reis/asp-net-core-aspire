@@ -22,29 +22,29 @@ using System.Threading.Tasks;
 public abstract class EntityRepository<TEntity, TEntityFilter, TEntityOrderBy, TEntityOrderDirection> : IEntityRepository<TEntity, TEntityFilter, TEntityOrderBy, TEntityOrderDirection>
 	where TEntity : class, IEntity
 	where TEntityFilter : class, IEntityFilter<TEntityOrderBy, TEntityOrderDirection>
-	where TEntityOrderBy : Enum
-	where TEntityOrderDirection : Enum
+	where TEntityOrderBy : struct, Enum
+	where TEntityOrderDirection : struct, Enum
 {
 	#region [Properties]
 	/// <summary>
 	/// The context.
 	/// </summary>
-	protected readonly DbContext Context;
+	protected DbContext Context { get; init; }
 
 	/// <summary>
 	/// The entities.
 	/// </summary>
-	protected readonly DbSet<TEntity> Entities;
+	protected DbSet<TEntity> Entities { get; init; }
 
 	/// <summary>
 	/// The localizer service.
 	/// </summary>
-	protected readonly ILocalizer Localizer;
+	protected ILocalizer Localizer { get; init; }
 
 	/// <summary>
 	/// The logger.
 	/// </summary>
-	protected readonly ILogger Logger;
+	protected ILogger Logger { get; init; }
 	#endregion
 
 	#region [Constructors]
@@ -115,11 +115,6 @@ public abstract class EntityRepository<TEntity, TEntityFilter, TEntityOrderBy, T
 
 		// Update the entity
 		this.UpdateEntity(entity, databaseEntity);
-		// Save the changes
-		await this.Context.SaveChangesAsync(cancellationToken);
-
-		// Update the entity's relations
-		this.UpdateEntityRelations(entity, databaseEntity);
 		// Save the changes
 		await this.Context.SaveChangesAsync(cancellationToken);
 
@@ -224,15 +219,15 @@ public abstract class EntityRepository<TEntity, TEntityFilter, TEntityOrderBy, T
 	/// Normalizes the entity.
 	/// </summary>
 	///
-	/// <param name="sourceEntity">The source entity.</param>
-	protected abstract void NormalizeEntity(TEntity sourceEntity);
+	/// <param name="entity">The entity.</param>
+	protected abstract void NormalizeEntity(TEntity entity);
 
 	/// <summary>
 	/// Validates the entity.
 	/// </summary>
 	///
-	/// <param name="sourceEntity">The source entity.</param>
-	protected abstract void ValidateEntity(TEntity sourceEntity);
+	/// <param name="entity">The entity.</param>
+	protected abstract void ValidateEntity(TEntity entity);
 
 	/// <summary>
 	/// Updates the entity.
@@ -241,14 +236,6 @@ public abstract class EntityRepository<TEntity, TEntityFilter, TEntityOrderBy, T
 	/// <param name="sourceEntity">The source entity.</param>
 	/// <param name="targetEntity">The target entity.</param>
 	protected abstract void UpdateEntity(TEntity sourceEntity, TEntity targetEntity);
-
-	/// <summary>
-	/// Updates the entities relations.
-	/// </summary>
-	///
-	/// <param name="sourceEntity">The source entity.</param>
-	/// <param name="targetEntity">The target entity.</param>
-	protected abstract void UpdateEntityRelations(TEntity sourceEntity, TEntity targetEntity);
 	#endregion
 
 	#region [Methods] Queryables

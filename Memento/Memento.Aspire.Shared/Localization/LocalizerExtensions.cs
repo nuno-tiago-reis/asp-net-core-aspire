@@ -62,8 +62,8 @@ public static class LocalizerExtensions
 		// Create the options
 		var options = new LocalizerOptions
 		{
-			DefaultCulture = LocalizerOptions.DEFAULT_CULTURE,
-			SupportedCultures = LocalizerOptions.SUPPORTED_CULTURES
+			DefaultCulture = LocalizerOptions.DefaultDefaulCulture,
+			SupportedCultures = LocalizerOptions.DefaultSupportedCultures
 		};
 
 		// Configure the options
@@ -112,8 +112,8 @@ public static class LocalizerExtensions
 		// Create the options
 		var options = new LocalizerOptions
 		{
-			DefaultCulture = LocalizerOptions.DEFAULT_CULTURE,
-			SupportedCultures = LocalizerOptions.SUPPORTED_CULTURES
+			DefaultCulture = LocalizerOptions.DefaultDefaulCulture,
+			SupportedCultures = LocalizerOptions.DefaultSupportedCultures
 		};
 
 		// Configure the options

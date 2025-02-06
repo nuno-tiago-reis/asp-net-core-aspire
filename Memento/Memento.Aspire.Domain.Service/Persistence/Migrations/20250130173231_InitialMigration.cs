@@ -92,15 +92,13 @@ public partial class InitialMigration : Migration
 			column: "Name"
 		);
 
-		#pragma warning disable CA1861 // Avoid constant arrays as arguments
 		migrationBuilder.CreateIndex
 		(
 			name: "IX_Authors_Name_BirthDate",
 			table: "Authors",
-			columns: new[] { "Name", "BirthDate" },
+			columns: [ "Name", "BirthDate" ],
 			unique: true
 		);
-		#pragma warning restore CA1861 // Avoid constant arrays as arguments
 
 		migrationBuilder.CreateIndex
 		(
@@ -123,15 +121,13 @@ public partial class InitialMigration : Migration
 			column: "Name"
 		);
 
-		#pragma warning disable CA1861 // Avoid constant arrays as arguments
 		migrationBuilder.CreateIndex
 		(
 			name: "IX_Books_Name_ReleaseDate",
 			table: "Books",
-			columns: new[] { "Name", "ReleaseDate" },
+			columns: [ "Name", "ReleaseDate" ],
 			unique: true
 		);
-		#pragma warning restore CA1861 // Avoid constant arrays as arguments
 
 		migrationBuilder.CreateIndex
 		(

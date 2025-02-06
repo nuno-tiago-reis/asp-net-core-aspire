@@ -22,7 +22,7 @@ using System.Linq.Expressions;
 /// <seealso cref="GenreFilter" />
 /// <seealso cref="GenreOrderBy" />
 /// <seealso cref="GenreOrderDirection" />
-internal sealed class GenreRepository : EntityRepository<Genre, GenreFilter, GenreOrderBy, GenreOrderDirection>, IGenreRepository
+public sealed class GenreRepository : EntityRepository<Genre, GenreFilter, GenreOrderBy, GenreOrderDirection>, IGenreRepository
 {
 	#region [Constructors]
 	/// <summary>
@@ -32,7 +32,7 @@ internal sealed class GenreRepository : EntityRepository<Genre, GenreFilter, Gen
 	/// <param name="context">The context.</param>
 	/// <param name="localizer">The localizer.</param>
 	/// <param name="logger">The logger.</param>
-	internal GenreRepository
+	public GenreRepository
 	(
 		DomainContext context,
 		ILocalizer localizer,
@@ -46,24 +46,24 @@ internal sealed class GenreRepository : EntityRepository<Genre, GenreFilter, Gen
 
 	#region [Methods] Entity
 	/// <inheritdoc />
-	protected override void NormalizeEntity(Genre sourceGenre)
+	protected override void NormalizeEntity(Genre genre)
 	{
 		// Intentionally Empty.
 	}
 
 	/// <inheritdoc />
-	protected override void ValidateEntity(Genre sourceGenre)
+	protected override void ValidateEntity(Genre genre)
 	{
 		var errorMessages = new List<string>();
 
 		// Required fields
-		if (string.IsNullOrWhiteSpace(sourceGenre.Name))
+		if (string.IsNullOrWhiteSpace(genre.Name))
 		{
 			errorMessages.Add(this.GetEntityHasInvalidFieldMessage((genre) => genre.Name));
 		}
 
 		// Duplicate fields
-		if (this.Entities.Any((genre) => genre.Id != sourceGenre.Id && genre.Name.Equals(sourceGenre.Name)))
+		if (this.Entities.Any((genre) => genre.Id != genre.Id && genre.Name.Equals(genre.Name, StringComparison.OrdinalIgnoreCase)))
 		{
 			errorMessages.Add(this.GetEntityHasDuplicateFieldMessage((genre) => genre.Name));
 		}
@@ -82,12 +82,6 @@ internal sealed class GenreRepository : EntityRepository<Genre, GenreFilter, Gen
 
 		// Entity
 		targetGenre.UpdatedBy = sourceGenre.UpdatedBy;
-	}
-
-	/// <inheritdoc />
-	protected override void UpdateEntityRelations(Genre sourceGenre, Genre targetGenre)
-	{
-		// Nothing to do here.
 	}
 	#endregion
 

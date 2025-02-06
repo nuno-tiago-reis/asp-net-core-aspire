@@ -15,10 +15,9 @@ public sealed record GenreFilterContract : EntityFilterContract<GenreOrderBy, Ge
 {
 	#region [Properties]
 	/// <summary>
-	///  The name filter.
-	///  Only returns genres matching this value.
+	/// The name filter.
+	/// Only returns genres matching this value.
 	/// </summary>
-	[FromQuery]
 	public string? Name { get; set; }
 	#endregion
 

@@ -63,10 +63,12 @@ public sealed class FluentValidationSchemaFilter : ISchemaFilter
 						{
 							schema.Properties[key].MaxLength = lengthValidator.Max;
 						}
+
 						if (lengthValidator.Min > 0)
 						{
 							schema.Properties[key].MinLength = lengthValidator.Min;
 						}
+
 						break;
 					}
 					case IRegularExpressionValidator expressionValidator:
@@ -98,22 +100,24 @@ public sealed class FluentValidationSchemaFilter : ISchemaFilter
 				var fromQuery = property.GetCustomAttribute<FromQueryAttribute>();
 				var jsonPropertyName = property.GetCustomAttribute<JsonPropertyNameAttribute>();
 
-				if (string.Equals(property.Name, modelName, StringComparison.InvariantCultureIgnoreCase))
+				if (string.Equals(property.Name, modelName, StringComparison.OrdinalIgnoreCase))
 				{
 					return descriptor.GetValidatorsForMember(property.Name).Select((validator) => validator.Validator);
 				}
-				if (string.Equals(fromQuery?.Name, modelName, StringComparison.InvariantCultureIgnoreCase))
+
+				if (string.Equals(fromQuery?.Name, modelName, StringComparison.OrdinalIgnoreCase))
 				{
 					return descriptor.GetValidatorsForMember(property.Name).Select((validator) => validator.Validator);
 				}
-				if (string.Equals(jsonPropertyName?.Name, modelName, StringComparison.InvariantCultureIgnoreCase))
+
+				if (string.Equals(jsonPropertyName?.Name, modelName, StringComparison.OrdinalIgnoreCase))
 				{
 					return descriptor.GetValidatorsForMember(property.Name).Select((validator) => validator.Validator);
 				}
 			}
 		}
 
-		return Array.Empty<IPropertyValidator>();
+		return [];
 	}
 	#endregion
 }

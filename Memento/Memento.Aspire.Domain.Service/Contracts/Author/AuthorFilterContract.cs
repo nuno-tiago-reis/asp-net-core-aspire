@@ -15,24 +15,21 @@ public sealed record AuthorFilterContract : EntityFilterContract<AuthorOrderBy, 
 {
 	#region [Properties]
 	/// <summary>
-	///  The name filter.
-	///  Only returns authors matching this queryString.
+	/// The name filter.
+	/// Only returns authors matching this queryString.
 	/// </summary>
-	[FromQuery]
 	public string? Name { get; set; }
 
 	/// <summary>
-	///  The born before filter.
-	///  Only returns authors with a birth date that is lesser or equal to this queryString.
+	/// The born before filter.
+	/// Only returns authors with a birth date that is lesser or equal to this queryString.
 	/// </summary>
-	[FromQuery]
 	public DateOnly? BornBefore { get; set; }
 
 	/// <summary>
-	///  The born after filter.
-	///  Only returns authors with a birth date that is greater or equal to this queryString.
+	/// The born after filter.
+	/// Only returns authors with a birth date that is greater or equal to this queryString.
 	/// </summary>
-	[FromQuery]
 	public DateOnly? BornAfter { get; set; }
 	#endregion
 

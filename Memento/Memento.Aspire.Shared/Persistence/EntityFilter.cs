@@ -8,8 +8,8 @@
 /// <typeparam name="TEntityFilterOrderBy">The entity filter order by type.</typeparam>
 /// <typeparam name="TEntityFilterOrderDirection">The entity filter order direction type.</typeparam>
 public abstract record EntityFilter<TEntityFilterOrderBy, TEntityFilterOrderDirection> : IEntityFilter<TEntityFilterOrderBy, TEntityFilterOrderDirection>
-	where TEntityFilterOrderBy : Enum
-	where TEntityFilterOrderDirection : Enum
+	where TEntityFilterOrderBy : struct, Enum
+	where TEntityFilterOrderDirection : struct, Enum
 {
 	#region [Properties]
 	/// <summary>
