@@ -14,6 +14,6 @@ public sealed record GetAuthorsQuery : Query<GetAuthorsQueryResult>
 	/// <summary>
 	/// Gets or sets the author filter contract.
 	/// </summary>
-	public required AuthorFilterContract AuthorFilterContract { get; set; }
+	public required AuthorFilterContract AuthorFilterContract { get; init; }
 	#endregion
 }

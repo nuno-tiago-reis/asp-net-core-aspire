@@ -52,17 +52,17 @@ public abstract class EntityController : ControllerBase
 	/// <param name="contract">The contract.</param>
 	protected ActionResult<StandardResult<TContract>> BuildCreateResult<TContract>(TContract contract) where TContract : EntityContract
 	{
-		// Build the message
+		// Prepare the response
 		var message = this.GetCreateSuccessfulMessage();
 
 		// Build the response
 		var response = new StandardResult<TContract>
 		{
 			Success = true,
-			Message = message,
 			StatusCode = StatusCodes.Status201Created,
-			Data = contract,
-			Errors = []
+			Message = message,
+			Errors = [],
+			Data = contract
 		};
 
 		return this.Created(new Uri($"{this.HttpContext.Request.GetDisplayUrl()}/{contract.Id}"), response);
@@ -73,15 +73,15 @@ public abstract class EntityController : ControllerBase
 	/// </summary>
 	protected ActionResult<StandardResult> BuildUpdateResult()
 	{
-		// Build the message
+		// Prepare the response
 		var message = this.GetUpdateSuccessfulMessage();
 
 		// Build the response
 		var response = new StandardResult
 		{
 			Success = true,
-			Message = message,
 			StatusCode = StatusCodes.Status200OK,
+			Message = message,
 			Errors = []
 		};
 
@@ -93,15 +93,15 @@ public abstract class EntityController : ControllerBase
 	/// </summary>
 	protected ActionResult<StandardResult> BuildDeleteResult()
 	{
-		// Build the message
+		// Prepare the response
 		var message = this.GetDeleteSuccessfulMessage();
 
 		// Build the response
 		var response = new StandardResult
 		{
 			Success = true,
-			Message = message,
 			StatusCode = StatusCodes.Status200OK,
+			Message = message,
 			Errors = []
 		};
 
@@ -115,17 +115,17 @@ public abstract class EntityController : ControllerBase
 	/// <param name="contract">The contract.</param>
 	protected ActionResult<StandardResult<TContract>> BuildGetResult<TContract>(TContract contract) where TContract : EntityContract
 	{
-		// Build the message
+		// Prepare the response
 		var message = this.GetGetSuccessfulMessage();
 
 		// Build the response
 		var response = new StandardResult<TContract>
 		{
 			Success = true,
-			Message = message,
 			StatusCode = StatusCodes.Status200OK,
-			Data = contract,
-			Errors = []
+			Message = message,
+			Errors = [],
+			Data = contract
 		};
 
 		return this.Ok(response);
@@ -138,17 +138,17 @@ public abstract class EntityController : ControllerBase
 	/// <param name="contracts">The contracts.</param>
 	protected ActionResult<StandardResult<Page<TContract>>> BuildGetAllResult<TContract>(Page<TContract> contracts) where TContract : EntityContract
 	{
-		// Build the message
+		// Prepare the response
 		var message = this.GetGetAllSuccessfulMessage();
 
 		// Build the response
 		var response = new StandardResult<Page<TContract>>
 		{
 			Success = true,
-			Message = message,
 			StatusCode = StatusCodes.Status200OK,
-			Data = contracts,
-			Errors = []
+			Message = message,
+			Errors = [],
+			Data = contracts
 		};
 
 		return this.Ok(response);
@@ -161,21 +161,17 @@ public abstract class EntityController : ControllerBase
 	/// <param name="exception">The exception.</param>
 	protected ActionResult<StandardResult> BuildErrorResult(StandardException exception)
 	{
-		// Build the response
-		var response = new StandardResult
-		{
-			Success = false,
-			Message = exception.Message,
-			StatusCode = exception.GetStatusCode(),
-			Errors = exception.Messages
-		};
+		// Prepare the response
+		var statusCode = exception.GetStatusCode();
+		var message = exception.Message;
+		var errors = exception.Messages;
 
-		// Adjust the message when necessary
+		// Adjust the response when necessary
 		switch (exception.Type)
 		{
 			case StandardExceptionType.BadRequest:
 			{
-				response.Message = this.GetValidationErrorMessage();
+				message = this.GetValidationErrorMessage();
 				break;
 			}
 			case StandardExceptionType.NotFound:
@@ -184,11 +180,20 @@ public abstract class EntityController : ControllerBase
 			}
 			default:
 			{
-				response.Message = this.GetUnexpectedErrorMessage();
-				response.Errors = [response.Message];
+				message = this.GetUnexpectedErrorMessage();
+				errors = [message];
 				break;
 			}
 		}
+
+		// Build the response
+		var response = new StandardResult
+		{
+			Success = false,
+			StatusCode = statusCode,
+			Message = message,
+			Errors = errors
+		};
 
 		return this.StatusCode(response.StatusCode, response);
 	}
@@ -200,22 +205,17 @@ public abstract class EntityController : ControllerBase
 	/// <param name="exception">The exception.</param>
 	protected ActionResult<StandardResult<TContract>> BuildErrorResult<TContract>(StandardException exception) where TContract : class
 	{
-		// Build the response
-		var response = new StandardResult<TContract>
-		{
-			Success = false,
-			Message = exception.Message,
-			StatusCode = exception.GetStatusCode(),
-			Data = null,
-			Errors = exception.Messages
-		};
+		// Prepare the response
+		var statusCode = exception.GetStatusCode();
+		var message = exception.Message;
+		var errors = exception.Messages;
 
-		// Adjust the message when necessary
+		// Adjust the response when necessary
 		switch (exception.Type)
 		{
 			case StandardExceptionType.BadRequest:
 			{
-				response.Message = this.GetValidationErrorMessage();
+				message = this.GetValidationErrorMessage();
 				break;
 			}
 			case StandardExceptionType.NotFound:
@@ -224,11 +224,21 @@ public abstract class EntityController : ControllerBase
 			}
 			default:
 			{
-				response.Message = this.GetUnexpectedErrorMessage();
-				response.Errors = [ response.Message ];
+				message = this.GetUnexpectedErrorMessage();
+				errors = [message];
 				break;
 			}
 		}
+
+		// Build the response
+		var response = new StandardResult<TContract>
+		{
+			Success = false,
+			StatusCode = statusCode,
+			Message = message,
+			Errors = errors,
+			Data = null
+		};
 
 		return this.StatusCode(response.StatusCode, response);
 	}

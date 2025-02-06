@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 /// </summary>
 ///
 /// <seealso cref="Genre" />
-public sealed class GenreConfiguration : IEntityTypeConfiguration<Genre>
+internal sealed class GenreConfiguration : IEntityTypeConfiguration<Genre>
 {
 	#region [Constants]
 	/// <summary>

@@ -13,6 +13,6 @@ public sealed record GetAuthorQuery : Query<GetAuthorQueryResult>
 	/// <summary>
 	/// Gets or sets the author identifier.
 	/// </summary>
-	public required Guid AuthorId { get; set; }
+	public required Guid AuthorId { get; init; }
 	#endregion
 }

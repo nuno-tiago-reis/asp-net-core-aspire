@@ -11,6 +11,6 @@ public sealed record GenreDeletedEvent : Event
 	/// <summary>
 	/// The genre identifier.
 	/// </summary>
-	public required Guid GenreId { get; set; }
+	public required Guid GenreId { get; init; }
 	#endregion
 }

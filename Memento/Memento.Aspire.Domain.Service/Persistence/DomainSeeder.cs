@@ -16,7 +16,7 @@ using System.Text.Json;
 /// </summary>
 ///
 /// <seealso cref="DomainContext"/>
-public sealed class DomainSeeder
+internal sealed class DomainSeeder
 {
 	#region [Constants]
 	/// <summary>

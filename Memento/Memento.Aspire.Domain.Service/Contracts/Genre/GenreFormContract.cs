@@ -13,6 +13,6 @@ public sealed record GenreFormContract
 	/// The genre's name.
 	/// </summary>
 	[Display(Name = nameof(SharedResources.GENRE_NAME), ResourceType = typeof(SharedResources))]
-	public required string? Name { get; set; }
+	public required string? Name { get; init; }
 	#endregion
 }

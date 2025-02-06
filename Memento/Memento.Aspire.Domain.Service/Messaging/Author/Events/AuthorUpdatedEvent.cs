@@ -12,6 +12,6 @@ public sealed record AuthorUpdatedEvent : Event
 	/// <summary>
 	/// The author.
 	/// </summary>
-	public required AuthorDetailContract Author { get; set; }
+	public required AuthorDetailContract Author { get; init; }
 	#endregion
 }

@@ -3,7 +3,7 @@
 /// <summary>
 /// Implements several utility methods for dealing with cache entries.
 /// </summary>
-public static class CacheEntries
+internal static class CacheEntries
 {
 	#region [Properties]
 	/// <summary>

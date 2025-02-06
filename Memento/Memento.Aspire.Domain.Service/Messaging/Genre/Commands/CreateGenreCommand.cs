@@ -14,6 +14,6 @@ public sealed record CreateGenreCommand : Command<CreateGenreCommandResult>
 	/// <summary>
 	/// Gets or sets the genre contract.
 	/// </summary>
-	public required GenreFormContract GenreContract { get; set; }
+	public required GenreFormContract GenreContract { get; init; }
 	#endregion
 }

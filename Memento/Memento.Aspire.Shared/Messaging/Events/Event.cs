@@ -10,11 +10,11 @@ public abstract record Event
 	/// <summary>
 	/// The correlation identifier.
 	/// </summary>
-	public required Guid CorrelationId { get; set; }
+	public required Guid CorrelationId { get; init; }
 
 	/// <summary>
 	/// The timestamp.
 	/// </summary>
-	public required DateTimeOffset Timestamp { get; set; }
+	public required DateTimeOffset Timestamp { get; init; }
 	#endregion
 }

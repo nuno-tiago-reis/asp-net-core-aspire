@@ -12,6 +12,6 @@ public sealed record GenreUpdatedEvent : Event
 	/// <summary>
 	/// The genre.
 	/// </summary>
-	public required GenreDetailContract Genre { get; set; }
+	public required GenreDetailContract Genre { get; init; }
 	#endregion
 }

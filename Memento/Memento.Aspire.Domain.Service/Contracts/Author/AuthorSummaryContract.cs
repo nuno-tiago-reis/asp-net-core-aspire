@@ -16,13 +16,13 @@ public sealed record AuthorSummaryContract : EntityContract
 	/// </summary>
 	[Display(Name = nameof(SharedResources.AUTHOR_NAME), ResourceType = typeof(SharedResources))]
 	[JsonPropertyOrder(0)]
-	public required string Name { get; set; }
+	public required string Name { get; init; }
 
 	/// <summary>
 	/// The author's birth date.
 	/// </summary>
 	[Display(Name = nameof(SharedResources.AUTHOR_BIRTHDATE), ResourceType = typeof(SharedResources))]
 	[JsonPropertyOrder(1)]
-	public required DateOnly BirthDate { get; set; }
+	public required DateOnly BirthDate { get; init; }
 	#endregion
 }

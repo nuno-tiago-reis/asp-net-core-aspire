@@ -14,6 +14,6 @@ public sealed record GetGenresQuery : Query<GetGenresQueryResult>
 	/// <summary>
 	/// Gets or sets the genre filter contract.
 	/// </summary>
-	public required GenreFilterContract GenreFilterContract { get; set; }
+	public required GenreFilterContract GenreFilterContract { get; init; }
 	#endregion
 }

@@ -11,7 +11,7 @@ public sealed record LoggingOptions
 	/// <summary>
 	/// Gets or sets the http logging options.
 	/// </summary>
-	public required HttpLoggingOptions? HttpLogging { get; set; }
+	public required HttpLoggingOptions? HttpLogging { get; init; }
 	#endregion
 }
 
@@ -24,6 +24,6 @@ public sealed record HttpLoggingOptions
 	/// <summary>
 	/// Gets or sets the fields.
 	/// </summary>
-	public required HttpLoggingFields? Fields { get; set; }
+	public required HttpLoggingFields? Fields { get; init; }
 	#endregion
 }

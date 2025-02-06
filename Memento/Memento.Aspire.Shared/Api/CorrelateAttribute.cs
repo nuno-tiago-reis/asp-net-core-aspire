@@ -1,10 +1,8 @@
 ﻿namespace Memento.Aspire.Shared.Api;
 
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Primitives;
 using System;
 using System.Threading.Tasks;
 

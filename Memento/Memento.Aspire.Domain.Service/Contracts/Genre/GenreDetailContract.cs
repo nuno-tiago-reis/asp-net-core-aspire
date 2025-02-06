@@ -17,13 +17,13 @@ public sealed record GenreDetailContract : EntityContract
 	/// </summary>
 	[Display(Name = nameof(SharedResources.GENRE_NAME), ResourceType = typeof(SharedResources))]
 	[JsonPropertyOrder(0)]
-	public required string Name { get; set; }
+	public required string Name { get; init; }
 
 	/// <summary>
 	/// The genre's books.
 	/// </summary>
 	[Display(Name = nameof(SharedResources.GENRE_BOOKS), ResourceType = typeof(SharedResources))]
 	[JsonPropertyOrder(1)]
-	public required List<BookSummaryContract> Books { get; set; }
+	public required List<BookSummaryContract> Books { get; init; }
 	#endregion
 }

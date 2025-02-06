@@ -17,13 +17,13 @@ public sealed record BookSummaryContract : EntityContract
 	/// </summary>
 	[Display(Name = nameof(SharedResources.BOOK_NAME), ResourceType = typeof(SharedResources))]
 	[JsonPropertyOrder(0)]
-	public required string Name { get; set; }
+	public required string Name { get; init; }
 
 	/// <summary>
 	/// The book's release date.
 	/// </summary>
 	[Display(Name = nameof(SharedResources.BOOK_RELEASEDATE), ResourceType = typeof(SharedResources))]
 	[JsonPropertyOrder(1)]
-	public required DateOnly ReleaseDate { get; set; }
+	public required DateOnly ReleaseDate { get; init; }
 	#endregion
 }

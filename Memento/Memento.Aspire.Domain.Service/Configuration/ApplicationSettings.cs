@@ -13,22 +13,22 @@ public sealed record ApplicationSettings
 	/// <summary>
 	/// Gets or sets the database options.
 	/// </summary>
-	public required DatabaseOptions Database { get; set; }
+	public required DatabaseOptions Database { get; init; }
 
 	/// <summary>
 	/// Gets or sets the message bus options.
 	/// </summary>
-	public required MessageBusOptions MessageBus { get; set; }
+	public required MessageBusOptions MessageBus { get; init; }
 
 	/// <summary>
 	/// Gets or sets the localizer options.
 	/// </summary>
-	public required LocalizerOptions Localizer { get; set; }
+	public required LocalizerOptions Localizer { get; init; }
 
 	/// <summary>
 	/// Gets or sets the logging options.
 	/// </summary>
-	public required LoggingOptions Logging { get; set; }
+	public required LoggingOptions Logging { get; init; }
 
 	#endregion
 }
@@ -42,6 +42,6 @@ public sealed record DatabaseOptions
 	/// <summary>
 	/// Gets or sets the connection string.
 	/// </summary>
-	public required string ConnectionString { get; set; }
+	public required string ConnectionString { get; init; }
 	#endregion
 }

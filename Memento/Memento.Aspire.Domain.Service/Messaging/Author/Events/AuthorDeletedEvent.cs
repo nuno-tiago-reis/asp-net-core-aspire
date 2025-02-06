@@ -11,6 +11,6 @@ public sealed record AuthorDeletedEvent : Event
 	/// <summary>
 	/// The author identifier.
 	/// </summary>
-	public required Guid AuthorId { get; set; }
+	public required Guid AuthorId { get; init; }
 	#endregion
 }

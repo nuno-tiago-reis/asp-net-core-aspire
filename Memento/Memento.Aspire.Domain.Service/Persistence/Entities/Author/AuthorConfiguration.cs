@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 /// </summary>
 ///
 /// <seealso cref="Author" />
-public sealed class AuthorConfiguration : IEntityTypeConfiguration<Author>
+internal sealed class AuthorConfiguration : IEntityTypeConfiguration<Author>
 {
 	#region [Constants]
 	/// <summary>

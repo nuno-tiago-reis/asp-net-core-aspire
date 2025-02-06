@@ -15,6 +15,6 @@ public sealed record GetAuthorsQueryResult : QueryResult
 	/// <summary>
 	/// Gets or sets the author contracts.
 	/// </summary>
-	public required Page<AuthorSummaryContract>? AuthorContracts { get; set; }
+	public required Page<AuthorSummaryContract>? AuthorContracts { get; init; }
 	#endregion
 }

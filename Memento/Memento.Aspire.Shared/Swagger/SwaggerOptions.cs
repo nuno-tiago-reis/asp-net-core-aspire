@@ -9,22 +9,22 @@ public sealed record SwaggerOptions
 	/// <summary>
 	/// Gets or sets the title.
 	/// </summary>
-	public required string? Title { get; set; }
+	public required string? Title { get; init; }
 
 	/// <summary>
 	/// Gets or sets the version.
 	/// </summary>
-	public required string? Version { get; set; }
+	public required string? Version { get; init; }
 
 	/// <summary>
 	/// Gets or sets the endpoint.
 	/// </summary>
-	public required string? Endpoint { get; set; }
+	public required string? Endpoint { get; init; }
 
 	/// <summary>
 	/// Gets or sets the security options.
 	/// </summary>
-	public required SwaggerSecurityOptions? Security { get; set; }
+	public required SwaggerSecurityOptions? Security { get; init; }
 	#endregion
 }
 
@@ -37,12 +37,12 @@ public sealed record SwaggerSecurityOptions
 	/// <summary>
 	/// Gets or sets the openid connect options.
 	/// </summary>
-	public required SwaggerSecurityOpenIdConnectOptions OpenIdConnect { get; set; }
+	public required SwaggerSecurityOpenIdConnectOptions OpenIdConnect { get; init; }
 
 	/// <summary>
 	/// Gets or sets the oauth options.
 	/// </summary>
-	public required SwaggerSecurityOAuthOptions OAuth { get; set; }
+	public required SwaggerSecurityOAuthOptions OAuth { get; init; }
 	#endregion
 }
 
@@ -55,32 +55,32 @@ public sealed record SwaggerSecurityOpenIdConnectOptions
 	/// <summary>
 	/// Gets or sets the audience.
 	/// </summary>
-	public required string Audience { get; set; }
+	public required string Audience { get; init; }
 
 	/// <summary>
 	/// Gets or sets the authority.
 	/// </summary>
-	public required string Authority { get; set; }
+	public required string Authority { get; init; }
 
 	/// <summary>
 	/// Gets or sets the discovery url.
 	/// </summary>
-	public required string DiscoveryUrl { get; set; }
+	public required string DiscoveryUrl { get; init; }
 
 	/// <summary>
 	/// Gets or sets the client identifier.
 	/// </summary>
-	public required string ClientId { get; set; }
+	public required string ClientId { get; init; }
 
 	/// <summary>
 	/// Gets or sets the client secret.
 	/// </summary>
-	public required string ClientSecret { get; set; }
+	public required string ClientSecret { get; init; }
 
 	/// <summary>
 	/// Gets or sets the scopes (key-Value pairs composed of the scope name and description).
 	/// </summary>
-	public required List<SwaggerSecurityScopeOptions> Scopes { get; set; } = [];
+	public required List<SwaggerSecurityScopeOptions> Scopes { get; init; } = [];
 	#endregion
 }
 
@@ -93,37 +93,37 @@ public sealed record SwaggerSecurityOAuthOptions
 	/// <summary>
 	/// Gets or sets the audience.
 	/// </summary>
-	public required string Audience { get; set; }
+	public required string Audience { get; init; }
 
 	/// <summary>
 	/// Gets or sets the authority.
 	/// </summary>
-	public required string Authority { get; set; }
+	public required string Authority { get; init; }
 
 	/// <summary>
 	/// Gets or sets the authorization url.
 	/// </summary>
-	public required string AuthorizationUrl { get; set; }
+	public required string AuthorizationUrl { get; init; }
 
 	/// <summary>
 	/// Gets or sets the token url.
 	/// </summary>
-	public required string TokenUrl { get; set; }
+	public required string TokenUrl { get; init; }
 
 	/// <summary>
 	/// Gets or sets the client identifier.
 	/// </summary>
-	public required string ClientId { get; set; }
+	public required string ClientId { get; init; }
 
 	/// <summary>
 	/// Gets or sets the client secret.
 	/// </summary>
-	public required string ClientSecret { get; set; }
+	public required string ClientSecret { get; init; }
 
 	/// <summary>
 	/// Gets or sets the scopes (key-Value pairs composed of the scope name and description).
 	/// </summary>
-	public required List<SwaggerSecurityScopeOptions> Scopes { get; set; } = [];
+	public required List<SwaggerSecurityScopeOptions> Scopes { get; init; } = [];
 	#endregion
 }
 
@@ -136,11 +136,11 @@ public sealed record SwaggerSecurityScopeOptions
 	/// <summary>
 	/// Gets or sets the name.
 	/// </summary>
-	public required string Name { get; set; }
+	public required string Name { get; init; }
 
 	/// <summary>
 	/// Gets or sets the description.
 	/// </summary>
-	public required string Description { get; set; }
+	public required string Description { get; init; }
 	#endregion
 }

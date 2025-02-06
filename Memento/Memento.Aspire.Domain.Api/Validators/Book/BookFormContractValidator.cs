@@ -6,7 +6,7 @@ using Memento.Aspire.Domain.Service.Contracts.Book;
 /// <summary>
 /// Implements the 'Book' form contract validator.
 /// </summary>
-public sealed class BookFormContractValidator : AbstractValidator<BookFormContract>
+internal sealed class BookFormContractValidator : AbstractValidator<BookFormContract>
 {
 	#region [Constructor]
 	/// <summary>

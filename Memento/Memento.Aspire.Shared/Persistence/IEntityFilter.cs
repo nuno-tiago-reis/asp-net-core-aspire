@@ -15,21 +15,21 @@ public interface IEntityFilter<TEntityFilterOrderBy, TEntityFilterOrderDirection
 	/// <summary>
 	/// Gets or sets the page number.
 	/// </summary>
-	int PageNumber { get; set; }
+	int PageNumber { get; init; }
 
 	/// <summary>
 	/// Gets or sets the page size.
 	/// </summary>
-	int PageSize { get; set; }
+	int PageSize { get; init; }
 
 	/// <summary>
 	/// Gets or sets the order by Value.
 	/// </summary>
-	TEntityFilterOrderBy OrderBy { get; set; }
+	TEntityFilterOrderBy OrderBy { get; init; }
 
 	/// <summary>
 	/// Gets or sets the order direction Value.
 	/// </summary>
-	TEntityFilterOrderDirection OrderDirection { get; set; }
+	TEntityFilterOrderDirection OrderDirection { get; init; }
 	#endregion
 }

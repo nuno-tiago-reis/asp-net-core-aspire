@@ -14,6 +14,6 @@ public sealed record UpdateAuthorCommandResult : CommandResult
 	/// <summary>
 	/// Gets or sets the contract.
 	/// </summary>
-	public required AuthorDetailContract? AuthorContract { get; set; }
+	public required AuthorDetailContract? AuthorContract { get; init; }
 	#endregion
 }

@@ -55,17 +55,17 @@ public abstract class EntityModule : CarterModule
 		// Get the services
 		var localizer = httpContext.RequestServices.GetService<ILocalizer>()!;
 
-		// Build the message
+		// Prepare the response
 		var message = this.GetCreateSuccessfulMessage(localizer);
 
 		// Build the response
 		var response = new StandardResult<TContract>
 		{
 			Success = true,
-			Message = message,
 			StatusCode = StatusCodes.Status201Created,
-			Data = contract,
-			Errors = []
+			Message = message,
+			Errors = [],
+			Data = contract
 		};
 
 		return TypedResults.Created(new Uri($"{httpContext.Request.GetDisplayUrl()}/{contract.Id}"), response);
@@ -81,15 +81,15 @@ public abstract class EntityModule : CarterModule
 		// Get the services
 		var localizer = httpContext.RequestServices.GetService<ILocalizer>()!;
 
-		// Build the message
+		// Prepare the response
 		var message = this.GetUpdateSuccessfulMessage(localizer);
 
 		// Build the response
 		var response = new StandardResult
 		{
 			Success = true,
-			Message = message,
 			StatusCode = StatusCodes.Status200OK,
+			Message = message,
 			Errors = []
 		};
 
@@ -106,15 +106,15 @@ public abstract class EntityModule : CarterModule
 		// Get the services
 		var localizer = httpContext.RequestServices.GetService<ILocalizer>()!;
 
-		// Build the message
+		// Prepare the response
 		var message = this.GetDeleteSuccessfulMessage(localizer);
 
 		// Build the response
 		var response = new StandardResult
 		{
 			Success = true,
-			Message = message,
 			StatusCode = StatusCodes.Status200OK,
+			Message = message,
 			Errors = []
 		};
 
@@ -133,17 +133,17 @@ public abstract class EntityModule : CarterModule
 		// Get the services
 		var localizer = httpContext.RequestServices.GetService<ILocalizer>()!;
 
-		// Build the message
+		// Prepare the response
 		var message = this.GetGetSuccessfulMessage(localizer);
 
 		// Build the response
 		var response = new StandardResult<TContract>
 		{
 			Success = true,
-			Message = message,
 			StatusCode = StatusCodes.Status200OK,
-			Data = contract,
-			Errors = []
+			Message = message,
+			Errors = [],
+			Data = contract
 		};
 
 		return TypedResults.Ok(response);
@@ -161,17 +161,17 @@ public abstract class EntityModule : CarterModule
 		// Get the services
 		var localizer = httpContext.RequestServices.GetService<ILocalizer>()!;
 
-		// Build the message
+		// Prepare the response
 		var message = this.GetGetAllSuccessfulMessage(localizer);
 
 		// Build the response
 		var response = new StandardResult<Page<TContract>>
 		{
 			Success = true,
-			Message = message,
 			StatusCode = StatusCodes.Status200OK,
-			Data = contracts,
-			Errors = []
+			Message = message,
+			Errors = [],
+			Data = contracts
 		};
 
 		return TypedResults.Ok(response);
@@ -187,36 +187,41 @@ public abstract class EntityModule : CarterModule
 		// Get the services
 		var localizer = httpContext.RequestServices.GetService<ILocalizer>()!;
 
+		// Prepare the response
+		var statusCode = exception.GetStatusCode();
+		var message = exception.Message;
+		var errors = exception.Messages;
+
+		// Adjust the response when necessary
+		switch (exception.Type)
+		{
+			case StandardExceptionType.BadRequest:
+			{
+				message = this.GetValidationErrorMessage(localizer);
+				break;
+			}
+			case StandardExceptionType.NotFound:
+			{
+				break;
+			}
+			default:
+			{
+				message = this.GetUnexpectedErrorMessage(localizer);
+				errors = [message];
+				break;
+			}
+		}
+
 		// Build the response
 		var response = new StandardResult
 		{
 			Success = false,
-			Message = exception.Message,
-			StatusCode = exception.GetStatusCode(),
-			Errors = exception.Messages
+			StatusCode = statusCode,
+			Message = message,
+			Errors = errors
 		};
 
-		// Adjust the message when necessary
-		switch (response.StatusCode)
-		{
-			case StatusCodes.Status400BadRequest:
-			{
-				response.Message = this.GetValidationErrorMessage(localizer);
-
-				return TypedResults.BadRequest(response);
-			}
-			case StatusCodes.Status404NotFound:
-			{
-				return TypedResults.NotFound(response);
-			}
-			default:
-			{
-				response.Message = this.GetUnexpectedErrorMessage(localizer);
-				response.Errors = [response.Message];
-
-				return TypedResults.InternalServerError(response);
-			}
-		}
+		return TypedResults.Json(response, statusCode: statusCode);
 	}
 
 	/// <summary>
@@ -229,37 +234,42 @@ public abstract class EntityModule : CarterModule
 		// Get the services
 		var localizer = httpContext.RequestServices.GetService<ILocalizer>()!;
 
+		// Prepare the response
+		var statusCode = exception.GetStatusCode();
+		var message = exception.Message;
+		var errors = exception.Messages;
+
+		// Adjust the response when necessary
+		switch (exception.Type)
+		{
+			case StandardExceptionType.BadRequest:
+			{
+				message = this.GetValidationErrorMessage(localizer);
+				break;
+			}
+			case StandardExceptionType.NotFound:
+			{
+				break;
+			}
+			default:
+			{
+				message = this.GetUnexpectedErrorMessage(localizer);
+				errors = [message];
+				break;
+			}
+		}
+
 		// Build the response
 		var response = new StandardResult<TContract>
 		{
 			Success = false,
-			Message = exception.Message,
-			StatusCode = exception.GetStatusCode(),
-			Data = null,
-			Errors = exception.Messages
+			StatusCode = statusCode,
+			Message = message,
+			Errors = errors,
+			Data = null
 		};
 
-		// Adjust the message when necessary
-		switch (response.StatusCode)
-		{
-			case StatusCodes.Status400BadRequest:
-			{
-				response.Message = this.GetValidationErrorMessage(localizer);
-
-				return TypedResults.BadRequest(response);
-			}
-			case StatusCodes.Status404NotFound:
-			{
-				return TypedResults.NotFound(response);
-			}
-			default:
-			{
-				response.Message = this.GetUnexpectedErrorMessage(localizer);
-				response.Errors = [response.Message];
-
-				return TypedResults.InternalServerError(response);
-			}
-		}
+		return TypedResults.Json(response, statusCode: statusCode);
 	}
 
 	/// <summary>

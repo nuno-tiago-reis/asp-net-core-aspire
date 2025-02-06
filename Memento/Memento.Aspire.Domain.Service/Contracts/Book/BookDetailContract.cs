@@ -19,27 +19,27 @@ public sealed record BookDetailContract : EntityContract
 	/// </summary>
 	[Display(Name = nameof(SharedResources.BOOK_NAME), ResourceType = typeof(SharedResources))]
 	[JsonPropertyOrder(0)]
-	public required string Name { get; set; }
+	public required string Name { get; init; }
 
 	/// <summary>
 	/// The book's release date.
 	/// </summary>
 	[Display(Name = nameof(SharedResources.BOOK_RELEASEDATE), ResourceType = typeof(SharedResources))]
 	[JsonPropertyOrder(1)]
-	public required DateOnly ReleaseDate { get; set; }
+	public required DateOnly ReleaseDate { get; init; }
 
 	/// <summary>
 	/// The book's author.
 	/// </summary>
 	[Display(Name = nameof(SharedResources.BOOK_AUTHOR), ResourceType = typeof(SharedResources))]
 	[JsonPropertyOrder(2)]
-	public required AuthorSummaryContract Author { get; set; }
+	public required AuthorSummaryContract Author { get; init; }
 
 	/// <summary>
 	/// The book's genre.
 	/// </summary>
 	[Display(Name = nameof(SharedResources.BOOK_GENRE), ResourceType = typeof(SharedResources))]
 	[JsonPropertyOrder(3)]
-	public required GenreSummaryContract Genre { get; set; }
+	public required GenreSummaryContract Genre { get; init; }
 	#endregion
 }

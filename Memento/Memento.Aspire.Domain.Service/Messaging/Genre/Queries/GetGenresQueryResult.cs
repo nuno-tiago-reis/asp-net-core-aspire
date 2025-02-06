@@ -15,6 +15,6 @@ public sealed record GetGenresQueryResult : QueryResult
 	/// <summary>
 	/// Gets or sets the genre contracts.
 	/// </summary>
-	public required Page<GenreSummaryContract>? GenreContracts { get; set; }
+	public required Page<GenreSummaryContract>? GenreContracts { get; init; }
 	#endregion
 }

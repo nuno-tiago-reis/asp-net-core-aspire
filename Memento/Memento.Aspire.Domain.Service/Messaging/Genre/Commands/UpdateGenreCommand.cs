@@ -14,7 +14,7 @@ public sealed record UpdateGenreCommand : Command<UpdateGenreCommandResult>
 	/// <summary>
 	/// Gets or sets the genre identifier.
 	/// </summary>
-	public required Guid GenreId { get; set; }
+	public required Guid GenreId { get; init; }
 
 	/// <summary>
 	/// Gets or sets the identifier.
@@ -22,6 +22,6 @@ public sealed record UpdateGenreCommand : Command<UpdateGenreCommandResult>
 	/// <summary>
 	/// Gets or sets the contract.
 	/// </summary>
-	public required GenreFormContract GenreContract { get; set; }
+	public required GenreFormContract GenreContract { get; init; }
 	#endregion
 }

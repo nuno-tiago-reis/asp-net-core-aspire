@@ -14,11 +14,11 @@ public sealed record UpdateBookCommand : Command<UpdateBookCommandResult>
 	/// <summary>
 	/// Gets or sets the book identifier.
 	/// </summary>
-	public required Guid BookId { get; set; }
+	public required Guid BookId { get; init; }
 
 	/// <summary>
 	/// Gets or sets the book contract.
 	/// </summary>
-	public required BookFormContract BookContract { get; set; }
+	public required BookFormContract BookContract { get; init; }
 	#endregion
 }

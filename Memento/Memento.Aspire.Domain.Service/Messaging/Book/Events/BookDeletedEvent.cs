@@ -11,6 +11,6 @@ public sealed record BookDeletedEvent : Event
 	/// <summary>
 	/// The book identifier.
 	/// </summary>
-	public required Guid BookId { get; set; }
+	public required Guid BookId { get; init; }
 	#endregion
 }

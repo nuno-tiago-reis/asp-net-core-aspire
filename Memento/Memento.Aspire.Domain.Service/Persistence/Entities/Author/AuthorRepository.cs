@@ -22,7 +22,7 @@ using System.Linq.Expressions;
 /// <seealso cref="AuthorFilter" />
 /// <seealso cref="AuthorOrderBy" />
 /// <seealso cref="AuthorOrderDirection" />
-public sealed class AuthorRepository : EntityRepository<Author, AuthorFilter, AuthorOrderBy, AuthorOrderDirection>, IAuthorRepository
+internal sealed class AuthorRepository : EntityRepository<Author, AuthorFilter, AuthorOrderBy, AuthorOrderDirection>, IAuthorRepository
 {
 	#region [Constructors]
 	/// <summary>
@@ -32,7 +32,7 @@ public sealed class AuthorRepository : EntityRepository<Author, AuthorFilter, Au
 	/// <param name="context">The context.</param>
 	/// <param name="localizer">The localizer.</param>
 	/// <param name="logger">The logger.</param>
-	public AuthorRepository
+	internal AuthorRepository
 	(
 		DomainContext context,
 		ILocalizer localizer,

@@ -14,11 +14,11 @@ public sealed record UpdateAuthorCommand : Command<UpdateAuthorCommandResult>
 	/// <summary>
 	/// Gets or sets the author identifier.
 	/// </summary>
-	public required Guid AuthorId { get; set; }
+	public required Guid AuthorId { get; init; }
 
 	/// <summary>
 	/// Gets or sets the author contract.
 	/// </summary>
-	public required AuthorFormContract AuthorContract { get; set; }
+	public required AuthorFormContract AuthorContract { get; init; }
 	#endregion
 }

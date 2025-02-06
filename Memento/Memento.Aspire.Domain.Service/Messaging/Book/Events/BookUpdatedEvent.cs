@@ -12,6 +12,6 @@ public sealed record BookUpdatedEvent : Event
 	/// <summary>
 	/// The book.
 	/// </summary>
-	public required BookDetailContract Book { get; set; }
+	public required BookDetailContract Book { get; init; }
 	#endregion
 }

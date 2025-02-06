@@ -16,6 +16,6 @@ public abstract record EntityContract
 	/// </summary>
 	[Display(Name = nameof(SharedResources.ENTITY_ID), ResourceType = typeof(SharedResources))]
 	[JsonPropertyOrder(int.MinValue)]
-	public required Guid Id { get; set; }
+	public required Guid Id { get; init; }
 	#endregion
 }

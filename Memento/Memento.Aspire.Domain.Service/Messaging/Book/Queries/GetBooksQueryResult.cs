@@ -15,6 +15,6 @@ public sealed record GetBooksQueryResult : QueryResult
 	/// <summary>
 	/// Gets or sets the book contracts.
 	/// </summary>
-	public required Page<BookSummaryContract>? BookContracts { get; set; }
+	public required Page<BookSummaryContract>? BookContracts { get; init; }
 	#endregion
 }

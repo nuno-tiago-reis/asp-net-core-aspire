@@ -13,13 +13,12 @@ public sealed record AuthorFormContract
 	/// The author's name.
 	/// </summary>
 	[Display(Name = nameof(SharedResources.AUTHOR_NAME), ResourceType = typeof(SharedResources))]
-	public required string? Name { get; set; }
+	public required string? Name { get; init; }
 
 	/// <summary>
 	/// The author's birth date.
 	/// </summary>
-	[Required]
 	[Display(Name = nameof(SharedResources.AUTHOR_BIRTHDATE), ResourceType = typeof(SharedResources))]
-	public required DateOnly? BirthDate { get; set; }
+	public required DateOnly? BirthDate { get; init; }
 	#endregion
 }

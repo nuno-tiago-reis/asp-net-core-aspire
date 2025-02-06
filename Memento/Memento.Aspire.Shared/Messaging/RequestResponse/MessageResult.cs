@@ -12,21 +12,21 @@ public abstract record MessageResult
 	/// <summary>
 	/// Gets or sets the correlation identifier.
 	/// </summary>
-	public required Guid CorrelationId { get; set; }
+	public required Guid CorrelationId { get; init; }
 
 	/// <summary>
 	/// Gets or sets the user identifier.
 	/// </summary>
-	public required Guid UserId { get; set; }
+	public required Guid UserId { get; init; }
 
 	/// <summary>
 	/// Gets or sets whether the messages processing was successful.
 	/// </summary>
-	public required bool Success { get; set; }
+	public required bool Success { get; init; }
 
 	/// <summary>
 	/// Gets or sets the exception.
 	/// </summary>
-	public required StandardException? Exception { get; set; }
+	public required StandardException? Exception { get; init; }
 	#endregion
 }

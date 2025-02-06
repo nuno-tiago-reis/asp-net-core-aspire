@@ -11,23 +11,23 @@ using Microsoft.EntityFrameworkCore;
 /// </summary>
 ///
 /// <seealso cref="EntityContext"/>
-public sealed class DomainContext : EntityContext
+internal sealed class DomainContext : EntityContext
 {
 	#region [Properties]
 		/// <summary>
 	/// Gets or sets the 'Author' database set.
 	/// </summary>
-	public DbSet<Author> Authors { get; set; }
+	public DbSet<Author> Authors { get; init; }
 
 	/// <summary>
 	/// Gets or sets the 'Book' database set.
 	/// </summary>
-	public DbSet<Book> Books { get; set; }
+	public DbSet<Book> Books { get; init; }
 
 	/// <summary>
 	/// Gets or sets the 'Genre' database set.
 	/// </summary>
-	public DbSet<Genre> Genres { get; set; }
+	public DbSet<Genre> Genres { get; init; }
 	#endregion
 
 	#region [Constructors]

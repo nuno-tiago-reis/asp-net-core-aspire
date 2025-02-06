@@ -13,6 +13,6 @@ public sealed record DeleteGenreCommand : Command<DeleteGenreCommandResult>
 	/// <summary>
 	/// Gets or sets the genre identifier.
 	/// </summary>
-	public required Guid GenreId { get; set; }
+	public required Guid GenreId { get; init; }
 	#endregion
 }

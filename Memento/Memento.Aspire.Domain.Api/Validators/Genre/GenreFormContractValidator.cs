@@ -6,7 +6,7 @@ using Memento.Aspire.Domain.Service.Contracts.Genre;
 /// <summary>
 /// Implements the 'Genre' form contract validator.
 /// </summary>
-public sealed class GenreFormContractValidator : AbstractValidator<GenreFormContract>
+internal sealed class GenreFormContractValidator : AbstractValidator<GenreFormContract>
 {
 	#region [Constructor]
 	/// <summary>

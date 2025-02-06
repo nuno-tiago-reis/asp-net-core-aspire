@@ -16,6 +16,6 @@ public sealed record GenreSummaryContract : EntityContract
 	/// </summary>
 	[Display(Name = nameof(SharedResources.GENRE_NAME), ResourceType = typeof(SharedResources))]
 	[JsonPropertyOrder(0)]
-	public required string Name { get; set; }
+	public required string Name { get; init; }
 	#endregion
 }

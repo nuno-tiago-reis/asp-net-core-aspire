@@ -14,6 +14,6 @@ public sealed record UpdateBookCommandResult : CommandResult
 	/// <summary>
 	/// Gets or sets the contract.
 	/// </summary>
-	public required BookDetailContract? BookContract { get; set; }
+	public required BookDetailContract? BookContract { get; init; }
 	#endregion
 }

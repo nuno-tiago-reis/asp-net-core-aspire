@@ -22,7 +22,7 @@ using System.Linq.Expressions;
 /// <seealso cref="BookFilter" />
 /// <seealso cref="BookOrderBy" />
 /// <seealso cref="BookOrderDirection" />
-public sealed class BookRepository : EntityRepository<Book, BookFilter, BookOrderBy, BookOrderDirection>, IBookRepository
+internal sealed class BookRepository : EntityRepository<Book, BookFilter, BookOrderBy, BookOrderDirection>, IBookRepository
 {
 	#region [Constructors]
 	/// <summary>
@@ -32,7 +32,7 @@ public sealed class BookRepository : EntityRepository<Book, BookFilter, BookOrde
 	/// <param name="context">The context.</param>
 	/// <param name="localizer">The localizer.</param>
 	/// <param name="logger">The logger.</param>
-	public BookRepository
+	internal BookRepository
 	(
 		DomainContext context,
 		ILocalizer localizer,

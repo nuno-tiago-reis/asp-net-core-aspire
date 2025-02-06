@@ -15,22 +15,22 @@ public abstract record EntityFilter<TEntityFilterOrderBy, TEntityFilterOrderDire
 	/// <summary>
 	/// Gets or sets the page number.
 	/// </summary>
-	public required int PageNumber { get; set; }
+	public required int PageNumber { get; init; }
 
 	/// <summary>
 	/// Gets or sets the page size.
 	/// </summary>
-	public required int PageSize { get; set; }
+	public required int PageSize { get; init; }
 
 	/// <summary>
 	/// Gets or sets the order by Value.
 	/// </summary>
-	public required TEntityFilterOrderBy OrderBy { get; set; }
+	public required TEntityFilterOrderBy OrderBy { get; init; }
 
 	/// <summary>
 	/// Gets or sets the order direction Value.
 	/// </summary>
-	public required TEntityFilterOrderDirection OrderDirection { get; set; }
+	public required TEntityFilterOrderDirection OrderDirection { get; init; }
 	#endregion
 
 	#region [Constructors]

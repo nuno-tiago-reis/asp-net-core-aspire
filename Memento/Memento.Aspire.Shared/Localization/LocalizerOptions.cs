@@ -21,11 +21,11 @@ public sealed record LocalizerOptions
 	/// <summary>
 	/// Gets or sets the default culture.
 	/// </summary>
-	public required string DefaultCulture { get; set; }
+	public required string DefaultCulture { get; init; }
 
 	/// <summary>
 	/// Gets or sets the supported cultures.
 	/// </summary>
-	public required string[] SupportedCultures { get; set; }
+	public required string[] SupportedCultures { get; init; }
 	#endregion
 }

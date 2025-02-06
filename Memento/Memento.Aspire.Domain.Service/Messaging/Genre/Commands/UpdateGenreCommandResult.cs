@@ -14,6 +14,6 @@ public sealed record UpdateGenreCommandResult : CommandResult
 	/// <summary>
 	/// Gets or sets the contract.
 	/// </summary>
-	public required GenreDetailContract? GenreContract { get; set; }
+	public required GenreDetailContract? GenreContract { get; init; }
 	#endregion
 }

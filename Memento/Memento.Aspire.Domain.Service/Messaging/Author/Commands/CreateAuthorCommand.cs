@@ -14,6 +14,6 @@ public sealed record CreateAuthorCommand : Command<CreateAuthorCommandResult>
 	/// <summary>
 	/// Gets or sets the author contract.
 	/// </summary>
-	public required AuthorFormContract AuthorContract { get; set; }
+	public required AuthorFormContract AuthorContract { get; init; }
 	#endregion
 }

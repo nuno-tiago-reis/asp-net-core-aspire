@@ -13,6 +13,6 @@ public sealed record DeleteBookCommand : Command<DeleteBookCommandResult>
 	/// <summary>
 	/// Gets or sets the book identifier.
 	/// </summary>
-	public required Guid BookId { get; set; }
+	public required Guid BookId { get; init; }
 	#endregion
 }

@@ -14,6 +14,6 @@ public sealed record CreateBookCommand : Command<CreateBookCommandResult>
 	/// <summary>
 	/// Gets or sets the book contract.
 	/// </summary>
-	public required BookFormContract BookContract { get; set; }
+	public required BookFormContract BookContract { get; init; }
 	#endregion
 }

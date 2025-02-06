@@ -14,6 +14,6 @@ public sealed record GetBooksQuery : Query<GetBooksQueryResult>
 	/// <summary>
 	/// Gets or sets the book filter contract.
 	/// </summary>
-	public required BookFilterContract BookFilterContract { get; set; }
+	public required BookFilterContract BookFilterContract { get; init; }
 	#endregion
 }

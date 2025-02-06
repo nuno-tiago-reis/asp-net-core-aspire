@@ -12,11 +12,11 @@ public abstract record Message<TMessageResult> : Request<TMessageResult> where T
 	/// <summary>
 	/// Gets or sets the correlation identifier.
 	/// </summary>
-	public required Guid CorrelationId { get; set; }
+	public required Guid CorrelationId { get; init; }
 
 	/// <summary>
 	/// Gets or sets the user identifier.
 	/// </summary>
-	public required Guid UserId { get; set; }
+	public required Guid UserId { get; init; }
 	#endregion
 }

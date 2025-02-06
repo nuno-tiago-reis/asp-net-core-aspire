@@ -22,7 +22,7 @@ using System.Linq.Expressions;
 /// <seealso cref="GenreFilter" />
 /// <seealso cref="GenreOrderBy" />
 /// <seealso cref="GenreOrderDirection" />
-public sealed class GenreRepository : EntityRepository<Genre, GenreFilter, GenreOrderBy, GenreOrderDirection>, IGenreRepository
+internal sealed class GenreRepository : EntityRepository<Genre, GenreFilter, GenreOrderBy, GenreOrderDirection>, IGenreRepository
 {
 	#region [Constructors]
 	/// <summary>
@@ -32,7 +32,7 @@ public sealed class GenreRepository : EntityRepository<Genre, GenreFilter, Genre
 	/// <param name="context">The context.</param>
 	/// <param name="localizer">The localizer.</param>
 	/// <param name="logger">The logger.</param>
-	public GenreRepository
+	internal GenreRepository
 	(
 		DomainContext context,
 		ILocalizer localizer,
