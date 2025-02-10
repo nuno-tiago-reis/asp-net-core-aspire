@@ -1,5 +1,6 @@
 ﻿namespace Memento.Aspire.Domain.Service.Messaging.Author.Events;
 
+using Memento.Aspire.Domain.Service.Contracts.Author;
 using Memento.Aspire.Shared.Messaging.Events;
 
 /// <summary>
@@ -9,8 +10,8 @@ public sealed record AuthorDeletedEvent : Event
 {
 	#region [Properties]
 	/// <summary>
-	/// The author identifier.
+	/// The author.
 	/// </summary>
-	public required Guid AuthorId { get; init; }
+	public required AuthorDetailContract Author { get; init; }
 	#endregion
 }

@@ -1,7 +1,7 @@
 ﻿namespace Memento.Aspire.Domain.Service.Messaging.Book.Queries;
 
 using Memento.Aspire.Domain.Service.Contracts.Book;
-using Memento.Aspire.Shared.Messaging.RequestResponse;
+using Memento.Aspire.Shared.Messaging.Messages;
 using Memento.Aspire.Shared.Pagination;
 
 /// <summary>

@@ -42,7 +42,7 @@ public abstract class EventHandler<TEvent> : IConsumer<TEvent>
 		using var _ = this.Logger.BeginScope("{CorrelationId}", context.Message.CorrelationId);
 
 		// Log the event
-		this.Logger.LogInformation("Processing {Message}", context.Message);
+		this.Logger.LogInformation("Handling {Message}", context.Message);
 
 		try
 		{
@@ -50,12 +50,12 @@ public abstract class EventHandler<TEvent> : IConsumer<TEvent>
 			await this.HandleEventAsync(context.Message, context.CancellationToken);
 
 			// Log the event
-			this.Logger.LogInformation("Processed Successfully {Message}", context.Message);
+			this.Logger.LogInformation("Handled Successfully {Message}", context.Message);
 		}
 		catch (Exception exception)
 		{
 			// Log the event
-			this.Logger.LogError("Processed Unsuccessfully {Message} {Exception}", context.Message, exception);
+			this.Logger.LogError("Handled Unsuccessfully {Message} {Exception}", context.Message, exception);
 		}
 	}
 

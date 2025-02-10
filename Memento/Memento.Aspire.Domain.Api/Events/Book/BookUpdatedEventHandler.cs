@@ -37,12 +37,14 @@ public sealed class BookUpdatedEventHandler : EventHandler<BookUpdatedEvent>
 	/// <inheritdoc />
 	protected override async Task HandleEventAsync(BookUpdatedEvent @event, CancellationToken cancellationToken = default)
 	{
-		// Define the duration
-		var absoluteDuration = TimeSpan.FromMinutes(5);
-		var slidingDuration = TimeSpan.FromMinutes(5);
-
 		// Store the book in the cache
-		await this.Cache.SetAsync(CacheEntries.GetBookCacheKey(@event.Book.Id), @event.Book, absoluteDuration, slidingDuration, cancellationToken);
+		await this.Cache.SetAsync(CacheEntries.GetBookCacheKey(@event.Book.Id), @event.Book, cancellationToken: cancellationToken);
+
+		// Remove the book's author from the cache
+		await this.Cache.RemoveAsync(CacheEntries.GetAuthorCacheKey(@event.Book.Author.Id), cancellationToken);
+
+		// Remove the book's genre from the cache
+		await this.Cache.RemoveAsync(CacheEntries.GetAuthorCacheKey(@event.Book.Genre.Id), cancellationToken);
 	}
 	#endregion
 }

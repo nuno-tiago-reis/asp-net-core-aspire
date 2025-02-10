@@ -40,7 +40,7 @@ public interface IEntityRepository<TEntity, TEntityFilter, TEntityOrderBy, TEnti
 	///
 	/// <param name="entityId">The entity identifier.</param>
 	/// <param name="cancellationToken">The cancellation token.</param>
-	Task DeleteAsync(Guid entityId, CancellationToken cancellationToken = default);
+	Task<TEntity> DeleteAsync(Guid entityId, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// Gets the entity matching the given id.

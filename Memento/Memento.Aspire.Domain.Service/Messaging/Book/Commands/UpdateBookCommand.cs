@@ -1,7 +1,7 @@
 ﻿namespace Memento.Aspire.Domain.Service.Messaging.Book.Commands;
 
 using Memento.Aspire.Domain.Service.Contracts.Book;
-using Memento.Aspire.Shared.Messaging.RequestResponse;
+using Memento.Aspire.Shared.Messaging.Messages;
 
 /// <summary>
 /// Implements the interface for the update Book command.

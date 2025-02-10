@@ -85,7 +85,7 @@ public sealed class GenreController : EntityController
 			CorrelationId = correlationId,
 			UserId = this.HttpContext.GetUserId()
 		};
-		var commandResult = await this.MessageBus.RequestResponseViaBusAsync<CreateGenreCommand, CreateGenreCommandResult>(command, this.HttpContext.RequestAborted);
+		var commandResult = await this.MessageBus.DispatchMessageViaBusAsync<CreateGenreCommand, CreateGenreCommandResult>(command, this.HttpContext.RequestAborted);
 
 		if (commandResult.Success)
 		{
@@ -131,7 +131,7 @@ public sealed class GenreController : EntityController
 			CorrelationId = correlationId,
 			UserId = this.HttpContext.GetUserId()
 		};
-		var commandResult = await this.MessageBus.RequestResponseViaBusAsync<UpdateGenreCommand, UpdateGenreCommandResult>(command, this.HttpContext.RequestAborted);
+		var commandResult = await this.MessageBus.DispatchMessageViaBusAsync<UpdateGenreCommand, UpdateGenreCommandResult>(command, this.HttpContext.RequestAborted);
 
 		if (commandResult.Success)
 		{
@@ -166,7 +166,7 @@ public sealed class GenreController : EntityController
 			CorrelationId = correlationId,
 			UserId = this.HttpContext.GetUserId()
 		};
-		var commandResult = await this.MessageBus.RequestResponseViaBusAsync<DeleteGenreCommand, DeleteGenreCommandResult>(command, this.HttpContext.RequestAborted);
+		var commandResult = await this.MessageBus.DispatchMessageViaBusAsync<DeleteGenreCommand, DeleteGenreCommandResult>(command, this.HttpContext.RequestAborted);
 
 		if (commandResult.Success)
 		{
@@ -209,7 +209,7 @@ public sealed class GenreController : EntityController
 			CorrelationId = correlationId,
 			UserId = this.HttpContext.GetUserId()
 		};
-		var queryResult = await this.MessageBus.RequestResponseViaBusAsync<GetGenreQuery, GetGenreQueryResult>(query, this.HttpContext.RequestAborted);
+		var queryResult = await this.MessageBus.DispatchMessageViaBusAsync<GetGenreQuery, GetGenreQueryResult>(query, this.HttpContext.RequestAborted);
 
 		if (queryResult.Success)
 		{
@@ -242,7 +242,7 @@ public sealed class GenreController : EntityController
 			CorrelationId = correlationId,
 			UserId = this.HttpContext.GetUserId()
 		};
-		var queryResult = await this.MessageBus.RequestResponseViaBusAsync<GetGenresQuery, GetGenresQueryResult>(query, this.HttpContext.RequestAborted);
+		var queryResult = await this.MessageBus.DispatchMessageViaBusAsync<GetGenresQuery, GetGenresQueryResult>(query, this.HttpContext.RequestAborted);
 
 		if (queryResult.Success)
 		{

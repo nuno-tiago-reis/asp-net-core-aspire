@@ -46,12 +46,6 @@ public sealed class BookRepository : EntityRepository<Book, BookFilter, BookOrde
 
 	#region [Methods] Entity
 	/// <inheritdoc />
-	protected override void NormalizeEntity(Book book)
-	{
-		// Intentionally Empty.
-	}
-
-	/// <inheritdoc />
 	protected override void ValidateEntity(Book book)
 	{
 		var errorMessages = new List<string>();
@@ -78,7 +72,7 @@ public sealed class BookRepository : EntityRepository<Book, BookFilter, BookOrde
 		}
 
 		// Duplicate fields
-		if (this.Entities.Any((book) => book.Id != book.Id && book.Name.Equals(book.Name, StringComparison.OrdinalIgnoreCase)))
+		if (this.Entities.Any((book) => book.Id != book.Id && book.Name.Equals(book.Name)))
 		{
 			errorMessages.Add(this.GetEntityHasDuplicateFieldCombinationMessage((book) => book.Name, (book) => book.ReleaseDate));
 		}

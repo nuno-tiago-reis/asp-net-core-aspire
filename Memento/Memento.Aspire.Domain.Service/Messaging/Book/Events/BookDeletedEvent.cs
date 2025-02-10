@@ -1,5 +1,6 @@
 ﻿namespace Memento.Aspire.Domain.Service.Messaging.Book.Events;
 
+using Memento.Aspire.Domain.Service.Contracts.Book;
 using Memento.Aspire.Shared.Messaging.Events;
 
 /// <summary>
@@ -9,8 +10,8 @@ public sealed record BookDeletedEvent : Event
 {
 	#region [Properties]
 	/// <summary>
-	/// The book identifier.
+	/// The book.
 	/// </summary>
-	public required Guid BookId { get; init; }
+	public required BookDetailContract Book { get; init; }
 	#endregion
 }

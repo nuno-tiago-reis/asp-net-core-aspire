@@ -129,7 +129,7 @@ public sealed class GenreModule : EntityModule
 			CorrelationId = correlationId,
 			UserId = httpContext.GetUserId()
 		};
-		var commandResult = await messageBus.RequestResponseViaBusAsync<CreateGenreCommand, CreateGenreCommandResult>(command, cancellationToken);
+		var commandResult = await messageBus.DispatchMessageViaBusAsync<CreateGenreCommand, CreateGenreCommandResult>(command, cancellationToken);
 
 		if (commandResult.Success)
 		{
@@ -174,7 +174,7 @@ public sealed class GenreModule : EntityModule
 			CorrelationId = correlationId,
 			UserId = httpContext.GetUserId()
 		};
-		var commandResult = await messageBus.RequestResponseViaBusAsync<UpdateGenreCommand, UpdateGenreCommandResult>(command, cancellationToken);
+		var commandResult = await messageBus.DispatchMessageViaBusAsync<UpdateGenreCommand, UpdateGenreCommandResult>(command, cancellationToken);
 
 		if (commandResult.Success)
 		{
@@ -208,7 +208,7 @@ public sealed class GenreModule : EntityModule
 			CorrelationId = correlationId,
 			UserId = httpContext.GetUserId()
 		};
-		var commandResult = await messageBus.RequestResponseViaBusAsync<DeleteGenreCommand, DeleteGenreCommandResult>(command, cancellationToken);
+		var commandResult = await messageBus.DispatchMessageViaBusAsync<DeleteGenreCommand, DeleteGenreCommandResult>(command, cancellationToken);
 
 		if (commandResult.Success)
 		{
@@ -252,7 +252,7 @@ public sealed class GenreModule : EntityModule
 			CorrelationId = correlationId,
 			UserId = httpContext.GetUserId()
 		};
-		var queryResult = await messageBus.RequestResponseViaBusAsync<GetGenreQuery, GetGenreQueryResult>(query, cancellationToken);
+		var queryResult = await messageBus.DispatchMessageViaBusAsync<GetGenreQuery, GetGenreQueryResult>(query, cancellationToken);
 
 		if (queryResult.Success)
 		{
@@ -286,7 +286,7 @@ public sealed class GenreModule : EntityModule
 			CorrelationId = correlationId,
 			UserId = httpContext.GetUserId()
 		};
-		var queryResult = await messageBus.RequestResponseViaBusAsync<GetGenresQuery, GetGenresQueryResult>(query, cancellationToken);
+		var queryResult = await messageBus.DispatchMessageViaBusAsync<GetGenresQuery, GetGenresQueryResult>(query, cancellationToken);
 
 		if (queryResult.Success)
 		{

@@ -37,12 +37,8 @@ public sealed class GenreCreatedEventHandler : EventHandler<GenreCreatedEvent>
 	/// <inheritdoc />
 	protected override async Task HandleEventAsync(GenreCreatedEvent @event, CancellationToken cancellationToken = default)
 	{
-		// Define the duration
-		var absoluteDuration = TimeSpan.FromMinutes(5);
-		var slidingDuration = TimeSpan.FromMinutes(5);
-
 		// Store the genre in the cache
-		await this.Cache.SetAsync(CacheEntries.GetGenreCacheKey(@event.Genre.Id), @event.Genre, absoluteDuration, slidingDuration, cancellationToken);
+		await this.Cache.SetAsync(CacheEntries.GetGenreCacheKey(@event.Genre.Id), @event.Genre, cancellationToken: cancellationToken);
 	}
 	#endregion
 }

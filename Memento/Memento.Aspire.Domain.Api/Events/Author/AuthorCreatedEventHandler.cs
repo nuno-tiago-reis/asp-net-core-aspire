@@ -37,12 +37,8 @@ public sealed class AuthorCreatedEventHandler : EventHandler<AuthorCreatedEvent>
 	/// <inheritdoc />
 	protected override async Task HandleEventAsync(AuthorCreatedEvent @event, CancellationToken cancellationToken = default)
 	{
-		// Define the duration
-		var absoluteDuration = TimeSpan.FromMinutes(5);
-		var slidingDuration = TimeSpan.FromMinutes(5);
-
 		// Store the author in the cache
-		await this.Cache.SetAsync(CacheEntries.GetAuthorCacheKey(@event.Author.Id), @event.Author, absoluteDuration, slidingDuration, cancellationToken);
+		await this.Cache.SetAsync(CacheEntries.GetAuthorCacheKey(@event.Author.Id), @event.Author, cancellationToken: cancellationToken);
 	}
 	#endregion
 }

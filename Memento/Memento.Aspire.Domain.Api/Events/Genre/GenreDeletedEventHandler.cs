@@ -38,7 +38,7 @@ public sealed class GenreDeletedEventHandler : EventHandler<GenreDeletedEvent>
 	protected override async Task HandleEventAsync(GenreDeletedEvent @event, CancellationToken cancellationToken = default)
 	{
 		// Remove the genre from the cache
-		await this.Cache.RemoveAsync(CacheEntries.GetGenreCacheKey(@event.GenreId), cancellationToken);
+		await this.Cache.RemoveAsync(CacheEntries.GetGenreCacheKey(@event.Genre.Id), cancellationToken);
 	}
 	#endregion
 }

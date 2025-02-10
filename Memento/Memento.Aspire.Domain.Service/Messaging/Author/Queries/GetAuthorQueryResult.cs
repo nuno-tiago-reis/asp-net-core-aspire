@@ -1,7 +1,7 @@
 ﻿namespace Memento.Aspire.Domain.Service.Messaging.Author.Queries;
 
 using Memento.Aspire.Domain.Service.Contracts.Author;
-using Memento.Aspire.Shared.Messaging.RequestResponse;
+using Memento.Aspire.Shared.Messaging.Messages;
 
 /// <summary>
 /// Implements the interface for the get author query result.

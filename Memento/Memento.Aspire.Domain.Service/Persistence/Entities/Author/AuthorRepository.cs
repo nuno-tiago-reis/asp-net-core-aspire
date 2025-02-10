@@ -46,12 +46,6 @@ public sealed class AuthorRepository : EntityRepository<Author, AuthorFilter, Au
 
 	#region [Methods] Entity
 	/// <inheritdoc />
-	protected override void NormalizeEntity(Author author)
-	{
-		// Intentionally Empty.
-	}
-
-	/// <inheritdoc />
 	protected override void ValidateEntity(Author author)
 	{
 		var errorMessages = new List<string>();
@@ -68,7 +62,7 @@ public sealed class AuthorRepository : EntityRepository<Author, AuthorFilter, Au
 		}
 
 		// Duplicate fields
-		if (this.Entities.Any((author) => author.Id != author.Id && author.Name.Equals(author.Name, StringComparison.OrdinalIgnoreCase) && author.BirthDate == author.BirthDate))
+		if (this.Entities.Any((author) => author.Id != author.Id && author.Name.Equals(author.Name) && author.BirthDate == author.BirthDate))
 		{
 			errorMessages.Add(this.GetEntityHasDuplicateFieldCombinationMessage((author) => author.Name, (author) => author.BirthDate));
 		}

@@ -1,6 +1,6 @@
 ﻿namespace Memento.Aspire.Domain.Service.Messaging.Book.Commands;
 
-using Memento.Aspire.Shared.Messaging.RequestResponse;
+using Memento.Aspire.Shared.Messaging.Messages;
 
 /// <summary>
 /// Implements the interface for the delete Book command.

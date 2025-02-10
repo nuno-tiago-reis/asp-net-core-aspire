@@ -4,7 +4,7 @@ using AutoMapper;
 using Memento.Aspire.Domain.Service.Contracts.Genre;
 using Memento.Aspire.Domain.Service.Persistence.Entities.Genre;
 using Memento.Aspire.Shared.Exceptions;
-using Memento.Aspire.Shared.Messaging.RequestResponse;
+using Memento.Aspire.Shared.Messaging.Messages;
 using System.Threading;
 
 /// <summary>

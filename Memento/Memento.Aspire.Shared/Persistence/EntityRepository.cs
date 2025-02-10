@@ -78,8 +78,6 @@ public abstract class EntityRepository<TEntity, TEntityFilter, TEntityOrderBy, T
 	/// <param name="cancellationToken">The cancellation token.</param>
 	public virtual async Task<TEntity> CreateAsync(TEntity entity, CancellationToken cancellationToken = default)
 	{
-		// Normalize the entity
-		this.NormalizeEntity(entity);
 		// Validate the entity
 		this.ValidateEntity(entity);
 
@@ -92,9 +90,12 @@ public abstract class EntityRepository<TEntity, TEntityFilter, TEntityOrderBy, T
 		this.Context.Entry(entity).State = EntityState.Detached;
 
 		// Ensure the navigation properties are included
-		entity = await this.GetAsync(entity.Id, cancellationToken);
+		var databaseEntity = await this.GetAsync(entity.Id, cancellationToken);
 
-		return entity;
+		// Detach the entity before returning it
+		this.Context.Entry(databaseEntity).State = EntityState.Detached;
+
+		return databaseEntity;
 	}
 
 	/// <summary>
@@ -106,10 +107,11 @@ public abstract class EntityRepository<TEntity, TEntityFilter, TEntityOrderBy, T
 	public virtual async Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
 	{
 		// Check if the entity exists
-		var databaseEntity = await this.TryGetEntityAsync(entity.Id, cancellationToken);
+		var databaseEntity = await this.GetAsync(entity.Id, cancellationToken);
 
-		// Normalize the entity
-		this.NormalizeEntity(entity);
+		// Detach the entity before returning it
+		this.Context.Entry(databaseEntity).State = EntityState.Detached;
+
 		// Validate the entity
 		this.ValidateEntity(entity);
 
@@ -118,13 +120,7 @@ public abstract class EntityRepository<TEntity, TEntityFilter, TEntityOrderBy, T
 		// Save the changes
 		await this.Context.SaveChangesAsync(cancellationToken);
 
-		// Detach the entity before returning it
-		this.Context.Entry(entity).State = EntityState.Detached;
-
-		// Ensure the navigation properties are included
-		entity = await this.GetAsync(entity.Id, cancellationToken);
-
-		return entity;
+		return databaseEntity;
 	}
 
 	/// <summary>
@@ -133,15 +129,20 @@ public abstract class EntityRepository<TEntity, TEntityFilter, TEntityOrderBy, T
 	///
 	/// <param name="entityId">The entity identifier.</param>
 	/// <param name="cancellationToken">The cancellation token.</param>
-	public virtual async Task DeleteAsync(Guid entityId, CancellationToken cancellationToken = default)
+	public virtual async Task<TEntity> DeleteAsync(Guid entityId, CancellationToken cancellationToken = default)
 	{
 		// Check if the entity exists
-		var entity = await this.TryGetEntityAsync(entityId, cancellationToken);
+		var databaseEntity = await this.GetAsync(entityId, cancellationToken);
+
+		// Detach the entity before returning it
+		this.Context.Entry(databaseEntity).State = EntityState.Detached;
 
 		// Delete the entity
-		this.Entities.Remove(entity);
+		this.Entities.Remove(databaseEntity);
 		// Save the changes
 		await this.Context.SaveChangesAsync(cancellationToken);
+
+		return databaseEntity;
 	}
 
 	/// <summary>
@@ -215,13 +216,6 @@ public abstract class EntityRepository<TEntity, TEntityFilter, TEntityOrderBy, T
 	#endregion
 
 	#region [Methods] Changes
-	/// <summary>
-	/// Normalizes the entity.
-	/// </summary>
-	///
-	/// <param name="entity">The entity.</param>
-	protected abstract void NormalizeEntity(TEntity entity);
-
 	/// <summary>
 	/// Validates the entity.
 	/// </summary>

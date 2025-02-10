@@ -6,7 +6,7 @@ using Memento.Aspire.Domain.Service.Messaging.Book.Events;
 using Memento.Aspire.Domain.Service.Persistence.Entities.Book;
 using Memento.Aspire.Shared.Exceptions;
 using Memento.Aspire.Shared.Messaging;
-using Memento.Aspire.Shared.Messaging.RequestResponse;
+using Memento.Aspire.Shared.Messaging.Messages;
 using System.Threading;
 
 /// <summary>
@@ -70,7 +70,7 @@ public sealed class CreateBookCommandHandler : CommandHandler<CreateBookCommand,
 		};
 
 		// Publish the event
-		await this.MessageBus.FireAndForgetViaBusAsync(createdEvent, cancellationToken);
+		await this.MessageBus.DispatchEventViaBusAsync(createdEvent, cancellationToken);
 
 		// Build the result
 		return new CreateBookCommandResult

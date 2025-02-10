@@ -1,6 +1,6 @@
 ﻿namespace Memento.Aspire.Domain.Service.Messaging.Genre.Commands;
 
-using Memento.Aspire.Shared.Messaging.RequestResponse;
+using Memento.Aspire.Shared.Messaging.Messages;
 
 /// <summary>
 /// Implements the interface for the delete genre command.

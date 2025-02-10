@@ -6,7 +6,7 @@ using Memento.Aspire.Domain.Service.Messaging.Genre.Events;
 using Memento.Aspire.Domain.Service.Persistence.Entities.Genre;
 using Memento.Aspire.Shared.Exceptions;
 using Memento.Aspire.Shared.Messaging;
-using Memento.Aspire.Shared.Messaging.RequestResponse;
+using Memento.Aspire.Shared.Messaging.Messages;
 using System.Threading;
 
 /// <summary>
@@ -70,7 +70,7 @@ public sealed class CreateGenreCommandHandler : CommandHandler<CreateGenreComman
 		};
 
 		// Publish the event
-		await this.MessageBus.FireAndForgetViaBusAsync(createdEvent, cancellationToken);
+		await this.MessageBus.DispatchEventViaBusAsync(createdEvent, cancellationToken);
 
 		// Build the result
 		return new CreateGenreCommandResult

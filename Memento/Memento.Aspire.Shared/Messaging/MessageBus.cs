@@ -2,13 +2,15 @@
 
 using MassTransit;
 using MassTransit.Mediator;
-using Memento.Aspire.Shared.Messaging.RequestResponse;
+using Memento.Aspire.Shared.Messaging.Messages;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
+using Event = Events.Event;
+
 /// <summary>
-/// Implements the generic interface for a message bus.
-/// Provides methods to send messages and receive message results.
+/// Implements the generic interface for a event bus.
+/// Provides methods to send messages and receive event results.
 /// </summary>
 public sealed class MessageBus : IMessageBus
 {
@@ -46,26 +48,38 @@ public sealed class MessageBus : IMessageBus
 
 	#region [Methods]
 	/// <summary>
-	/// Dispatches a message and returns a message result.
+	/// Dispatches an event using the event bus (fire and forget).
 	/// </summary>
 	///
-	/// <param name="message">The message.</param>
+	/// <param name="event">The event.</param>
 	/// <param name="cancellationToken">The cancellation token.</param>
-	public async Task FireAndForgetViaBusAsync<TMessage>(TMessage message, CancellationToken cancellationToken = default)
-		where TMessage : class
+	public async Task DispatchEventViaBusAsync<TEvent>(TEvent @event, CancellationToken cancellationToken = default)
+		where TEvent : Event
 	{
-		await this.Bus.Publish(message, cancellationToken);
+		await this.Bus.Publish(@event, cancellationToken);
 	}
 
 	/// <summary>
-	/// Dispatches a message and returns a message result.
+	/// Dispatches an event using the mediator (fire and forget).
+	/// </summary>
+	///
+	/// <param name="event">The event.</param>
+	/// <param name="cancellationToken">The cancellation token.</param>
+	public async Task DispatchEventViaMediatorAsync<TEvent>(TEvent @event, CancellationToken cancellationToken = default)
+		where TEvent : Event
+	{
+		await this.Mediator.Publish(@event, cancellationToken);
+	}
+
+	/// <summary>
+	/// Dispatches a message and returns a message result using the message bus (request response).
 	/// </summary>
 	///
 	/// <param name="message">The message.</param>
 	/// <param name="cancellationToken">The cancellation token.</param>
 	///
 	/// <returns>A message result</returns>
-	public async Task<TMessageResult> RequestResponseViaBusAsync<TMessage, TMessageResult>(TMessage message, CancellationToken cancellationToken = default)
+	public async Task<TMessageResult> DispatchMessageViaBusAsync<TMessage, TMessageResult>(TMessage message, CancellationToken cancellationToken = default)
 		where TMessage : Message<TMessageResult>
 		where TMessageResult : MessageResult
 	{
@@ -83,26 +97,14 @@ public sealed class MessageBus : IMessageBus
 	}
 
 	/// <summary>
-	/// Dispatches a message and returns a message result.
-	/// </summary>
-	///
-	/// <param name="message">The message.</param>
-	/// <param name="cancellationToken">The cancellation token.</param>
-	public async Task FireAndForgetViaMediatorAsync<TMessage>(TMessage message, CancellationToken cancellationToken = default)
-		where TMessage : class
-	{
-		await this.Mediator.Publish(message, cancellationToken);
-	}
-
-	/// <summary>
-	/// Dispatches a message and returns a message result.
+	/// Dispatches a message and returns a message result using the message mediator (request response).
 	/// </summary>
 	///
 	/// <param name="message">The message.</param>
 	/// <param name="cancellationToken">The cancellation token.</param>
 	///
 	/// <returns>A message result</returns>
-	public async Task<TMessageResult> RequestResponseViaMediatorAsync<TMessage, TMessageResult>(TMessage message, CancellationToken cancellationToken = default)
+	public async Task<TMessageResult> DispatchMessageViaMediatorAsync<TMessage, TMessageResult>(TMessage message, CancellationToken cancellationToken = default)
 		where TMessage : Message<TMessageResult>
 		where TMessageResult : MessageResult
 	{

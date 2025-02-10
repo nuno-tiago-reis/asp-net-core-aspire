@@ -129,7 +129,7 @@ public sealed class BookModule : EntityModule
 			CorrelationId = correlationId,
 			UserId = httpContext.GetUserId()
 		};
-		var commandResult = await messageBus.RequestResponseViaBusAsync<CreateBookCommand, CreateBookCommandResult>(command, cancellationToken);
+		var commandResult = await messageBus.DispatchMessageViaBusAsync<CreateBookCommand, CreateBookCommandResult>(command, cancellationToken);
 
 		if (commandResult.Success)
 		{
@@ -174,7 +174,7 @@ public sealed class BookModule : EntityModule
 			CorrelationId = correlationId,
 			UserId = httpContext.GetUserId()
 		};
-		var commandResult = await messageBus.RequestResponseViaBusAsync<UpdateBookCommand, UpdateBookCommandResult>(command, cancellationToken);
+		var commandResult = await messageBus.DispatchMessageViaBusAsync<UpdateBookCommand, UpdateBookCommandResult>(command, cancellationToken);
 
 		if (commandResult.Success)
 		{
@@ -208,7 +208,7 @@ public sealed class BookModule : EntityModule
 			CorrelationId = correlationId,
 			UserId = httpContext.GetUserId()
 		};
-		var commandResult = await messageBus.RequestResponseViaBusAsync<DeleteBookCommand, DeleteBookCommandResult>(command, cancellationToken);
+		var commandResult = await messageBus.DispatchMessageViaBusAsync<DeleteBookCommand, DeleteBookCommandResult>(command, cancellationToken);
 
 		if (commandResult.Success)
 		{
@@ -252,7 +252,7 @@ public sealed class BookModule : EntityModule
 			CorrelationId = correlationId,
 			UserId = httpContext.GetUserId()
 		};
-		var queryResult = await messageBus.RequestResponseViaBusAsync<GetBookQuery, GetBookQueryResult>(query, cancellationToken);
+		var queryResult = await messageBus.DispatchMessageViaBusAsync<GetBookQuery, GetBookQueryResult>(query, cancellationToken);
 
 		if (queryResult.Success)
 		{
@@ -286,7 +286,7 @@ public sealed class BookModule : EntityModule
 			CorrelationId = correlationId,
 			UserId = httpContext.GetUserId()
 		};
-		var queryResult = await messageBus.RequestResponseViaBusAsync<GetBooksQuery, GetBooksQueryResult>(query, cancellationToken);
+		var queryResult = await messageBus.DispatchMessageViaBusAsync<GetBooksQuery, GetBooksQueryResult>(query, cancellationToken);
 
 		if (queryResult.Success)
 		{

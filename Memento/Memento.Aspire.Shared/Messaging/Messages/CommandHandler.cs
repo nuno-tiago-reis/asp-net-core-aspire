@@ -1,4 +1,4 @@
-﻿namespace Memento.Aspire.Shared.Messaging.RequestResponse;
+﻿namespace Memento.Aspire.Shared.Messaging.Messages;
 
 using Microsoft.Extensions.Logging;
 

@@ -38,7 +38,7 @@ public sealed class AuthorDeletedEventHandler : EventHandler<AuthorDeletedEvent>
 	protected override async Task HandleEventAsync(AuthorDeletedEvent @event, CancellationToken cancellationToken = default)
 	{
 		// Remove the author from the cache
-		await this.Cache.RemoveAsync(CacheEntries.GetAuthorCacheKey(@event.AuthorId), cancellationToken);
+		await this.Cache.RemoveAsync(CacheEntries.GetAuthorCacheKey(@event.Author.Id), cancellationToken);
 	}
 	#endregion
 }

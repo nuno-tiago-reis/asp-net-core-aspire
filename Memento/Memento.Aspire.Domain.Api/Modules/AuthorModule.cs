@@ -129,7 +129,7 @@ public sealed class AuthorModule : EntityModule
 			CorrelationId = correlationId,
 			UserId = httpContext.GetUserId()
 		};
-		var commandResult = await messageBus.RequestResponseViaBusAsync<CreateAuthorCommand, CreateAuthorCommandResult>(command, cancellationToken);
+		var commandResult = await messageBus.DispatchMessageViaBusAsync<CreateAuthorCommand, CreateAuthorCommandResult>(command, cancellationToken);
 
 		if (commandResult.Success)
 		{
@@ -174,7 +174,7 @@ public sealed class AuthorModule : EntityModule
 			CorrelationId = correlationId,
 			UserId = httpContext.GetUserId()
 		};
-		var commandResult = await messageBus.RequestResponseViaBusAsync<UpdateAuthorCommand, UpdateAuthorCommandResult>(command, cancellationToken);
+		var commandResult = await messageBus.DispatchMessageViaBusAsync<UpdateAuthorCommand, UpdateAuthorCommandResult>(command, cancellationToken);
 
 		if (commandResult.Success)
 		{
@@ -208,7 +208,7 @@ public sealed class AuthorModule : EntityModule
 			CorrelationId = correlationId,
 			UserId = httpContext.GetUserId()
 		};
-		var commandResult = await messageBus.RequestResponseViaBusAsync<DeleteAuthorCommand, DeleteAuthorCommandResult>(command, cancellationToken);
+		var commandResult = await messageBus.DispatchMessageViaBusAsync<DeleteAuthorCommand, DeleteAuthorCommandResult>(command, cancellationToken);
 
 		if (commandResult.Success)
 		{
@@ -252,7 +252,7 @@ public sealed class AuthorModule : EntityModule
 			CorrelationId = correlationId,
 			UserId = httpContext.GetUserId()
 		};
-		var queryResult = await messageBus.RequestResponseViaBusAsync<GetAuthorQuery, GetAuthorQueryResult>(query, cancellationToken);
+		var queryResult = await messageBus.DispatchMessageViaBusAsync<GetAuthorQuery, GetAuthorQueryResult>(query, cancellationToken);
 
 		if (queryResult.Success)
 		{
@@ -286,7 +286,7 @@ public sealed class AuthorModule : EntityModule
 			CorrelationId = correlationId,
 			UserId = httpContext.GetUserId()
 		};
-		var queryResult = await messageBus.RequestResponseViaBusAsync<GetAuthorsQuery, GetAuthorsQueryResult>(query, cancellationToken);
+		var queryResult = await messageBus.DispatchMessageViaBusAsync<GetAuthorsQuery, GetAuthorsQueryResult>(query, cancellationToken);
 
 		if (queryResult.Success)
 		{

@@ -1,4 +1,4 @@
-﻿namespace Memento.Aspire.Shared.Messaging.RequestResponse;
+﻿namespace Memento.Aspire.Shared.Messaging.Messages;
 
 using MassTransit;
 using Memento.Aspire.Shared.Exceptions;
@@ -44,7 +44,7 @@ public abstract class MessageHandler<TMessage, TMessageResult> : IConsumer<TMess
 		using var _ = this.Logger.BeginScope("{CorrelationId}", context.Message.CorrelationId);
 
 		// Log the message
-		this.Logger.LogInformation("Processing {Message}", context.Message);
+		this.Logger.LogInformation("Handling {Message}", context.Message);
 
 		try
 		{
@@ -55,7 +55,7 @@ public abstract class MessageHandler<TMessage, TMessageResult> : IConsumer<TMess
 			await context.RespondAsync(messageResult);
 
 			// Log the message
-			this.Logger.LogInformation("Processed Successfully {Message} {MessageResult}", context.Message, messageResult);
+			this.Logger.LogInformation("Handled Successfully {Message} {MessageResult}", context.Message, messageResult);
 		}
 		catch (Exception exception)
 		{
@@ -72,7 +72,7 @@ public abstract class MessageHandler<TMessage, TMessageResult> : IConsumer<TMess
 			await context.RespondAsync(messageResult);
 
 			// Log the message
-			this.Logger.LogError("Processed Unsuccessfully {Message} {MessageResult} {Exception}", context.Message, messageResult, exception);
+			this.Logger.LogError("Handled Unsuccessfully {Message} {MessageResult} {Exception}", context.Message, messageResult, exception);
 		}
 	}
 

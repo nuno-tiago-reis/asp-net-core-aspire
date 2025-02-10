@@ -1,20 +1,27 @@
 ﻿namespace Memento.Aspire.Domain.Service.Messaging.Genre.Commands;
 
+using AutoMapper;
+using Memento.Aspire.Domain.Service.Contracts.Genre;
 using Memento.Aspire.Domain.Service.Messaging.Genre.Events;
 using Memento.Aspire.Domain.Service.Persistence.Entities.Genre;
 using Memento.Aspire.Shared.Exceptions;
 using Memento.Aspire.Shared.Messaging;
-using Memento.Aspire.Shared.Messaging.RequestResponse;
+using Memento.Aspire.Shared.Messaging.Messages;
 using System.Threading;
 
 /// <summary>
-/// Implements the interface for the delete genre command handler.
+/// Implements the interface for the delete deletedGenre command handler.
 /// </summary>
 ///
 /// <seealso cref="CommandHandler{T, T}" />
 public sealed class DeleteGenreCommandHandler : CommandHandler<DeleteGenreCommand, DeleteGenreCommandResult>
 {
 	#region [Properties]
+	/// <summary>
+	/// The mapper.
+	/// </summary>
+	private readonly IMapper Mapper;
+
 	/// <summary>
 	/// The message bus.
 	/// </summary>
@@ -32,10 +39,12 @@ public sealed class DeleteGenreCommandHandler : CommandHandler<DeleteGenreComman
 	/// </summary>
 	///
 	/// <param name="logger">The logger.</param>
+	/// <param name="mapper">The mapper.</param>
 	/// <param name="messageBus">The message bus.</param>
 	/// <param name="repository">The repository.</param>
-	public DeleteGenreCommandHandler(ILogger<DeleteGenreCommandHandler> logger, IMessageBus messageBus, IGenreRepository repository) : base(logger)
+	public DeleteGenreCommandHandler(ILogger<DeleteGenreCommandHandler> logger, IMapper mapper, IMessageBus messageBus, IGenreRepository repository) : base(logger)
 	{
+		this.Mapper = mapper;
 		this.MessageBus = messageBus;
 		this.Repository = repository;
 	}
@@ -46,18 +55,18 @@ public sealed class DeleteGenreCommandHandler : CommandHandler<DeleteGenreComman
 	protected override async Task<DeleteGenreCommandResult> HandleMessageAsync(DeleteGenreCommand command, CancellationToken cancellationToken = default)
 	{
 		// Delete the genre
-		await this.Repository.DeleteAsync(command.GenreId, cancellationToken);
+		var deletedGenre = await this.Repository.DeleteAsync(command.GenreId, cancellationToken);
 
 		// Create the event
-		var createdEvent = new GenreDeletedEvent
+		var deletedEvent = new GenreDeletedEvent
 		{
-			GenreId = command.GenreId,
+			Genre = this.Mapper.Map<GenreDetailContract>(deletedGenre),
 			CorrelationId = command.CorrelationId,
 			Timestamp = DateTimeOffset.UtcNow
 		};
 
 		// Publish the event
-		await this.MessageBus.FireAndForgetViaBusAsync(createdEvent, cancellationToken);
+		await this.MessageBus.DispatchEventViaBusAsync(deletedEvent, cancellationToken);
 
 		// Build the result
 		return new DeleteGenreCommandResult

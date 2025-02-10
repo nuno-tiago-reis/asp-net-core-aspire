@@ -85,7 +85,7 @@ public sealed class BookController : EntityController
 			CorrelationId = correlationId,
 			UserId = this.HttpContext.GetUserId()
 		};
-		var commandResult = await this.MessageBus.RequestResponseViaBusAsync<CreateBookCommand, CreateBookCommandResult>(command, this.HttpContext.RequestAborted);
+		var commandResult = await this.MessageBus.DispatchMessageViaBusAsync<CreateBookCommand, CreateBookCommandResult>(command, this.HttpContext.RequestAborted);
 
 		if (commandResult.Success)
 		{
@@ -131,7 +131,7 @@ public sealed class BookController : EntityController
 			CorrelationId = correlationId,
 			UserId = this.HttpContext.GetUserId()
 		};
-		var commandResult = await this.MessageBus.RequestResponseViaBusAsync<UpdateBookCommand, UpdateBookCommandResult>(command, this.HttpContext.RequestAborted);
+		var commandResult = await this.MessageBus.DispatchMessageViaBusAsync<UpdateBookCommand, UpdateBookCommandResult>(command, this.HttpContext.RequestAborted);
 
 		if (commandResult.Success)
 		{
@@ -166,7 +166,7 @@ public sealed class BookController : EntityController
 			CorrelationId = correlationId,
 			UserId = this.HttpContext.GetUserId()
 		};
-		var commandResult = await this.MessageBus.RequestResponseViaBusAsync<DeleteBookCommand, DeleteBookCommandResult>(command, this.HttpContext.RequestAborted);
+		var commandResult = await this.MessageBus.DispatchMessageViaBusAsync<DeleteBookCommand, DeleteBookCommandResult>(command, this.HttpContext.RequestAborted);
 
 		if (commandResult.Success)
 		{
@@ -209,7 +209,7 @@ public sealed class BookController : EntityController
 			CorrelationId = correlationId,
 			UserId = this.HttpContext.GetUserId()
 		};
-		var queryResult = await this.MessageBus.RequestResponseViaBusAsync<GetBookQuery, GetBookQueryResult>(query, this.HttpContext.RequestAborted);
+		var queryResult = await this.MessageBus.DispatchMessageViaBusAsync<GetBookQuery, GetBookQueryResult>(query, this.HttpContext.RequestAborted);
 
 		if (queryResult.Success)
 		{
@@ -242,7 +242,7 @@ public sealed class BookController : EntityController
 			CorrelationId = correlationId,
 			UserId = this.HttpContext.GetUserId()
 		};
-		var queryResult = await this.MessageBus.RequestResponseViaBusAsync<GetBooksQuery, GetBooksQueryResult>(query, this.HttpContext.RequestAborted);
+		var queryResult = await this.MessageBus.DispatchMessageViaBusAsync<GetBooksQuery, GetBooksQueryResult>(query, this.HttpContext.RequestAborted);
 
 		if (queryResult.Success)
 		{

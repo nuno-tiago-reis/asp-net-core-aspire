@@ -1,10 +1,12 @@
 ﻿namespace Memento.Aspire.Domain.Service.Messaging.Author.Commands;
 
+using AutoMapper;
+using Memento.Aspire.Domain.Service.Contracts.Author;
 using Memento.Aspire.Domain.Service.Messaging.Author.Events;
 using Memento.Aspire.Domain.Service.Persistence.Entities.Author;
 using Memento.Aspire.Shared.Exceptions;
 using Memento.Aspire.Shared.Messaging;
-using Memento.Aspire.Shared.Messaging.RequestResponse;
+using Memento.Aspire.Shared.Messaging.Messages;
 using System.Threading;
 
 /// <summary>
@@ -15,6 +17,11 @@ using System.Threading;
 public sealed class DeleteAuthorCommandHandler : CommandHandler<DeleteAuthorCommand, DeleteAuthorCommandResult>
 {
 	#region [Properties]
+	/// <summary>
+	/// The mapper.
+	/// </summary>
+	private readonly IMapper Mapper;
+
 	/// <summary>
 	/// The message bus.
 	/// </summary>
@@ -32,10 +39,12 @@ public sealed class DeleteAuthorCommandHandler : CommandHandler<DeleteAuthorComm
 	/// </summary>
 	///
 	/// <param name="logger">The logger.</param>
+	/// <param name="mapper">The mapper.</param>
 	/// <param name="messageBus">The message bus.</param>
 	/// <param name="repository">The repository.</param>
-	public DeleteAuthorCommandHandler(ILogger<DeleteAuthorCommandHandler> logger, IMessageBus messageBus, IAuthorRepository repository) : base(logger)
+	public DeleteAuthorCommandHandler(ILogger<DeleteAuthorCommandHandler> logger, IMapper mapper, IMessageBus messageBus, IAuthorRepository repository) : base(logger)
 	{
+		this.Mapper = mapper;
 		this.MessageBus = messageBus;
 		this.Repository = repository;
 	}
@@ -46,18 +55,18 @@ public sealed class DeleteAuthorCommandHandler : CommandHandler<DeleteAuthorComm
 	protected override async Task<DeleteAuthorCommandResult> HandleMessageAsync(DeleteAuthorCommand command, CancellationToken cancellationToken = default)
 	{
 		// Delete the author
-		await this.Repository.DeleteAsync(command.AuthorId, cancellationToken);
+		var deletedAuthor = await this.Repository.DeleteAsync(command.AuthorId, cancellationToken);
 
 		// Create the event
-		var createdEvent = new AuthorDeletedEvent
+		var deletedEvent = new AuthorDeletedEvent
 		{
-			AuthorId = command.AuthorId,
+			Author = this.Mapper.Map<AuthorDetailContract>(deletedAuthor),
 			CorrelationId = command.CorrelationId,
 			Timestamp = DateTimeOffset.UtcNow
 		};
 
 		// Publish the event
-		await this.MessageBus.FireAndForgetViaBusAsync(createdEvent, cancellationToken);
+		await this.MessageBus.DispatchEventViaBusAsync(deletedEvent, cancellationToken);
 
 		// Build the result
 		return new DeleteAuthorCommandResult

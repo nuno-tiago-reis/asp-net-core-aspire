@@ -38,7 +38,13 @@ public sealed class BookDeletedEventHandler : EventHandler<BookDeletedEvent>
 	protected override async Task HandleEventAsync(BookDeletedEvent @event, CancellationToken cancellationToken = default)
 	{
 		// Remove the book from the cache
-		await this.Cache.RemoveAsync(CacheEntries.GetBookCacheKey(@event.BookId), cancellationToken);
+		await this.Cache.RemoveAsync(CacheEntries.GetBookCacheKey(@event.Book.Id), cancellationToken);
+
+		// Remove the book's author from the cache
+		await this.Cache.RemoveAsync(CacheEntries.GetAuthorCacheKey(@event.Book.Author.Id), cancellationToken);
+
+		// Remove the book's genre from the cache
+		await this.Cache.RemoveAsync(CacheEntries.GetAuthorCacheKey(@event.Book.Genre.Id), cancellationToken);
 	}
 	#endregion
 }

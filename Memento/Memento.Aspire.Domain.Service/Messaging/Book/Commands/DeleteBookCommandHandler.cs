@@ -1,10 +1,12 @@
 ﻿namespace Memento.Aspire.Domain.Service.Messaging.Book.Commands;
 
+using AutoMapper;
+using Memento.Aspire.Domain.Service.Contracts.Book;
 using Memento.Aspire.Domain.Service.Messaging.Book.Events;
 using Memento.Aspire.Domain.Service.Persistence.Entities.Book;
 using Memento.Aspire.Shared.Exceptions;
 using Memento.Aspire.Shared.Messaging;
-using Memento.Aspire.Shared.Messaging.RequestResponse;
+using Memento.Aspire.Shared.Messaging.Messages;
 using System.Threading;
 
 /// <summary>
@@ -15,6 +17,11 @@ using System.Threading;
 public sealed class DeleteBookCommandHandler : CommandHandler<DeleteBookCommand, DeleteBookCommandResult>
 {
 	#region [Properties]
+	/// <summary>
+	/// The mapper.
+	/// </summary>
+	private readonly IMapper Mapper;
+
 	/// <summary>
 	/// The message bus.
 	/// </summary>
@@ -32,10 +39,12 @@ public sealed class DeleteBookCommandHandler : CommandHandler<DeleteBookCommand,
 	/// </summary>
 	///
 	/// <param name="logger">The logger.</param>
+	/// <param name="mapper">The mapper.</param>
 	/// <param name="messageBus">The message bus.</param>
 	/// <param name="repository">The repository.</param>
-	public DeleteBookCommandHandler(ILogger<DeleteBookCommandHandler> logger, IMessageBus messageBus, IBookRepository repository) : base(logger)
+	public DeleteBookCommandHandler(ILogger<DeleteBookCommandHandler> logger, IMapper mapper, IMessageBus messageBus, IBookRepository repository) : base(logger)
 	{
+		this.Mapper = mapper;
 		this.MessageBus = messageBus;
 		this.Repository = repository;
 	}
@@ -46,18 +55,18 @@ public sealed class DeleteBookCommandHandler : CommandHandler<DeleteBookCommand,
 	protected override async Task<DeleteBookCommandResult> HandleMessageAsync(DeleteBookCommand command, CancellationToken cancellationToken = default)
 	{
 		// Delete the book
-		await this.Repository.DeleteAsync(command.BookId, cancellationToken);
+		var deletedBook = await this.Repository.DeleteAsync(command.BookId, cancellationToken);
 
 		// Create the event
 		var createdEvent = new BookDeletedEvent
 		{
-			BookId = command.BookId,
+			Book = this.Mapper.Map<BookDetailContract>(deletedBook),
 			CorrelationId = command.CorrelationId,
 			Timestamp = DateTimeOffset.UtcNow
 		};
 
 		// Publish the event
-		await this.MessageBus.FireAndForgetViaBusAsync(createdEvent, cancellationToken);
+		await this.MessageBus.DispatchEventViaBusAsync(createdEvent, cancellationToken);
 
 		// Build the result
 		return new DeleteBookCommandResult

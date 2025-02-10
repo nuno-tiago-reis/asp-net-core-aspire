@@ -46,12 +46,6 @@ public sealed class GenreRepository : EntityRepository<Genre, GenreFilter, Genre
 
 	#region [Methods] Entity
 	/// <inheritdoc />
-	protected override void NormalizeEntity(Genre genre)
-	{
-		// Intentionally Empty.
-	}
-
-	/// <inheritdoc />
 	protected override void ValidateEntity(Genre genre)
 	{
 		var errorMessages = new List<string>();
@@ -63,7 +57,7 @@ public sealed class GenreRepository : EntityRepository<Genre, GenreFilter, Genre
 		}
 
 		// Duplicate fields
-		if (this.Entities.Any((genre) => genre.Id != genre.Id && genre.Name.Equals(genre.Name, StringComparison.OrdinalIgnoreCase)))
+		if (this.Entities.Any((genre) => genre.Id != genre.Id && genre.Name.Equals(genre.Name)))
 		{
 			errorMessages.Add(this.GetEntityHasDuplicateFieldMessage((genre) => genre.Name));
 		}

@@ -85,7 +85,7 @@ public sealed class AuthorController : EntityController
 			CorrelationId = correlationId,
 			UserId = this.HttpContext.GetUserId()
 		};
-		var commandResult = await this.MessageBus.RequestResponseViaBusAsync<CreateAuthorCommand, CreateAuthorCommandResult>(command, this.HttpContext.RequestAborted);
+		var commandResult = await this.MessageBus.DispatchMessageViaBusAsync<CreateAuthorCommand, CreateAuthorCommandResult>(command, this.HttpContext.RequestAborted);
 
 		if (commandResult.Success)
 		{
@@ -131,7 +131,7 @@ public sealed class AuthorController : EntityController
 			CorrelationId = correlationId,
 			UserId = this.HttpContext.GetUserId()
 		};
-		var commandResult = await this.MessageBus.RequestResponseViaBusAsync<UpdateAuthorCommand, UpdateAuthorCommandResult>(command, this.HttpContext.RequestAborted);
+		var commandResult = await this.MessageBus.DispatchMessageViaBusAsync<UpdateAuthorCommand, UpdateAuthorCommandResult>(command, this.HttpContext.RequestAborted);
 
 		if (commandResult.Success)
 		{
@@ -166,7 +166,7 @@ public sealed class AuthorController : EntityController
 			CorrelationId = correlationId,
 			UserId = this.HttpContext.GetUserId()
 		};
-		var commandResult = await this.MessageBus.RequestResponseViaBusAsync<DeleteAuthorCommand, DeleteAuthorCommandResult>(command, this.HttpContext.RequestAborted);
+		var commandResult = await this.MessageBus.DispatchMessageViaBusAsync<DeleteAuthorCommand, DeleteAuthorCommandResult>(command, this.HttpContext.RequestAborted);
 
 		if (commandResult.Success)
 		{
@@ -209,7 +209,7 @@ public sealed class AuthorController : EntityController
 			CorrelationId = correlationId,
 			UserId = this.HttpContext.GetUserId()
 		};
-		var queryResult = await this.MessageBus.RequestResponseViaBusAsync<GetAuthorQuery, GetAuthorQueryResult>(query, this.HttpContext.RequestAborted);
+		var queryResult = await this.MessageBus.DispatchMessageViaBusAsync<GetAuthorQuery, GetAuthorQueryResult>(query, this.HttpContext.RequestAborted);
 
 		if (queryResult.Success)
 		{
@@ -242,7 +242,7 @@ public sealed class AuthorController : EntityController
 			CorrelationId = correlationId,
 			UserId = this.HttpContext.GetUserId()
 		};
-		var queryResult = await this.MessageBus.RequestResponseViaBusAsync<GetAuthorsQuery, GetAuthorsQueryResult>(query, this.HttpContext.RequestAborted);
+		var queryResult = await this.MessageBus.DispatchMessageViaBusAsync<GetAuthorsQuery, GetAuthorsQueryResult>(query, this.HttpContext.RequestAborted);
 
 		if (queryResult.Success)
 		{
