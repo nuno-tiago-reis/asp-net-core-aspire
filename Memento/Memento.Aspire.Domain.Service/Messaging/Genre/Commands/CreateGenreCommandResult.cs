@@ -1,7 +1,7 @@
 ﻿namespace Memento.Aspire.Domain.Service.Messaging.Genre.Commands;
 
 using Memento.Aspire.Domain.Service.Contracts.Genre;
-using Memento.Aspire.Shared.Messaging.Messages;
+using Memento.Aspire.Core.Messaging.Messages;
 
 /// <summary>
 /// Implements the interface for the create genre command result.

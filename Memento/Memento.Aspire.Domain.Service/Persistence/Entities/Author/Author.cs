@@ -1,7 +1,7 @@
 ﻿namespace Memento.Aspire.Domain.Service.Persistence.Entities.Author;
 
 using Memento.Aspire.Domain.Service.Persistence.Entities.Book;
-using Memento.Aspire.Shared.Persistence;
+using Memento.Aspire.Core.Persistence;
 
 /// <summary>
 /// Implements the 'Author' entity.

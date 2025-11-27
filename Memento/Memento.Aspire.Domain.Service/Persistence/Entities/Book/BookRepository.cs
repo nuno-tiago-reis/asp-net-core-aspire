@@ -1,10 +1,10 @@
 ﻿namespace Memento.Aspire.Domain.Service.Persistence.Entities.Book;
 
-using Memento.Aspire.Shared.Exceptions;
-using Memento.Aspire.Shared.Extensions;
-using Memento.Aspire.Shared.Localization;
-using Memento.Aspire.Shared.Persistence;
-using Memento.Aspire.Shared.Resources;
+using Memento.Aspire.Core.Exceptions;
+using Memento.Aspire.Core.Extensions;
+using Memento.Aspire.Core.Localization;
+using Memento.Aspire.Core.Persistence;
+using Memento.Aspire.Core.Resources;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -72,7 +72,7 @@ public sealed class BookRepository : EntityRepository<Book, BookFilter, BookOrde
 		}
 
 		// Duplicate fields
-		if (this.Entities.Any((book) => book.Id != book.Id && book.Name.Equals(book.Name)))
+		if (this.Entities.Any((existingBook) => existingBook.Id != book.Id && existingBook.Name == book.Name))
 		{
 			errorMessages.Add(this.GetEntityHasDuplicateFieldCombinationMessage((book) => book.Name, (book) => book.ReleaseDate));
 		}
@@ -118,107 +118,107 @@ public sealed class BookRepository : EntityRepository<Book, BookFilter, BookOrde
 	}
 
 	/// <inheritdoc />
-	protected override IQueryable<Book> FilterQueryable(IQueryable<Book> bookQueryable, BookFilter bookFilter)
+	protected override IQueryable<Book> FilterQueryable(IQueryable<Book> queryable, BookFilter filter)
 	{
 		// Apply the filter
-		if (string.IsNullOrWhiteSpace(bookFilter.Name) == false)
+		if (string.IsNullOrWhiteSpace(filter.Name) == false)
 		{
-			var name = bookFilter.Name;
+			var name = filter.Name;
 
-			bookQueryable = bookQueryable.Where((book) => EF.Functions.Like(book.Name, $"%{name}%"));
+			queryable = queryable.Where((book) => EF.Functions.Like(book.Name, $"%{name}%"));
 		}
 
-		if (string.IsNullOrWhiteSpace(bookFilter.Author) == false)
+		if (string.IsNullOrWhiteSpace(filter.Author) == false)
 		{
-			var authorName = bookFilter.Author;
+			var authorName = filter.Author;
 
-			bookQueryable = bookQueryable.Where((book) => EF.Functions.Like(book.Author!.Name, $"%{authorName}%"));
+			queryable = queryable.Where((book) => EF.Functions.Like(book.Author!.Name, $"%{authorName}%"));
 		}
 
-		if (string.IsNullOrWhiteSpace(bookFilter.Genre) == false)
+		if (string.IsNullOrWhiteSpace(filter.Genre) == false)
 		{
-			var genreName = bookFilter.Genre;
+			var genreName = filter.Genre;
 
-			bookQueryable = bookQueryable.Where((book) => EF.Functions.Like(book.Genre!.Name, $"%{genreName}%"));
+			queryable = queryable.Where((book) => EF.Functions.Like(book.Genre!.Name, $"%{genreName}%"));
 		}
 
-		if (bookFilter.ReleasedAfter is not null)
+		if (filter.ReleasedAfter is not null)
 		{
-			var releaseDate = bookFilter.ReleasedAfter.Value;
+			var releaseDate = filter.ReleasedAfter.Value;
 
-			bookQueryable = bookQueryable.Where((book) => book.ReleaseDate >= releaseDate);
+			queryable = queryable.Where((book) => book.ReleaseDate >= releaseDate);
 		}
 
-		if (bookFilter.ReleasedBefore is not null)
+		if (filter.ReleasedBefore is not null)
 		{
-			var releaseDate = bookFilter.ReleasedBefore.Value;
+			var releaseDate = filter.ReleasedBefore.Value;
 
-			bookQueryable = bookQueryable.Where((book) => book.ReleaseDate <= releaseDate);
+			queryable = queryable.Where((book) => book.ReleaseDate <= releaseDate);
 		}
 
 		// Apply the order
-		switch (bookFilter.OrderBy)
+		switch (filter.OrderBy)
 		{
 			case BookOrderBy.Id:
 			{
-				bookQueryable = OrderQueryable(bookQueryable, bookFilter, (book) => book.Id);
+				queryable = OrderQueryable(queryable, filter, (book) => book.Id);
 				break;
 			}
 			case BookOrderBy.CreatedAt:
 			{
-				bookQueryable = OrderQueryable(bookQueryable, bookFilter, (book) => book.CreatedAt);
+				queryable = OrderQueryable(queryable, filter, (book) => book.CreatedAt);
 				break;
 			}
 			case BookOrderBy.UpdatedAt:
 			{
-				bookQueryable = OrderQueryable(bookQueryable, bookFilter, (book) => book.UpdatedAt);
+				queryable = OrderQueryable(queryable, filter, (book) => book.UpdatedAt);
 				break;
 			}
 			case BookOrderBy.Name:
 			{
-				bookQueryable = OrderQueryable(bookQueryable, bookFilter, (book) => book.Name);
+				queryable = OrderQueryable(queryable, filter, (book) => book.Name);
 				break;
 			}
 			case BookOrderBy.ReleaseDate:
 			{
-				bookQueryable = OrderQueryable(bookQueryable, bookFilter, (book) => book.ReleaseDate);
+				queryable = OrderQueryable(queryable, filter, (book) => book.ReleaseDate);
 				break;
 			}
 			case BookOrderBy.Author:
 			{
-				bookQueryable = OrderQueryable(bookQueryable, bookFilter, (book) => book.Author!.Name);
+				queryable = OrderQueryable(queryable, filter, (book) => book.Author!.Name);
 				break;
 			}
 			case BookOrderBy.Genre:
 			{
-				bookQueryable = OrderQueryable(bookQueryable, bookFilter, (book) => book.Genre!.Name);
+				queryable = OrderQueryable(queryable, filter, (book) => book.Genre!.Name);
 				break;
 			}
 			default:
 			{
-				throw new InvalidEnumArgumentException(nameof(bookFilter.OrderBy));
+				throw new InvalidEnumArgumentException(nameof(filter.OrderBy));
 			}
 		}
 
-		return bookQueryable;
+		return queryable;
 	}
 
 	/// <inheritdoc />
-	private static IQueryable<Book> OrderQueryable<TProperty>(IQueryable<Book> bookQueryable, BookFilter bookFilter, Expression<Func<Book, TProperty>> bookExpression)
+	private static IQueryable<Book> OrderQueryable<TProperty>(IQueryable<Book> queryable, BookFilter filter, Expression<Func<Book, TProperty>> expression)
 	{
-		switch (bookFilter.OrderDirection)
+		switch (filter.OrderDirection)
 		{
 			case BookOrderDirection.Ascending:
 			{
-				return bookQueryable.OrderBy(bookExpression);
+				return queryable.OrderBy(expression);
 			}
 			case BookOrderDirection.Descending:
 			{
-				return bookQueryable.OrderByDescending(bookExpression);
+				return queryable.OrderByDescending(expression);
 			}
 			default:
 			{
-				throw new InvalidEnumArgumentException(nameof(bookFilter.OrderDirection));
+				throw new InvalidEnumArgumentException(nameof(filter.OrderDirection));
 			}
 		}
 	}

@@ -1,6 +1,6 @@
 ﻿namespace Memento.Aspire.Domain.Service.Messaging.Book.Queries;
 
-using Memento.Aspire.Shared.Messaging.Messages;
+using Memento.Aspire.Core.Messaging.Messages;
 
 /// <summary>
 /// Implements the interface for the get book query.

@@ -1,8 +1,8 @@
 ﻿namespace Memento.Aspire.Domain.Service.Persistence.Entities.Genre;
 
 using Memento.Aspire.Domain.Service.Persistence.Entities.Book;
-using Memento.Aspire.Shared.Persistence;
-using Memento.Aspire.Shared.Resources;
+using Memento.Aspire.Core.Persistence;
+using Memento.Aspire.Core.Resources;
 using System.ComponentModel.DataAnnotations;
 
 /// <summary>

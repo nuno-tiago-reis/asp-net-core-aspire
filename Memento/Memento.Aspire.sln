@@ -8,13 +8,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Memento.Aspire.Domain.Api",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Memento.Aspire.Domain.Service", "Memento.Aspire.Domain.Service\Memento.Aspire.Domain.Service.csproj", "{A23C25AC-BA5E-4F3C-A579-9B5292C742CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Memento.Aspire.Shared", "Memento.Aspire.Shared\Memento.Aspire.Shared.csproj", "{27253F01-0BD8-444B-B3EE-617F12A538AC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Memento.Aspire.Core", "Memento.Aspire.Core\Memento.Aspire.Core.csproj", "{27253F01-0BD8-444B-B3EE-617F12A538AC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Hosting", "1 - Hosting", "{5C8E35A1-65DC-4F79-9AB5-F49B5F57AF68}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Domain", "2 - Domain", "{5AC36CE8-5D21-4707-BC8E-144D3DB16B5B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Shared", "3 - Shared", "{367F7D51-7267-409D-9F82-F96D5DD7D50C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Core", "3 - Core", "{367F7D51-7267-409D-9F82-F96D5DD7D50C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0 - Solution Items", "0 - Solution Items", "{FFFA75AD-F3A7-485C-A7D4-CC20E1FE2691}"
 	ProjectSection(SolutionItems) = preProject
@@ -35,7 +35,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Testing", "4 - Testing"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Memento.Aspire.Domain.IntegrationTests", "Memento.Aspire.Domain.IntegrationTests\Memento.Aspire.Domain.IntegrationTests.csproj", "{CF5C360B-5DCD-4F81-BEC4-B16CD3E55E7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Memento.Aspire.Shared.UnitTests", "Memento.Aspire.Shared.UnitTests\Memento.Aspire.Shared.UnitTests.csproj", "{5A7F815A-9444-4393-B003-ED18C092FE6E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Memento.Aspire.Core.UnitTests", "Memento.Aspire.Core.UnitTests\Memento.Aspire.Core.UnitTests.csproj", "{5A7F815A-9444-4393-B003-ED18C092FE6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

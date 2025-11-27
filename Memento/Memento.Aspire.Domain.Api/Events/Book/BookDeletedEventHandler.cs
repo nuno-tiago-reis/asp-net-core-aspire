@@ -2,8 +2,8 @@
 
 using Memento.Aspire.Domain.Api.Constants;
 using Memento.Aspire.Domain.Service.Messaging.Book.Events;
-using Memento.Aspire.Shared.Cache;
-using Memento.Aspire.Shared.Messaging.Events;
+using Memento.Aspire.Core.Cache;
+using Memento.Aspire.Core.Messaging.Events;
 using System.Threading;
 
 /// <summary>

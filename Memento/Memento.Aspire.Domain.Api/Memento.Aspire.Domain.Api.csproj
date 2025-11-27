@@ -5,6 +5,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<NeutralLanguage>en</NeutralLanguage>
+		<UserSecretsId>3c440bf0-c11f-4856-844c-775e6932a9ad</UserSecretsId>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -50,7 +51,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Memento.Aspire.Domain.Service\Memento.Aspire.Domain.Service.csproj" />
-		<ProjectReference Include="..\Memento.Aspire.Shared\Memento.Aspire.Shared.csproj" />
+		<ProjectReference Include="..\Memento.Aspire.Core\Memento.Aspire.Core.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -2,8 +2,8 @@
 
 using Memento.Aspire.Domain.Service.Contracts.Author;
 using Memento.Aspire.Domain.Service.Contracts.Genre;
-using Memento.Aspire.Shared.Contracts;
-using Memento.Aspire.Shared.Resources;
+using Memento.Aspire.Core.Contracts;
+using Memento.Aspire.Core.Resources;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;

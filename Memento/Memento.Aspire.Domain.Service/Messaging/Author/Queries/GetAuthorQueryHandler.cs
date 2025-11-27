@@ -3,8 +3,8 @@
 using AutoMapper;
 using Memento.Aspire.Domain.Service.Contracts.Author;
 using Memento.Aspire.Domain.Service.Persistence.Entities.Author;
-using Memento.Aspire.Shared.Exceptions;
-using Memento.Aspire.Shared.Messaging.Messages;
+using Memento.Aspire.Core.Exceptions;
+using Memento.Aspire.Core.Messaging.Messages;
 using System.Threading;
 
 /// <summary>

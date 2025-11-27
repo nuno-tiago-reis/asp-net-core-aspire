@@ -1,6 +1,6 @@
 ﻿namespace Memento.Aspire.Domain.Service.Messaging.Author.Commands;
 
-using Memento.Aspire.Shared.Messaging.Messages;
+using Memento.Aspire.Core.Messaging.Messages;
 
 /// <summary>
 /// Implements the interface for the delete author command.

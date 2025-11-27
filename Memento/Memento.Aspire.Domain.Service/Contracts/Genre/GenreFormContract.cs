@@ -1,6 +1,6 @@
 ﻿namespace Memento.Aspire.Domain.Service.Contracts.Genre;
 
-using Memento.Aspire.Shared.Resources;
+using Memento.Aspire.Core.Resources;
 using System.ComponentModel.DataAnnotations;
 
 /// <summary>

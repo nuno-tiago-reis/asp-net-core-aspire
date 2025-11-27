@@ -1,8 +1,8 @@
 ﻿namespace Memento.Aspire.Domain.Service.Configuration;
 
-using Memento.Aspire.Shared.Localization;
-using Memento.Aspire.Shared.Logging;
-using Memento.Aspire.Shared.Messaging;
+using Memento.Aspire.Core.Localization;
+using Memento.Aspire.Core.Logging;
+using Memento.Aspire.Core.Messaging;
 
 /// <summary>
 /// Implements the 'ApplicationSettings' section.

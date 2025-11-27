@@ -1,10 +1,10 @@
 ﻿namespace Memento.Aspire.Domain.Api.Configuration;
 
-using Memento.Aspire.Shared.Cache;
-using Memento.Aspire.Shared.Localization;
-using Memento.Aspire.Shared.Logging;
-using Memento.Aspire.Shared.Messaging;
-using Memento.Aspire.Shared.Swagger;
+using Memento.Aspire.Core.Cache;
+using Memento.Aspire.Core.Localization;
+using Memento.Aspire.Core.Logging;
+using Memento.Aspire.Core.Messaging;
+using Memento.Aspire.Core.Swagger;
 
 /// <summary>
 /// Implements the 'ApplicationSettings' section.

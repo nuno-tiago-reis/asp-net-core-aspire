@@ -1,10 +1,10 @@
 ﻿namespace Memento.Aspire.Domain.Service.Persistence.Entities.Genre;
 
-using Memento.Aspire.Shared.Exceptions;
-using Memento.Aspire.Shared.Extensions;
-using Memento.Aspire.Shared.Localization;
-using Memento.Aspire.Shared.Persistence;
-using Memento.Aspire.Shared.Resources;
+using Memento.Aspire.Core.Exceptions;
+using Memento.Aspire.Core.Extensions;
+using Memento.Aspire.Core.Localization;
+using Memento.Aspire.Core.Persistence;
+using Memento.Aspire.Core.Resources;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -57,7 +57,7 @@ public sealed class GenreRepository : EntityRepository<Genre, GenreFilter, Genre
 		}
 
 		// Duplicate fields
-		if (this.Entities.Any((genre) => genre.Id != genre.Id && genre.Name.Equals(genre.Name)))
+		if (this.Entities.Any((existingGenre) => existingGenre.Id != genre.Id && existingGenre.Name == genre.Name))
 		{
 			errorMessages.Add(this.GetEntityHasDuplicateFieldMessage((genre) => genre.Name));
 		}
@@ -101,64 +101,64 @@ public sealed class GenreRepository : EntityRepository<Genre, GenreFilter, Genre
 	}
 
 	/// <inheritdoc />
-	protected override IQueryable<Genre> FilterQueryable(IQueryable<Genre> genreQueryable, GenreFilter genreFilter)
+	protected override IQueryable<Genre> FilterQueryable(IQueryable<Genre> queryable, GenreFilter filter)
 	{
 		// Apply the filter
-		if (string.IsNullOrWhiteSpace(genreFilter.Name) == false)
+		if (string.IsNullOrWhiteSpace(filter.Name) == false)
 		{
-			var name = genreFilter.Name;
+			var name = filter.Name;
 
-			genreQueryable = genreQueryable.Where((genre) => EF.Functions.Like(genre.Name, $"%{name}%"));
+			queryable = queryable.Where((genre) => EF.Functions.Like(genre.Name, $"%{name}%"));
 		}
 
 		// Apply the order
-		switch (genreFilter.OrderBy)
+		switch (filter.OrderBy)
 		{
 			case GenreOrderBy.Id:
 			{
-				genreQueryable = OrderQueryable(genreQueryable, genreFilter, (genre) => genre.Id);
+				queryable = OrderQueryable(queryable, filter, (genre) => genre.Id);
 				break;
 			}
 			case GenreOrderBy.CreatedAt:
 			{
-				genreQueryable = OrderQueryable(genreQueryable, genreFilter, (genre) => genre.CreatedAt);
+				queryable = OrderQueryable(queryable, filter, (genre) => genre.CreatedAt);
 				break;
 			}
 			case GenreOrderBy.UpdatedAt:
 			{
-				genreQueryable = OrderQueryable(genreQueryable, genreFilter, (genre) => genre.UpdatedAt);
+				queryable = OrderQueryable(queryable, filter, (genre) => genre.UpdatedAt);
 				break;
 			}
 			case GenreOrderBy.Name:
 			{
-				genreQueryable = OrderQueryable(genreQueryable, genreFilter, (genre) => genre.Name);
+				queryable = OrderQueryable(queryable, filter, (genre) => genre.Name);
 				break;
 			}
 			default:
 			{
-				throw new InvalidEnumArgumentException(nameof(genreFilter.OrderBy));
+				throw new InvalidEnumArgumentException(nameof(filter.OrderBy));
 			}
 		}
 
-		return genreQueryable;
+		return queryable;
 	}
 
 	/// <inheritdoc />
-	private static IQueryable<Genre> OrderQueryable<TProperty>(IQueryable<Genre> genreQueryable, GenreFilter genreFilter, Expression<Func<Genre, TProperty>> genreExpression)
+	private static IQueryable<Genre> OrderQueryable<TProperty>(IQueryable<Genre> queryable, GenreFilter filter, Expression<Func<Genre, TProperty>> expression)
 	{
-		switch (genreFilter.OrderDirection)
+		switch (filter.OrderDirection)
 		{
 			case GenreOrderDirection.Ascending:
 			{
-				return genreQueryable.OrderBy(genreExpression);
+				return queryable.OrderBy(expression);
 			}
 			case GenreOrderDirection.Descending:
 			{
-				return genreQueryable.OrderByDescending(genreExpression);
+				return queryable.OrderByDescending(expression);
 			}
 			default:
 			{
-				throw new InvalidEnumArgumentException(nameof(genreFilter.OrderDirection));
+				throw new InvalidEnumArgumentException(nameof(filter.OrderDirection));
 			}
 		}
 	}

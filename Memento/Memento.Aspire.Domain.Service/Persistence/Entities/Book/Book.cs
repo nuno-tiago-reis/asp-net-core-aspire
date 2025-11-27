@@ -2,7 +2,7 @@
 
 using Memento.Aspire.Domain.Service.Persistence.Entities.Author;
 using Memento.Aspire.Domain.Service.Persistence.Entities.Genre;
-using Memento.Aspire.Shared.Persistence;
+using Memento.Aspire.Core.Persistence;
 
 /// <summary>
 /// Implements the 'Book' entity.

@@ -1,6 +1,6 @@
 ﻿namespace Memento.Aspire.Domain.Service.Persistence.Entities.Author;
 
-using Memento.Aspire.Shared.Persistence;
+using Memento.Aspire.Core.Persistence;
 
 /// <summary>
 /// Defines the interface for a 'Author' repository.

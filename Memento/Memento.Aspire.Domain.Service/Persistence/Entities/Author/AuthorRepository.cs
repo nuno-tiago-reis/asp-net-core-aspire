@@ -1,10 +1,10 @@
 ﻿namespace Memento.Aspire.Domain.Service.Persistence.Entities.Author;
 
-using Memento.Aspire.Shared.Exceptions;
-using Memento.Aspire.Shared.Extensions;
-using Memento.Aspire.Shared.Localization;
-using Memento.Aspire.Shared.Persistence;
-using Memento.Aspire.Shared.Resources;
+using Memento.Aspire.Core.Exceptions;
+using Memento.Aspire.Core.Extensions;
+using Memento.Aspire.Core.Localization;
+using Memento.Aspire.Core.Persistence;
+using Memento.Aspire.Core.Resources;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -62,7 +62,7 @@ public sealed class AuthorRepository : EntityRepository<Author, AuthorFilter, Au
 		}
 
 		// Duplicate fields
-		if (this.Entities.Any((author) => author.Id != author.Id && author.Name.Equals(author.Name) && author.BirthDate == author.BirthDate))
+		if (this.Entities.Any((existingAuthor) => existingAuthor.Id != author.Id && existingAuthor.Name == author.Name && existingAuthor.BirthDate == author.BirthDate))
 		{
 			errorMessages.Add(this.GetEntityHasDuplicateFieldCombinationMessage((author) => author.Name, (author) => author.BirthDate));
 		}
@@ -107,65 +107,65 @@ public sealed class AuthorRepository : EntityRepository<Author, AuthorFilter, Au
 	}
 
 	/// <inheritdoc />
-	protected override IQueryable<Author> FilterQueryable(IQueryable<Author> authorQueryable, AuthorFilter authorFilter)
+	protected override IQueryable<Author> FilterQueryable(IQueryable<Author> queryable, AuthorFilter filter)
 	{
 		// Apply the filter
-		if (string.IsNullOrWhiteSpace(authorFilter.Name) == false)
+		if (string.IsNullOrWhiteSpace(filter.Name) == false)
 		{
-			var name = authorFilter.Name;
+			var name = filter.Name;
 
-			authorQueryable = authorQueryable.Where((author) => EF.Functions.Like(author.Name, $"%{name}%"));
+			queryable = queryable.Where((author) => EF.Functions.Like(author.Name, $"%{name}%"));
 		}
 
-		if (authorFilter.BornAfter is not null)
+		if (filter.BornAfter is not null)
 		{
-			var birthDate = authorFilter.BornAfter.Value;
+			var birthDate = filter.BornAfter.Value;
 
-			authorQueryable = authorQueryable.Where((author) => author.BirthDate >= birthDate);
+			queryable = queryable.Where((author) => author.BirthDate >= birthDate);
 		}
 
-		if (authorFilter.BornBefore is not null)
+		if (filter.BornBefore is not null)
 		{
-			var birthDate = authorFilter.BornBefore.Value;
+			var birthDate = filter.BornBefore.Value;
 
-			authorQueryable = authorQueryable.Where((author) => author.BirthDate <= birthDate);
+			queryable = queryable.Where((author) => author.BirthDate <= birthDate);
 		}
 
 		// Apply the order
-		switch (authorFilter.OrderBy)
+		switch (filter.OrderBy)
 		{
 			case AuthorOrderBy.Id:
 			{
-				authorQueryable = OrderQueryable(authorQueryable, authorFilter, (author) => author.Id);
+				queryable = OrderQueryable(queryable, filter, (author) => author.Id);
 				break;
 			}
 			case AuthorOrderBy.CreatedAt:
 			{
-				authorQueryable = OrderQueryable(authorQueryable, authorFilter, (author) => author.CreatedAt);
+				queryable = OrderQueryable(queryable, filter, (author) => author.CreatedAt);
 				break;
 			}
 			case AuthorOrderBy.UpdatedAt:
 			{
-				authorQueryable = OrderQueryable(authorQueryable, authorFilter, (author) => author.UpdatedAt);
+				queryable = OrderQueryable(queryable, filter, (author) => author.UpdatedAt);
 				break;
 			}
 			case AuthorOrderBy.Name:
 			{
-				authorQueryable = OrderQueryable(authorQueryable, authorFilter, (author) => author.Name);
+				queryable = OrderQueryable(queryable, filter, (author) => author.Name);
 				break;
 			}
 			case AuthorOrderBy.BirthDate:
 			{
-				authorQueryable = OrderQueryable(authorQueryable, authorFilter, (author) => author.BirthDate);
+				queryable = OrderQueryable(queryable, filter, (author) => author.BirthDate);
 				break;
 			}
 			default:
 			{
-				throw new InvalidEnumArgumentException(nameof(authorFilter.OrderBy));
+				throw new InvalidEnumArgumentException(nameof(filter.OrderBy));
 			}
 		}
 
-		return authorQueryable;
+		return queryable;
 	}
 
 	/// <summary>
@@ -174,24 +174,24 @@ public sealed class AuthorRepository : EntityRepository<Author, AuthorFilter, Au
 	///
 	/// <typeparam name="TProperty">The property's type.</typeparam>
 	///
-	/// <param name="authorQueryable">The author queryable.</param>
-	/// <param name="authorFilter">The author filter.</param>
-	/// <param name="authorExpression">The author expression</param>
-	private static IQueryable<Author> OrderQueryable<TProperty>(IQueryable<Author> authorQueryable, AuthorFilter authorFilter, Expression<Func<Author, TProperty>> authorExpression)
+	/// <param name="queryable">The author queryable.</param>
+	/// <param name="filter">The author filter.</param>
+	/// <param name="expression">The author expression</param>
+	private static IQueryable<Author> OrderQueryable<TProperty>(IQueryable<Author> queryable, AuthorFilter filter, Expression<Func<Author, TProperty>> expression)
 	{
-		switch (authorFilter.OrderDirection)
+		switch (filter.OrderDirection)
 		{
 			case AuthorOrderDirection.Ascending:
 			{
-				return authorQueryable.OrderBy(authorExpression);
+				return queryable.OrderBy(expression);
 			}
 			case AuthorOrderDirection.Descending:
 			{
-				return authorQueryable.OrderByDescending(authorExpression);
+				return queryable.OrderByDescending(expression);
 			}
 			default:
 			{
-				throw new InvalidEnumArgumentException(nameof(authorFilter.OrderDirection));
+				throw new InvalidEnumArgumentException(nameof(filter.OrderDirection));
 			}
 		}
 	}

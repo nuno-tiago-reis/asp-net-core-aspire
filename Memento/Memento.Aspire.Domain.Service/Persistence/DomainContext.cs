@@ -3,7 +3,7 @@
 using Memento.Aspire.Domain.Service.Persistence.Entities.Author;
 using Memento.Aspire.Domain.Service.Persistence.Entities.Book;
 using Memento.Aspire.Domain.Service.Persistence.Entities.Genre;
-using Memento.Aspire.Shared.Persistence;
+using Memento.Aspire.Core.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 /// <summary>

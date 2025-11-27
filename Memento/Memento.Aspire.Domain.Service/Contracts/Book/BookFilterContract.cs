@@ -1,6 +1,6 @@
 ﻿namespace Memento.Aspire.Domain.Service.Contracts.Book;
 
-using Memento.Aspire.Shared.Contracts;
+using Memento.Aspire.Core.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using System.Collections.Generic;

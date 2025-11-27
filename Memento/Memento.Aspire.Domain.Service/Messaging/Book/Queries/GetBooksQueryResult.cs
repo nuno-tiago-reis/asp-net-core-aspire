@@ -1,8 +1,8 @@
 ﻿namespace Memento.Aspire.Domain.Service.Messaging.Book.Queries;
 
 using Memento.Aspire.Domain.Service.Contracts.Book;
-using Memento.Aspire.Shared.Messaging.Messages;
-using Memento.Aspire.Shared.Pagination;
+using Memento.Aspire.Core.Messaging.Messages;
+using Memento.Aspire.Core.Pagination;
 
 /// <summary>
 /// Implements the interface for the get books query result.

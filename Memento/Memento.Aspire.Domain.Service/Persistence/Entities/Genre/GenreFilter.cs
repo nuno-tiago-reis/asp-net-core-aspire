@@ -1,6 +1,6 @@
 ﻿namespace Memento.Aspire.Domain.Service.Persistence.Entities.Genre;
 
-using Memento.Aspire.Shared.Persistence;
+using Memento.Aspire.Core.Persistence;
 
 /// <summary>
 /// Defines the fields over which 'Genres' can be filtered.

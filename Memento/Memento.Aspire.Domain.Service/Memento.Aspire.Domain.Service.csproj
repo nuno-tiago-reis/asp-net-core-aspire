@@ -49,7 +49,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Memento.Aspire.Shared\Memento.Aspire.Shared.csproj" />
+		<ProjectReference Include="..\Memento.Aspire.Core\Memento.Aspire.Core.csproj" />
 	</ItemGroup>
 
 </Project>
