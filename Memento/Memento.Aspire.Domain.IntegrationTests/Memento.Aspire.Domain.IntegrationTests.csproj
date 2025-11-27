@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<IsPackable>false</IsPackable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Coverlet.Collector" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" />
+		<PackageReference Include="XUnit" />
+		<PackageReference Include="XUnit.Runner.Visualstudio" />
+
+		<!-- Temporary to get around https://github.com/dotnet/efcore/issues/35143 -->
+		<PackageReference Include="Microsoft.CodeAnalysis.Common" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" />
+		<PackageReference Include="Microsoft.CodeAnalysis.Workspaces.Common" />
+		<PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Memento.Aspire.Domain.Api\Memento.Aspire.Domain.Api.csproj" />
+		<ProjectReference Include="..\Memento.Aspire.Domain.Service\Memento.Aspire.Domain.Service.csproj" />
+		<ProjectReference Include="..\Memento.Aspire.Shared\Memento.Aspire.Shared.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Using Include="Xunit" />
+	</ItemGroup>
+
+</Project>

@@ -6,28 +6,36 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Memento.Aspire.Hosting", "M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Memento.Aspire.Domain.Api", "Memento.Aspire.Domain.Api\Memento.Aspire.Domain.Api.csproj", "{4672AADB-257E-4376-859D-ED2E94716161}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Memento.Aspire.Domain.Api.Tests", "Memento.Aspire.Domain.Api.Tests\Memento.Aspire.Domain.Api.Tests.csproj", "{04FB5430-B1EB-4CE4-8E38-878CEC98E2F3}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Memento.Aspire.Domain.Service", "Memento.Aspire.Domain.Service\Memento.Aspire.Domain.Service.csproj", "{A23C25AC-BA5E-4F3C-A579-9B5292C742CE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Memento.Aspire.Domain.Service.Tests", "Memento.Aspire.Domain.Service.Tests\Memento.Aspire.Domain.Service.Tests.csproj", "{DA6FD421-1FC3-4701-9CED-13C3CCC8C018}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Memento.Aspire.Shared", "Memento.Aspire.Shared\Memento.Aspire.Shared.csproj", "{27253F01-0BD8-444B-B3EE-617F12A538AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Memento.Aspire.Shared.Tests", "Memento.Aspire.Shared.Tests\Memento.Aspire.Shared.Tests.csproj", "{1115C507-1598-42B9-8CD6-0259A0624AA1}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Hosting", "1 - Hosting", "{5C8E35A1-65DC-4F79-9AB5-F49B5F57AF68}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hosting", "Hosting", "{5C8E35A1-65DC-4F79-9AB5-F49B5F57AF68}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Domain", "2 - Domain", "{5AC36CE8-5D21-4707-BC8E-144D3DB16B5B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{5AC36CE8-5D21-4707-BC8E-144D3DB16B5B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Shared", "3 - Shared", "{367F7D51-7267-409D-9F82-F96D5DD7D50C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{367F7D51-7267-409D-9F82-F96D5DD7D50C}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FFFA75AD-F3A7-485C-A7D4-CC20E1FE2691}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0 - Solution Items", "0 - Solution Items", "{FFFA75AD-F3A7-485C-A7D4-CC20E1FE2691}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		Directory.Packages.props = Directory.Packages.props
 		NuGet.config = NuGet.config
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Memento.Aspire.Domain.Api.UnitTests", "Memento.Aspire.Domain.Api.UnitTests\Memento.Aspire.Domain.Api.UnitTests.csproj", "{995FD14F-BD13-41D5-B82E-132DF8A7681F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Memento.Aspire.Domain.Api.ComponentTests", "Memento.Aspire.Domain.Api.ComponentTests\Memento.Aspire.Domain.Api.ComponentTests.csproj", "{704904CB-2CB1-4128-83C6-A25EAF1887BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Memento.Aspire.Domain.Service.UnitTests", "Memento.Aspire.Domain.Service.UnitTests\Memento.Aspire.Domain.Service.UnitTests.csproj", "{A7233738-FA20-4F18-8E51-4FBB58E47447}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Memento.Aspire.Domain.Service.ComponentTests", "Memento.Aspire.Domain.Service.ComponentTests\Memento.Aspire.Domain.Service.ComponentTests.csproj", "{7D899211-BBBA-4EAF-9444-7F1990324A40}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Testing", "4 - Testing", "{6B26B1C9-231F-402F-B93A-EFCE6FC9AA58}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Memento.Aspire.Domain.IntegrationTests", "Memento.Aspire.Domain.IntegrationTests\Memento.Aspire.Domain.IntegrationTests.csproj", "{CF5C360B-5DCD-4F81-BEC4-B16CD3E55E7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Memento.Aspire.Shared.UnitTests", "Memento.Aspire.Shared.UnitTests\Memento.Aspire.Shared.UnitTests.csproj", "{5A7F815A-9444-4393-B003-ED18C092FE6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,26 +51,38 @@ Global
 		{4672AADB-257E-4376-859D-ED2E94716161}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4672AADB-257E-4376-859D-ED2E94716161}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4672AADB-257E-4376-859D-ED2E94716161}.Release|Any CPU.Build.0 = Release|Any CPU
-		{04FB5430-B1EB-4CE4-8E38-878CEC98E2F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{04FB5430-B1EB-4CE4-8E38-878CEC98E2F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{04FB5430-B1EB-4CE4-8E38-878CEC98E2F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{04FB5430-B1EB-4CE4-8E38-878CEC98E2F3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A23C25AC-BA5E-4F3C-A579-9B5292C742CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A23C25AC-BA5E-4F3C-A579-9B5292C742CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A23C25AC-BA5E-4F3C-A579-9B5292C742CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A23C25AC-BA5E-4F3C-A579-9B5292C742CE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DA6FD421-1FC3-4701-9CED-13C3CCC8C018}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DA6FD421-1FC3-4701-9CED-13C3CCC8C018}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DA6FD421-1FC3-4701-9CED-13C3CCC8C018}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DA6FD421-1FC3-4701-9CED-13C3CCC8C018}.Release|Any CPU.Build.0 = Release|Any CPU
 		{27253F01-0BD8-444B-B3EE-617F12A538AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{27253F01-0BD8-444B-B3EE-617F12A538AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27253F01-0BD8-444B-B3EE-617F12A538AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27253F01-0BD8-444B-B3EE-617F12A538AC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1115C507-1598-42B9-8CD6-0259A0624AA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1115C507-1598-42B9-8CD6-0259A0624AA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1115C507-1598-42B9-8CD6-0259A0624AA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1115C507-1598-42B9-8CD6-0259A0624AA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{995FD14F-BD13-41D5-B82E-132DF8A7681F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{995FD14F-BD13-41D5-B82E-132DF8A7681F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{995FD14F-BD13-41D5-B82E-132DF8A7681F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{995FD14F-BD13-41D5-B82E-132DF8A7681F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{704904CB-2CB1-4128-83C6-A25EAF1887BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{704904CB-2CB1-4128-83C6-A25EAF1887BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{704904CB-2CB1-4128-83C6-A25EAF1887BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{704904CB-2CB1-4128-83C6-A25EAF1887BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7233738-FA20-4F18-8E51-4FBB58E47447}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7233738-FA20-4F18-8E51-4FBB58E47447}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7233738-FA20-4F18-8E51-4FBB58E47447}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7233738-FA20-4F18-8E51-4FBB58E47447}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D899211-BBBA-4EAF-9444-7F1990324A40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D899211-BBBA-4EAF-9444-7F1990324A40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D899211-BBBA-4EAF-9444-7F1990324A40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D899211-BBBA-4EAF-9444-7F1990324A40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF5C360B-5DCD-4F81-BEC4-B16CD3E55E7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF5C360B-5DCD-4F81-BEC4-B16CD3E55E7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF5C360B-5DCD-4F81-BEC4-B16CD3E55E7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF5C360B-5DCD-4F81-BEC4-B16CD3E55E7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A7F815A-9444-4393-B003-ED18C092FE6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A7F815A-9444-4393-B003-ED18C092FE6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A7F815A-9444-4393-B003-ED18C092FE6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A7F815A-9444-4393-B003-ED18C092FE6E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,10 +90,13 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{226A056B-68AD-46D9-9CE7-EF42AAF6D828} = {5C8E35A1-65DC-4F79-9AB5-F49B5F57AF68}
 		{4672AADB-257E-4376-859D-ED2E94716161} = {5AC36CE8-5D21-4707-BC8E-144D3DB16B5B}
-		{04FB5430-B1EB-4CE4-8E38-878CEC98E2F3} = {5AC36CE8-5D21-4707-BC8E-144D3DB16B5B}
 		{A23C25AC-BA5E-4F3C-A579-9B5292C742CE} = {5AC36CE8-5D21-4707-BC8E-144D3DB16B5B}
-		{DA6FD421-1FC3-4701-9CED-13C3CCC8C018} = {5AC36CE8-5D21-4707-BC8E-144D3DB16B5B}
 		{27253F01-0BD8-444B-B3EE-617F12A538AC} = {367F7D51-7267-409D-9F82-F96D5DD7D50C}
-		{1115C507-1598-42B9-8CD6-0259A0624AA1} = {367F7D51-7267-409D-9F82-F96D5DD7D50C}
+		{995FD14F-BD13-41D5-B82E-132DF8A7681F} = {5AC36CE8-5D21-4707-BC8E-144D3DB16B5B}
+		{704904CB-2CB1-4128-83C6-A25EAF1887BE} = {5AC36CE8-5D21-4707-BC8E-144D3DB16B5B}
+		{A7233738-FA20-4F18-8E51-4FBB58E47447} = {5AC36CE8-5D21-4707-BC8E-144D3DB16B5B}
+		{7D899211-BBBA-4EAF-9444-7F1990324A40} = {5AC36CE8-5D21-4707-BC8E-144D3DB16B5B}
+		{CF5C360B-5DCD-4F81-BEC4-B16CD3E55E7B} = {6B26B1C9-231F-402F-B93A-EFCE6FC9AA58}
+		{5A7F815A-9444-4393-B003-ED18C092FE6E} = {367F7D51-7267-409D-9F82-F96D5DD7D50C}
 	EndGlobalSection
 EndGlobal
